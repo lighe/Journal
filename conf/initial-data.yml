@@ -1,0 +1,24 @@
+# Test data
+
+Article(firstArticle):
+    title: Test title
+    pdf:    secret
+    date:       2009-06-14
+    
+Article(secondArticle):
+    title: Test title 2
+    pdf:    secret
+    date:       2009-06-14
+
+Article(thirdArticle):
+    title: Test title 3
+    pdf:    secret
+    date:       2009-06-14
+                    
+Tag(t1):
+    title: Tag1
+    article: firstArticle
+
+User(u1):
+    email: alighe89@gmail.com
+    password: tester
