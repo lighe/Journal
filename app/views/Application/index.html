@@ -1,0 +1,31 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+ #{if articles}
+        <div>    
+            <h3>Articles</h3>
+        
+            #{list items:articles, as:'article'}
+                <div class="post">
+                    <h2 class="post-title">
+                        <a href="#">${article.title}</a>
+                    </h2>
+                    <div class="post-metadata">
+                        <span class="post-pdf">
+                            pdf: ${article.pdf}
+                        </span>
+                        <div class="post-comments">
+                            ${article.tags.size() ?: 'no'} 
+                            tag${article.tags.size().pluralize()}:
+                            #{if article.tags}
+                               #{list items:article.tags, as:'tag'}
+							   		${tag.title},
+							   #{/list}
+                            #{/if}
+                        </div>
+                    </div>
+                </div>
+            #{/list}
+        </div>
+        
+    #{/if}
