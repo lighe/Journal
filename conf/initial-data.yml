@@ -1,16 +1,16 @@
 # Test data
 
-Article(firstArticle):
+Articles(firstArticle):
     title: Test title
     pdf:    secret
     date:       2009-06-14
     
-Article(secondArticle):
+Articles(secondArticle):
     title: Test title 2
     pdf:    secret
     date:       2009-06-14
 
-Article(thirdArticle):
+Articles(thirdArticle):
     title: Test title 3
     pdf:    secret
     date:       2009-06-14
@@ -19,6 +19,6 @@ Tag(t1):
     title: Tag1
     article: firstArticle
 
-User(u1):
+Users(u1):
     email: alighe89@gmail.com
     password: tester
