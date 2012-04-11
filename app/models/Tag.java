@@ -11,11 +11,11 @@ public class Tag extends Model {
     public String title;
 	
 	@ManyToOne
-    public Article article;
+    public Articles article;
 	
 	//public Author author;
     
-    public Tag(Article article, String title) {
+    public Tag(Articles article, String title) {
         this.article = article;
 		this.title = title;
     }

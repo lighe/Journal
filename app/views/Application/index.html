@@ -12,16 +12,9 @@
                     </h2>
                     <div class="post-metadata">
                         <span class="post-pdf">
-                            pdf: ${article.pdf}
                         </span>
                         <div class="post-comments">
-                            ${article.tags.size() ?: 'no'} 
-                            tag${article.tags.size().pluralize()}:
-                            #{if article.tags}
-                               #{list items:article.tags, as:'tag'}
-							   		${tag.title},
-							   #{/list}
-                            #{/if}
+                           
                         </div>
                     </div>
                 </div>

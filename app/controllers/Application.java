@@ -11,7 +11,7 @@ import models.*;
 public class Application extends Controller {
 
     public static void index() {
-        List<Article> articles = Article.find(
+        List<Articles> articles = Articles.find(
             "order by title desc"
         ).fetch(10);
 		String user = Security.connected();
