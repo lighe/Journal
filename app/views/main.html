@@ -7,10 +7,141 @@
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-        <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="@{'/public/javascripts/jquery.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+		<script src="@{'public/javascripts/init.js'}"></script>
+        <link rel="stylesheet/less" type="text/css" href="@{'public/stylesheets/style.less'}" />
+        <script src="@{'public/javascripts/less.js'}" type="text/javascript"></script>
         #{get 'moreScripts' /}
     </head>
     <body>
-        #{doLayout /}
+    	<div class="navbar">
+          <div class="navbar-inner" id="menu">
+            <div class="container">
+            	<h1>
+                	<a href="#" id="logo" class="brand">Journal CMS</a>
+                </h1>
+                <ul class="nav">
+                	<li class="active"><a href="#">Menu item 1</a></li>
+                    <li><a href="#">Menu item 2</a></li>
+                    <li><a href="#">Menu item 3</a></li>
+                    <li><a href="#">Menu item 4</a></li>
+                </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="hero-unit">
+        	<div class="container">
+            	<h1>The Journal CMS</h1>
+                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            </div>
+        </div>
+        
+        <div id="vol-nav" class="navbar">
+        	<div class="navbar-inner">
+        		<div class="container">
+					<h2>Recent volumes:</h2>
+					<ul class="nav">
+						<li><a href="#">2006</a></li>
+						<li><a href="#">2007</a></li>
+						<li><a href="#">2008</a></li>
+						<li><a href="#">2009</a></li>
+						<li><a href="#">2010</a></li>
+						<li><a href="#">2011</a></li>
+						<li class="active"><a href="#">2012</a></li>
+						<li><a href="#">Archive</a></li>
+					</ul>
+					<form class="navbar-search">
+						<input type="text" class="search-query" placeholder="Search">
+					</form>
+				</div>    
+            </div>
+        </div>
+		<div id="edition-nav" class="navbar">
+			<div class="navbar-inner">
+				<div class="container">
+					<ul class="nav">
+						<li><a href="#">I. Some title here</a></li>
+						<li><a href="#">II. Another title here</a></li>
+						<li><a href="#">III. You get the point</a></li>
+						<li class="selected"><a href="#">IV. Last Edition</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div id="articles" class="row">
+				<div class="span6">
+					<div class="article">
+						<h3><a href="#">Lung protective mechanical ventilation and two year survival in patients with acute lung injury: prospective cohort study</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Patient safety, satisfaction, and quality of hospital care: cross sectional surveys of nurses and patients in 12 countries in Europe and the United States</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Effect of implementation of Integrated Management of Neonatal and Childhood Illness (IMNCI) programme on neonatal and infant mortality: cluster randomised controlled trial</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Lung protective mechanical ventilation and two year survival in patients with acute lung injury: prospective cohort study</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">The article title will come here</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Effect of implementation of Integrated Management of Neonatal and Childhood Illness (IMNCI) programme on neonatal and infant mortality: cluster randomised controlled trial</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Patient safety, satisfaction, and quality of hospital care: cross sectional surveys of nurses and patients in 12 countries in Europe and the United States</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Lung protective mechanical ventilation and two year survival in patients with acute lung injury: prospective cohort study</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+				</div>
+				<div class="span6">
+					<div class="article">
+						<h3><a href="#">The article title will come here</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Patient safety, satisfaction, and quality of hospital care: cross sectional surveys of nurses and patients in 12 countries in Europe and the United States</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Effect of implementation of Integrated Management of Neonatal and Childhood Illness (IMNCI) programme on neonatal and infant mortality: cluster randomised controlled trial</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Lung protective mechanical ventilation and two year survival in patients with acute lung injury: prospective cohort study</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">The article title will come here</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Effect of implementation of Integrated Management of Neonatal and Childhood Illness (IMNCI) programme on neonatal and infant mortality: cluster randomised controlled trial</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Patient safety, satisfaction, and quality of hospital care: cross sectional surveys of nurses and patients in 12 countries in Europe and the United States</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+					</div>
+					<div class="article">
+						<h3><a href="#">Lung protective mechanical ventilation and two year survival in patients with acute lung injury: prospective cohort study</a></h3>
+						<p>And this will be an abstract exerpt of 1-2 lines of text</p>
+				</div>
+				
+			</div>
+		</div>
+    
+      <!-- #{doLayout /} -->
     </body>
 </html>
