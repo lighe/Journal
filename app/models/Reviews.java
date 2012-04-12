@@ -11,7 +11,7 @@ import play.db.jpa.*;
 public class Reviews extends Model {
 
     public int reviews_ID;    
-    public int score;      
+    public String score;      
     
     @ManyToOne
     public Users user_ID;
@@ -20,7 +20,7 @@ public class Reviews extends Model {
     @ManyToOne
     public Revisions revision_ID;
     
-    public Reviews(int review_ID, int score, Users user_ID, Revisions revision_ID) {
+    public Reviews(int review_ID, String score, Users user_ID, Revisions revision_ID) {
         this.reviews_ID = review_ID;
         this.score = score;
         this.user_ID = user_ID;
