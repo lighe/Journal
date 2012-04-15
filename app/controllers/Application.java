@@ -23,6 +23,10 @@ public class Application extends Controller {
          need to find how to get user id **/ 
         Discussion comment = Discussion.findById(id);
         render (comment);}
-    }
-
+    
+    public static void unpublishedShow(){
+        /*add user login check*/
+        Published.find("published", "false").fetch();
+    } 
+    
 }

@@ -30,8 +30,8 @@ public class Published extends Model {
         this.authorised_By = authorised_By;
         this.volume_ID = volume_ID;
         this.published = published;
-        
-    }
+        }
+    
  
 }
 
