@@ -1,0 +1,251 @@
+<HTML>
+<HEAD>
+<TITLE>Infastructure Cost Calculator</TITLE>
+<script type="text/javascript">
+function write(text){
+  var newHTML = "The Cost will be £" + text;
+  document.getElementById('costTXT').innerHTML = newHTML;
+}
+
+function troubleShooting(){
+  var newHTML = "Be sure to remove any symbols like commas from the input.";
+  document.getElementById('troubleShooting').innerHTML = newHTML;
+}
+
+
+function calculate() {
+  infaLevel = document.Calculator.infastructureLevel.value
+  levelsToPurchase = document.Calculator.levelsToPurchase.value
+  
+  var finalCost = 0;
+  lvlToPur = levelsToPurchase
+
+  while(0 < lvlToPur){
+    costPerLvl = costPerLevel(infaLevel)
+    finalCost = finalCost + costPerLvl
+    infaLevel ++
+    lvlToPur--
+  }
+  write(finalCost)
+}
+
+function costPerLevel(infaLevel) {
+  cost = 0
+  if (infaLevel < 20) {
+    cost = 500
+  }
+  else if (infaLevel < 100){
+    cost = (infaLevel * 12 ) + 500
+  }
+  else if (infaLevel < 200) {
+    cost = (infaLevel * 15 ) + 500
+  }
+  else if (infaLevel < 1000) {
+    cost = (infaLevel * 20 ) + 500
+  }
+  else if (infaLevel < 3000) {
+    cost = (infaLevel * 25 ) + 500
+  }
+  else if (infaLevel < 4000) {
+    cost = (infaLevel * 30 ) + 500
+  }
+  else if (infaLevel < 5000) {
+    cost = (infaLevel * 40 ) + 500
+  }
+  else if (infaLevel < 8000) {
+    cost = (infaLevel * 60 ) + 500
+  }
+  else if (infaLevel < 15000) {
+    cost = (infaLevel * 70 ) + 500
+  }
+  else {
+    cost = (infaLevel * 80 ) + 500
+  }
+  
+  gov = getSelectedGoverment()
+
+  if ((gov == "Capitalist") || (gov == "Dictatorship") || (gov == "Federal Government") || (gov == "Monarchy") || (gov == "Republic") || (gov == "Revolutionary Goverment")){
+    cost = cost * 0.95
+  }
+
+  if (document.getElementById("aluminium").checked){
+    cost = cost * 0.93
+  }
+
+  if (document.getElementById("coal").checked){
+    cost = cost * 0.96
+  }
+
+  if (document.getElementById("iron").checked){
+    cost = cost * 0.95
+  }
+
+  if (document.getElementById("lumber").checked){
+    cost = cost * 0.94
+  }
+
+  if (document.getElementById("marble").checked){
+    cost = cost * 0.90
+  }
+
+  if (document.getElementById("rubber").checked){
+    cost = cost * 0.97
+  }
+  
+  if (document.getElementById("construction").checked){
+    cost = cost * 0.95
+  }
+  if (document.getElementById("steel").checked){
+    cost = cost * 0.98
+  }
+
+  numFactories = document.Calculator.noOfFactories.selectedIndex
+
+  if (document.getElementById("scientifcDevelopmentCenter").checked){
+    factoryPercentage = 1 - (numFactories * 0.1)
+  } else {
+    factoryPercentage = 1 - (numFactories * 0.08)
+  }
+
+  cost = cost * factoryPercentage
+
+  if (document.getElementById("interstateSystem").checked){
+    cost = cost * 0.92
+  }
+  if (document.getElementById("marsBase").checked){
+    cost = cost * 0.97
+  }
+  if (document.getElementById("moonBase").checked){
+    cost = cost * 0.96
+  }
+
+  return cost
+}
+
+
+function getSelectedGoverment() {
+  index = document.Calculator.govermentType.selectedIndex
+  chosen = ""
+  switch(index){
+    case 0:
+      chosen = "Anarchy"
+      break;
+    case 1:
+      chosen = "Capitalist"
+      break;
+    case 2:
+      chosen = "Communist"
+      break;
+    case 3:
+      chosen = "Democracy"
+      break;
+    case 4:
+      chosen = "Dictatorship"
+      break;
+    case 5:
+      chosen = "Federal Government"
+      break;
+    case 6:
+      chosen = "Monarchy"
+      break;
+    case 7:
+      chosen = "Republic"
+      break;
+    case 8:
+      chosen = "Revolutionary Goverment"
+      break;
+    case 9:
+      chosen = "Totalitarian State"
+      break;
+    case 10:
+      chosen = "Transitional"
+      break;
+  }
+  return chosen;
+}
+
+</script>
+
+<TABLE width=800>
+
+<TR>
+<TD>
+
+<div class='menuBarEdges'><div> <CENTER>
+
+<div class='pageContent'>
+<P><h2>Infastructure cost Calculator</h2></P>
+<hr />
+
+<Form name="Calculator">
+<table>
+<tr><td>Infastructure Level:</td><td> <INPUT TYPE="text" id="infastructureLevel"></td></tr>
+<tr><td>Goverment Type:</td><td> <SELECT name="govermentType" id="govermentType">
+<OPTION selected value="Anarchy">Anarchy</option>
+<OPTION value="Capitalist">Capitalist</option>
+<OPTION value="Communist">Communist</option>
+<OPTION value="Democracy">Democracy</option>
+<OPTION value="Dictatorship">Dictatorship</option>
+<OPTION value="Federal Government">Federal Government</option>
+<OPTION value="Monarchy">Monarchy</option>
+<OPTION value="Republic">Republic</option>
+<OPTION value="Revolutionary Goverment">Revolutionary Goverment</option>
+<OPTION value="Totalitarian State">Totalitarian State</option>
+<OPTION value="Transitional">Transitional</option></SELECT>
+</td></tr>
+
+<td><BR><center><b>Improvments</b></center></td>
+<tr><td>
+Number of Factories: </td><td><SELECT name="noOfFactories" id="noOfFactories">
+
+<OPTION selected value="0">0</OPTION>
+<OPTION value="1">1</OPTION>
+<OPTION value="2">2</OPTION>
+<OPTION value="3">3</OPTION>
+<OPTION value="4">4</OPTION>
+<OPTION value="5">5</OPTION>
+
+</SELECT></td></tr>
+
+<td><BR><center><b>Resources</b></center></td>
+<tr><td>Aluminium:</td><td> <input type="checkbox" name="resources" id="aluminium" value="aluminium" /></td></tr>
+<tr><td>Coal:</td><td> <input type="checkbox" name="resources" id="coal" value="coal" /></td></tr>
+<tr><td>Iron:</td><td> <input type="checkbox" name="resources" id="iron" value="iron" /></td></tr>
+<tr><td>Lumber:</td><td> <input type="checkbox" name="resources" id="lumber" value="lumber" /></td></tr>
+<tr><td>Marble:</td><td> <input type="checkbox" name="resources" id="marble" value="marble" /></td></tr>
+<tr><td>Rubber:</td><td> <input type="checkbox" name="resources" id="rubber" value="rubber" /></td></tr>
+
+<td><BR><center><b>Bonus Resources</b></center></td>
+<tr><td>Construction:</td><td> <input type="checkbox" name="bonusresources" id="construction" value="construction" /></td></tr>
+<tr><td>Steel:</td><td> <input type="checkbox" name="bonusresources" id="steel" value="steel"></td></tr>
+
+<td><BR><center><b>Wonders</b></center></td>
+<tr><td>Interstate System:</td><td> <input type="checkbox" name="wonders" id="interstateSystem" value="interstateSystem" /></td></tr>
+<tr><td>Mars Base:</td><td> <input type="checkbox" name="wonders" id="marsBase" value="marsBase" /></td></tr>
+<tr><td>Moon Base:</td><td> <input type="checkbox" name="wonders" id="moonBase" value="moonBase" /></td></tr>
+<tr><td>Scientific Development<BR> Center:</td><td> <input type="checkbox" name="wonders" id="scientifcDevelopmentCenter" value="scientifcDevelopmentCenter" /></td></tr>
+
+
+<tr><td><BR>Amount To Purchase:</td><td><BR> <INPUT TYPE="text" name="levelsToPurchase" value=400 id="levelsToPurchase"></td></tr>
+
+</table>
+
+<center><BR>
+<input type="button" value="Calculate" onClick="calculate(this.form)" />
+
+<BR><BR>
+</center>
+<p id="costTXT">The cost will be ...</p>
+
+<center>
+<div id='troubleShooting'><div id="hilightMaps"><a onclick=troubleShooting()>Not what you expected?</a></div></div>
+</center>
+</td>
+
+</tr>
+</table>
+</form>
+
+</CENTER>
+</BODY>
+</HTML>

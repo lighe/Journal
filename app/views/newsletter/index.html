@@ -1,0 +1,16 @@
+#{extends 'main.html' /}
+#{set title:'Newsletter' /}
+
+Newsletters available:
+TODO - Selectable news letter(radio boxes)
+
+&{filesTable}
+
+TODO - Send selected news letter to all button, 
+Send selected news letter to email address button
+
+<form action="@{Newsletter.upload()}" method="POST" enctype="multipart/form-data"> 
+	Upload a new newsletter: 
+    <input type="file" name="picture"><br/>
+    <input type="submit" value="Submit" />
+</form>

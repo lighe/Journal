@@ -4,6 +4,9 @@
 
 # Home page
 GET     /                                       Application.index
+# newsletter page
+GET     /newsletter                             Newsletter.index
+GET     /newsletter/upload                      Newsletter.upload
 
 # Import Secure routes
 *      /                module:secure
