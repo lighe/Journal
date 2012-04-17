@@ -15,6 +15,7 @@ import java.util.Scanner;
 import org.apache.commons.mail.EmailException;
 
 import models.Emailer;
+import models.Users;
 import play.*;
 import play.data.Upload;
 import play.mvc.*;
@@ -23,12 +24,12 @@ public class Newsletter extends Controller {
 
     public static void index() {
     	String files[][] = getAvailableNewsletters();
-    	String filesTable = "<Table>\n";
+    	String filesTable = "<div id='fileTable' name='fileTable'> \n<Table>\n";
     	for(int x = 0; x < files.length-1; x++ ){
-    		filesTable += "<tr><td><a href='" + files[x][1] + "'> " + files[x][0] + "</a></td>\n";
+    		filesTable += "<tr><td width=20px><center><input type='radio' name="+files[x][0]+" value="+files[x][1]+" onchange='newSelection(this);' /></center></td><td><a href='" + files[x][1] + "'> " + files[x][0] + "</a></td>\n";
     		filesTable += "</tr>\n";
     	}
-		filesTable += "</table>\n";
+		filesTable += "</table>\n</div>\n";
     	render(filesTable);
     }
     
@@ -57,23 +58,34 @@ public class Newsletter extends Controller {
     			  System.err.println("Error: " + e.getMessage());
     	    	  index();  //if error, send back to upload page
     		}
-    		
-    		//Email it too... (needs testing)
-    		File newFile = new File(fileDestination);
-    		try {
-				Emailer.sendNewsletterTo("agro_02@hotmail.co.uk", newFile);
-			} catch (EmailException e) {
-				e.printStackTrace();
-			}
-			
     	} else {
     		index(); //if no upload found, send back to upload page
     	} 
     }
+
+	//Email it too... (needs testing with Users email addresses, has worked with hard coded emails)
+    public static void sendEmail(String newsletter){
+    	String fileDestination = newsletter;
+		File newFile = new File(fileDestination);
+		for(int x = 0; x < Users.count(); x++){
+			Users user = Users.findById(x);
+			try {
+				Emailer.sendNewsletterTo(user.email, newFile);
+			} catch (EmailException e) {
+				e.printStackTrace();
+			}
+		}
+    }
+    
+    public static void delete(String newsletter){
+    	String fileDestination = newsletter;
+		File newFile = new File(fileDestination);
+		newFile.delete();
+    }
     
     //Returns a list of all files uploaded to the newsletter directory (
-    public static String[][] getAvailableNewsletters(){
-    	 // Directory path here
+    private static String[][] getAvailableNewsletters(){
+    	//Directory path here
     	String path = "public\\files\\newsletters\\";
     	 
     	File folder = new File(path);
