@@ -4,9 +4,18 @@
 
 # Home page
 GET     /                                       Application.index
-# newsletter page
+# newsletter pages
 GET     /newsletter                             Newsletter.index
+GET     /newsletter/index                       Newsletter.index
 GET     /newsletter/upload                      Newsletter.upload
+
+# article pages
+GET     /article                             Article.index
+GET     /article/index                       Article.index
+GET     /article/new                         Article.newArticle
+GET     /article/new                         Article.newarticle
+GET     /article/edit                        Article.edit
+GET     /article/delete                      Article.delete
 
 # Import Secure routes
 *      /                module:secure

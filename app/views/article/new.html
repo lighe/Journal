@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+#{set title:'New Article' /}
+
+&{responce}
+
+<form action="newArticle" method="POST" enctype="multipart/form-data">
+    Title: <input type="text" name="title"><br/> 
+    Abstract: <textarea rows="8" cols="40" name=discription></textarea> <br/> 
+    Keywords (optional): <input type="text" name="keywords"><br/> 
+    Additional Authors (optional): <input type="text" name="authors"><br/> 
+    Upload Article: <input type="file" name="article"><br/>
+    <input type="submit" value="Submit" />
+</form>

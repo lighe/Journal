@@ -1,16 +1,59 @@
 #{extends 'main.html' /}
 #{set title:'Newsletter' /}
 
-Newsletters available:
-TODO - Selectable news letter(radio boxes)
+<u>Newsletters available:</u>
 
 &{filesTable}
 
-TODO - Send selected news letter to all button, 
-Send selected news letter to email address button
+<script type="text/javascript">
+var selectedFile;
 
+function newSelection(evt){
+	console.log("Changed selection")
+	selectedFile = evt.value
+	document.forms["delete"]["newsletter"].value = selectedFile
+	
+}
+
+function getHttpRequest(){
+	var httpObj;
+	if (window.XMLHttpRequest){// code for all good browsers
+	  httpObj = new XMLHttpRequest()
+	}else{// code for IE
+	  httpObj = new ActiveXObject("Microsoft.XMLHTTP")
+	}
+	return httpObj
+}
+
+function emailAll(){
+	var httpObj = getHttpRequest();
+	httpObj.onreadystatechange=function(){
+		if (httpObj==4 && httpObj==200){
+ 	   		alert("Emails sent")
+ 		}
+  	}
+  	if(selectedFile == null){
+  		alert("Please select a newsletter to send");
+  	} else {	
+		var target = "@{Newsletter.sendEmail()}?newsletter=" + selectedFile
+		httpObj.open("GET", target,true)
+		httpObj.send()
+	}
+}
+</script>
+
+<form> 
+    <input type="button" value="Email all" onclick="emailAll()"/>
+</form>
+
+<form action="@{Newsletter.delete()}" method="POST" name="delete" enctype="multipart/form-data"> 
+    <input type="hidden" name="newsletter"/>
+    <input type="submit" value="Delete newsletter""/>
+</form>
+
+<hr />
+<u>Upload a new newsletter:</u>
 <form action="@{Newsletter.upload()}" method="POST" enctype="multipart/form-data"> 
-	Upload a new newsletter: 
-    <input type="file" name="picture"><br/>
+    <input type="file" name="newsletter"><br/>
     <input type="submit" value="Submit" />
 </form>
