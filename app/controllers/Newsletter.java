@@ -16,8 +16,18 @@ import play.data.Upload;
 import play.data.validation.Required;
 import play.mvc.*;
 
+@With(Secure.class)
 public class Newsletter extends Controller {
 
+	@Before
+    static void setConnectedUser() {
+        if(Security.isConnected()) {
+            Users user = Users.find("email", Security.connected()).first();
+            renderArgs.put("user", user.email);
+        }
+    }
+	
+	
 	/**
 	 * renders the index page
 	 */
@@ -52,12 +62,14 @@ public class Newsletter extends Controller {
 		index();
     }
 
-	//Email it too... (needs testing with Users email addresses, has worked with hard coded emails)
-    //TODO - Fix this up once users are added
+    /**
+     * Email all users a specified file
+     * @param newsletter represents the file path of the newsletter to email to all users
+     */
     public static void sendEmail(@Required String newsletter){
     	String fileDestination = newsletter;
 		File newFile = new File(fileDestination);
-		for(int x = 1; x < Users.count(); x++){
+		for(long x = 1; x < Users.count(); x++){
 			Users user = Users.findById(x);
 			try {
 				Emailer.sendNewsletterTo(user.email, newFile);

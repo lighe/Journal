@@ -30,6 +30,8 @@ function emailAll(){
 	httpObj.onreadystatechange=function(){
 		if (httpObj==4 && httpObj==200){
  	   		alert("Emails sent")
+ 		} else {
+ 			alert("Sorry, youre request could not be compleated");
  		}
   	}
   	if(selectedFile == null){
@@ -41,7 +43,6 @@ function emailAll(){
 	}
 }
 </script>
-
 <form> 
     <input type="button" value="Email all" onclick="emailAll()"/>
 </form>
