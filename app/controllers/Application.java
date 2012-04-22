@@ -10,6 +10,11 @@ import models.*;
 @With(Secure.class)
 public class Application extends Controller {
 
+	@Before
+    static void setConnectedUser() {
+        Security.setConnectedUser();
+    }
+	
     public static void index() {
         List<Articles> articles = Articles.find(
             "order by title desc"

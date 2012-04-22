@@ -19,6 +19,15 @@ Tag(t1):
     title: Tag1
     article: firstArticle
 
+
 Users(u1):
     email: alighe89@gmail.com
     password: tester
+    
+Roles(r1):
+    role: auditor 
+    
+User_Roles(ur1):
+    user_ID: u1
+    role_ID: r1   
+  

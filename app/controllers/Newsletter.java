@@ -21,11 +21,10 @@ public class Newsletter extends Controller {
 
 	@Before
     static void setConnectedUser() {
-        if(Security.isConnected()) {
-            Users user = Users.find("email", Security.connected()).first();
-            renderArgs.put("user", user.email);
-        }
+        Security.setConnectedUser();
+    	Security.isAuditor();
     }
+	
 	
 	
 	/**

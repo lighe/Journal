@@ -19,6 +19,11 @@ import play.mvc.*;
 
 public class Article extends Controller {
 
+	@Before
+    static void setConnectedUser() {
+        Security.setConnectedUser();
+    }
+	
     //TODO change error messages to plays flash messages
 	
 	/**
