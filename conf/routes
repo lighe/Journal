@@ -16,6 +16,7 @@ GET     /article/new                         Article.newArticle
 GET     /article/new                         Article.newarticle
 GET     /article/edit                        Article.edit
 GET     /article/delete                      Article.delete
+GET     /unpublished/index                   Application.unpublishedShow
 
 # Import Secure routes
 *      /                module:secure

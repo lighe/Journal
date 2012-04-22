@@ -4,6 +4,7 @@ Articles(firstArticle):
     title: Test title
     pdf:    secret
     date:       2009-06-14
+    published:  false 
     
 Articles(secondArticle):
     title: Test title 2

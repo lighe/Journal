@@ -88,7 +88,7 @@
                         <label>test</label>
                         <location>test</location>
                     </source-folder>   
-                                     
+                    <source-folder style="tree"><label>precompiled</label><location>precompiled</location></source-folder>                 
                 </items>
                 <context-menu>
                     <ide-action name="run"/>
