@@ -20,54 +20,38 @@ public class Security extends Secure.Security {
     }   
     
     //returns true if user is an auditor
-    static boolean isAuditor() {
-    	List<Roles> roles = getRoles();
-        boolean isAuditor = false;
-        for(int x = 0; roles.size() > x; x++){
-        	if(roles.get(x).role.contentEquals("auditor")){
-        		isAuditor = true;
-        	}
-        }
-        return isAuditor;
+    public static boolean isAuditor() {
+    	return isUserOfRole("auditor");
     }
     
     //returns true if user is a reviewer
-    static boolean isReviewer() {
-    	List<Roles> roles = getRoles();
-        boolean isReviewer = false;
-        for(int x = 0; roles.size() > x; x++){
-        	if(roles.get(x).role.contentEquals("reviewer")){
-        		isReviewer = true;
-        	}
-        }
-        return isReviewer;
+    public static boolean isReviewer() {
+    	return isUserOfRole("reviewer");
     }
     
     //returns true if user is an editor
-    static boolean isEditor() {
-    	List<Roles> roles = getRoles();
-        boolean isEditor = false;
-        for(int x = 0; roles.size() > x; x++){
-        	if(roles.get(x).role.contentEquals("editor")){
-        		isEditor = true;
-        	}
-        }
-        return isEditor;
+    public static boolean isEditor() {
+    	return isUserOfRole("editor");
     }
     
     //Returns true if user has admin privalages
-    static boolean isAdmin() {
-    	List<Roles> roles = getRoles();
-        boolean isAdmin = false;
-        for(int x = 0; roles.size() > x; x++){
-        	if(roles.get(x).role.contentEquals("admin")){
-        		isAdmin = true;
-        	}
-        }
-        return isAdmin;
+    public static boolean isAdmin() {
+    	return isUserOfRole("admin");
     }
     
-    static List<Roles> getRoles(){
+    //Determines if a user is of the inputed role
+    private static boolean isUserOfRole(String role){
+    	List<Roles> roles = getRoles();
+        boolean isOfRole = false;
+        for(int x = 0; roles.size() > x; x++){
+        	if(roles.get(x).role.contentEquals(role)){
+        		isOfRole = true;
+        	}
+        }
+        return isOfRole;
+    }
+    
+    private static List<Roles> getRoles(){
         Users user = Users.find("email", Security.connected()).first();
         User_Roles userRole = User_Roles.find("user_ID", user).first();
         List<Roles> roles = Roles.find("role_ID", userRole.role_ID.role_ID).fetch();
