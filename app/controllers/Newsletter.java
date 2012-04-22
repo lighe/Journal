@@ -22,7 +22,10 @@ public class Newsletter extends Controller {
 	@Before
     static void setConnectedUser() {
         Security.setConnectedUser();
-    	Security.isAuditor();
+    	System.out.println("User is admin: " + Security.isAdmin());
+    	System.out.println("User is auditor: " + Security.isAuditor());
+    	System.out.println("User is reviewer: " + Security.isReviewer());
+    	System.out.println("User is editor: " + Security.isEditor());
     }
 	
 	

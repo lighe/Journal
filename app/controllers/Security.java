@@ -24,7 +24,7 @@ public class Security extends Secure.Security {
     	List<Roles> roles = getRoles();
         boolean isAuditor = false;
         for(int x = 0; roles.size() > x; x++){
-        	if(roles.get(x).role == "auditor"){
+        	if(roles.get(x).role.contentEquals("auditor")){
         		isAuditor = true;
         	}
         }
@@ -36,7 +36,7 @@ public class Security extends Secure.Security {
     	List<Roles> roles = getRoles();
         boolean isReviewer = false;
         for(int x = 0; roles.size() > x; x++){
-        	if(roles.get(x).role == "reviewer"){
+        	if(roles.get(x).role.contentEquals("reviewer")){
         		isReviewer = true;
         	}
         }
@@ -48,7 +48,7 @@ public class Security extends Secure.Security {
     	List<Roles> roles = getRoles();
         boolean isEditor = false;
         for(int x = 0; roles.size() > x; x++){
-        	if(roles.get(x).role == "editor"){
+        	if(roles.get(x).role.contentEquals("editor")){
         		isEditor = true;
         	}
         }
@@ -60,7 +60,7 @@ public class Security extends Secure.Security {
     	List<Roles> roles = getRoles();
         boolean isAdmin = false;
         for(int x = 0; roles.size() > x; x++){
-        	if(roles.get(x).role == "admin"){
+        	if(roles.get(x).role.contentEquals("admin")){
         		isAdmin = true;
         	}
         }

@@ -4,7 +4,6 @@ Articles(firstArticle):
     title: Test title
     pdf:    secret
     date:       2009-06-14
-    published:  false 
     
 Articles(secondArticle):
     title: Test title 2
@@ -26,7 +25,7 @@ Users(u1):
     password: tester
     
 Roles(r1):
-    role: auditor 
+    role: "auditor" 
     
 User_Roles(ur1):
     user_ID: u1
