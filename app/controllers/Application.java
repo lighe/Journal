@@ -19,14 +19,16 @@ public class Application extends Controller {
     }
     
     public static void discussionShow(int id){
-        /**if (getUser().user_ID = (Discussion.recievers_ID | Discussion.senders_ID)){ 
+        /**if (getUser().user_ID = (Discussion.recievers_ID || Discussion.senders_ID)){ 
          need to find how to get user id **/ 
         Discussion comment = Discussion.findById(id);
         render (comment);}
     
     public static void unpublishedShow(){
         /*add user login check*/
-        Published.find("published", "false").fetch();
+        /*add month check for tw0 months to force these to be chosen */
+       List unpublished = Published.find("published", false).fetch();
+        render ("unpublished/index.html", unpublished);
     } 
     
 }
