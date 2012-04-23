@@ -28,12 +28,5 @@ public class Application extends Controller {
          need to find how to get user id **/ 
         Discussion comment = Discussion.findById(id);
         render (comment);}
-    
-    public static void unpublishedShow(){
-        /*add user login check*/
-        /*add month check for tw0 months to force these to be chosen */
-       List unpublished = Published.find("published", false).fetch();
-        render ("unpublished/index.html", unpublished);
-    } 
-    
+      
 }
