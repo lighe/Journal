@@ -10,17 +10,26 @@ import play.db.jpa.*;
 @Entity
 public class Articles extends Model {
 
-    public int article_ID;
     public String title;
+	public String pdf;
+	@Lob
+	public String summary;
     
     @ManyToOne
-    public Users user_ID;
+    public Users user;
+	
+	@ManyToMany(mappedBy="articles") 
+	public List<Tag> tags;
     
-    public Articles(int article_ID, Users user_ID, String title){
-        this.article_ID = article_ID;
-        this.user_ID = user_ID;
+	public Articles (Users user, String title, List<Tag> tags) {
+		this(user, title, "", tags);
+	}
+	
+    public Articles(Users user, String title, String summary, List<Tag> tags){
+        this.user = user;
         this.title = title;
-       
+        this.summary = summary;
+		this.tags = tags;
     }
  
 }

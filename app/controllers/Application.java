@@ -16,11 +16,15 @@ public class Application extends Controller {
     }
 	
     public static void index() {
-        List<Articles> articles = Articles.find(
-            "order by title desc"
-        ).fetch(10);
+        List<Volume> volumes = Volume.find(
+            "order by ID desc"
+        ).fetch(5); //this repeats db values if not enough entries in db. Solutions?
 		String user = Security.connected();
-        render(articles);
+		Volume selectedVolume = volumes.get(0);
+		List<Edition> editions = selectedVolume.getEditions();
+		Edition selectedEdition = editions.get(0);
+		List<Published> publishedArticles = selectedEdition.getPublished();
+        render(volumes, editions, publishedArticles);
     }
     
     public static void discussionShow(int id){

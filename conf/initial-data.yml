@@ -1,24 +1,69 @@
 # Test data
+Tag(t1):
+    title: Tag1
+
+Tag(t1):
+    title: Tag2
 
 Articles(firstArticle):
-    title: Test title
+    title: Test title 1
     pdf:    secret
     date:       2009-06-14
+    summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    tags: t1, t2
     
 Articles(secondArticle):
     title: Test title 2
     pdf:    secret
     date:       2009-06-14
+    summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    tags: t1, t2
 
 Articles(thirdArticle):
     title: Test title 3
     pdf:    secret
     date:       2009-06-14
-                    
-Tag(t1):
-    title: Tag1
-    article: firstArticle
+    summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
+Volume(firstVolume):
+    name: Volume 1
+    date: 23/04/2012
+
+Volume(secondVolume):
+    name: Volume 2
+    date: 26/04/2012
+
+Edition(firstEdition):
+    name: Edition 1
+    date: some date
+    volume: secondVolume
+
+Edition(secondEdition):
+    name: Edition 2
+    date: some date
+    volume: secondVolume
+
+Edition(thirdEdition):
+    name: Edition 3
+    date: some date
+    volume: secondVolume
+
+Edition(fourthEdition):
+    name: Edition 4
+    date: some date
+    volume: secondVolume
+
+Published(firstPublished):
+    article: firstArticle
+    edition: firstEdition
+
+Published(secondPublished):
+    article: secondArticle
+    edition: firstEdition
+
+Published(thirdPublished):
+    article: thirdArticle
+    edition: firstEdition
 
 Users(u1):
     email: alighe89@gmail.com

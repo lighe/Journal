@@ -7,11 +7,7 @@ import java.util.List;
 
 import org.apache.commons.mail.EmailException;
 
-import models.Articles;
-import models.Emailer;
-import models.File_managment;
-import models.Revisions;
-import models.Users;
+import models.*;
 import play.*;
 import play.data.Upload;
 import play.data.validation.Required;
@@ -32,6 +28,25 @@ public class Article extends Controller {
     public static void index() {
     	render(Articles.all());
     }
+	
+	public static void show(Long id) {
+		
+		Published published = Published.findById(id);
+		Articles article = published.getArticle();
+		
+		//move this to a model perhaps
+		List<Volume> volumes = Volume.find(
+            "order by ID desc"
+        ).fetch(5); //this repeats db values if not enough entries in db. Solutions?
+		String user = Security.connected();
+		Volume selectedVolume = volumes.get(0);
+		List<Edition> editions = selectedVolume.getEditions();
+		Edition selectedEdition = editions.get(0);
+		List<Published> publishedArticles = selectedEdition.getPublished();
+		
+        render(article, volumes, editions, publishedArticles);
+		
+	}
        
     /**
      * For adding new articles.  If no params are given it renders and empty form, if title and article params are given it adds
@@ -53,14 +68,13 @@ public class Article extends Controller {
     		responce = "Please chouse a title and upload youre article";
     	} else {
         	if(File_managment.upload(uploads, "public\\files\\unpublished\\")){
-        		int articleID = (int) (Articles.count()+1);
         		Date date = new Date();
         		String url = "public\\files\\unpublished\\" + uploads.get(0).getFileName();
         		
         		//TODO add user, either by crating one on the fly or by taking it from session data
         		Users user = new Users((int) (Users.count()+1), "SomeEmail", "xxx");
           		
-        		Articles art = new Articles(articleID, user , title);  
+        		Articles art = new Articles(user , title, null);  
         		Revisions rev = new Revisions((int) (Revisions.count()+1), art, date, discription, 1, url);   
         		//Save the article and the revision
         		rev.save();

@@ -1,12 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
-		
-<div class="hero-unit">
-	<div class="container">
-		<h1>The Journal CMS</h1>
-		<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-	</div>
-</div>
+#{set title:'Article' /}
 
 <div id="vol-nav" class="navbar">
 	<div class="navbar-inner">
@@ -37,17 +30,22 @@
 		</div>
 	</div>
 </div>
+
 <div class="container">
-	<div id="articles" class="row">
-		<div class="span6">
-		<table>
-			#{list items:publishedArticles, as:'published'}
-				<div class="article">
-					<h3><a href="@{Article.show(published.article.id)}">${published.article.title}</a></h3>
-					<p>	${published.article.summary}</p>
-				</div>					
-			#{/list}
+	<div class="row">
+		<div class="span8">
+			<h1>${article.title}</h1>
+			<p>${article.summary}</p>
 			
-		</div>		
+			${article.tags.size() ?: 'No'} Tags
+			<ul>
+			   #{list items:article.tags, as:'tag'}
+					<li><a href="#">${tag.title}</a></li>						
+				#{/list}
+			</ul>
+		</div>
+		<div class="span6">
+		
+		</div>
 	</div>
 </div>

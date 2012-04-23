@@ -9,6 +9,27 @@ import play.db.jpa.*;
  
 @Entity
 public class Published extends Model {
+	
+	//will need authorised by
+   
+    @OneToOne
+    public Articles article;
+   
+	@ManyToOne
+    public Edition edition;
+    
+    public Published(Articles article, Edition edition){
+        this.article = article;
+		this.edition = edition;
+    }
+   
+    public Articles getArticle() {
+		return Articles.findById(this.id);		
+	}
+}
+
+/*
+public class Published extends Model {
 
     public int published_ID;  
     public int authorised_By;      
@@ -17,9 +38,9 @@ public class Published extends Model {
     @OneToOne
     public Articles article_ID;
     
-    /*@ManyToOne
-    public Users user_ID;
-    this needs to replace authorsied by */
+    //@ManyToOne
+   // public Users user_ID;
+   // this needs to replace authorsied by 
     
     @OneToOne
     public Volumes volume_ID;
@@ -35,3 +56,4 @@ public class Published extends Model {
  
 }
 
+*/
