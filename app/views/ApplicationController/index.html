@@ -15,7 +15,7 @@
 			<ul class="nav">
 				#{if volumes}				
 					#{list items:volumes, as:'volume'}
-						<li><a href="#">${volume.name}</a></li>						
+						<li><a href="@{BrowseController.index(volume.id)}">${volume.name}</a></li>						
 					#{/list}
 				#{/if}
 				<li><a href="@{BrowseController.index()}">Archive</a></li>

@@ -41,21 +41,32 @@ public class BrowseController extends Controller {
 		//Find all volumes
 		List<Volume> volumes = Volume.find("order by ID desc").fetch();
 		
+		Volume selectedVolume; 
+		
 		//If no volume id passed than select first found volume
 		if(selectedVolumeID==null){
-			selectedVolumeID = volumes.get(0).id;	
+			selectedVolumeID = volumes.get(0).id;
+			selectedVolume = volumes.get(0);	
+		}
+		else {
+			selectedVolume = Volume.findById(selectedVolumeID);	
 		}
 		
-		Edition selectedEdition;
+		Edition selectedEdition = null;
 		
 		//If no edition id passed, select first edition of selected volume
 		if(selectedEditionID==null) {
-			selectedEdition = volumes.get(0).getEditions().get(0); 
-			selectedEditionID = selectedEdition.id;
+			List<Edition> editions = selectedVolume.getEditions();
+			if(editions.size()>1) {
+				selectedEdition = editions.get(0); 
+				selectedEditionID = selectedEdition.id;
+			}
 		}
 		else selectedEdition = Edition.findById(selectedEditionID);
 		
-		List<Published> publishedArticles = selectedEdition.getPublished();
+		List<Published> publishedArticles = null;
+		
+		if(selectedEdition!=null)  publishedArticles = selectedEdition.getPublished();
 		
 		render(volumes, publishedArticles, selectedVolumeID, selectedEditionID);
 	}	
