@@ -8,6 +8,14 @@ body {
 	overflow-y: scroll;
 }
 
+#content {
+	margin-top: 50px;
+}
+
+#content h1 {
+	margin-bottom: 20px;
+}
+
 #vol-nav {
 	
 	h2 {
@@ -20,9 +28,14 @@ body {
 	form {
 		float: right;
 	}
+	
+	&.pull-up {
+		margin-top:-18px;
+	}
+	
 }
 
-#edition-nav {
+#edition-nav, .white-nav {
 	margin-top:-18px;
 	
 	.navbar-inner {
@@ -155,7 +168,38 @@ body {
 
 /* Article page
 ----------------------------- */
+#article_sidebar {
+	h2 {
+		margin-top: 5px;
+		margin-bottom: 15px;
+	}
+	
+	.group {
+		margin-bottom: 30px;
+	}
+}
 
+.tags {
+	list-style: none;
+	margin:15px 0px;
+	padding:15px 0px;
+	width: 100%;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	overflow: hidden;
+
+	li {
+		float:left;
+		margin-right: 10px;
+		line-height:25px;
+	}
+	
+	a {
+		.btn();
+		font-style: italic;
+		font-family:Georgia, "Times New Roman", Times, serif;
+	}
+}
 
 /* Upload article page
 ----------------------------- */

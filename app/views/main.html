@@ -22,10 +22,10 @@
 				<a href="@{ApplicationController.index()}" id="logo" class="brand">Journal CMS</a>
 			</h1>
 			<ul class="nav pull-left">
-				<li class="active"><a href="#">Menu item 1</a></li>
-				<li><a href="#">Menu item 2</a></li>
-				<li><a href="#">Menu item 3</a></li>
-				<li><a href="#">Menu item 4</a></li>
+				<li class="active"><a href="@{ApplicationController.index()}">Home</a></li>
+				<li><a href="@{BrowseController.index()}">Explore</a></li>
+				<li><a href="#">Journal Goals</a></li>
+				<li><a href="#">Templates</a></li>
 			</ul>
 			<ul class="nav pull-right">
 				<li class="divider-vertical"></li>
@@ -38,7 +38,9 @@
 	  </div>
 	</div>
         
-	#{doLayout /}
-       
+	<div id="content">
+		#{doLayout /}
+    </div>
+	 
     </body>
 </html>
