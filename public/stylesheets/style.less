@@ -4,10 +4,20 @@
 
 /* General 
 ----------------------------- */
-#menu {
-	ul {
-		float: right;
-	}
+body {
+	overflow-y: scroll;
+}
+
+.container {
+	position:relative;
+}
+
+#content {
+	margin-top: 50px;
+}
+
+#content h1 {
+	margin-bottom: 20px;
 }
 
 #vol-nav {
@@ -22,9 +32,14 @@
 	form {
 		float: right;
 	}
+	
+	&.pull-up {
+		margin-top:-18px;
+	}
+	
 }
 
-#edition-nav {
+#edition-nav, .white-nav {
 	margin-top:-18px;
 	
 	.navbar-inner {
@@ -80,8 +95,9 @@
 /* Home page 
 ----------------------------- */
 .hero-unit {
-	margin: -15px 0px;
+	margin: -50px 0px;
 	text-align:center;
+	padding-bottom:95px;
 	
 	h1 {
 		text-align:center;
@@ -93,14 +109,144 @@
 	}
 }
 
+#home-search {
+	position:relative;
+	
+	button {
+		display: none;
+		position: absolute;
+		top: -3px;
+		right: 3px;
+		padding:2px 10px;
+		.border-radius(50px);
+	}
+	
+	#advanced {
+		display: none;
+		position: absolute;
+		top: 5px;
+		right: 85px;
+		text-align:right;
+		color: @textColor;
+		text-decoration: underline;
+		
+		&:hover {
+			text-decoration: none;
+		}
+	}
+	
+	
+	&.selected {
+		position:absolute;
+		right: 0px;
+	}
+	
+	&.selected input[type=text] {
+		background: white;
+		padding-right: 160px;
+	}
+	
+	&.selected #advanced {
+		display: inline;
+	}
+}
 
+
+/* Browse page
+----------------------------- */
+#volume-browse {
+	padding:8px 0px; 
+	margin:0;
+	background: @gray;
+	.border-radius(5px);
+	border:1px solid darken(@gray, 5%);
+	
+	ul {
+		
+		.nav-header {
+			text-align: center;
+		}
+		
+		li {
+			padding: 5px 0px;
+		}
+		
+		li.active {
+			
+			ul { 
+				display: block;
+				list-style: none;
+				margin: 0px -14px;
+				padding: 5px 0px;
+				background: lighten(@gray, 2%);
+				border-bottom: 1px solid darken(@gray, 2%);
+				
+				li a, li p {
+					width: 87%;
+					padding-right: 5%;
+					padding-left: 8%;
+					margin:0;
+				}
+				
+				li.active a {
+					background: darken(@gray, 30%); 
+				}
+				
+			}
+			
+			&.js {
+				> a { background: darken(@gray, 50%); }	
+				ul { display: none; } /*animate with js */
+			}
+		}
+		
+		ul {
+			display: none;
+			
+			a {
+				display: block;
+			}
+		}
+	}
+}
 
 
 
 
 /* Article page
 ----------------------------- */
+#article_sidebar {
+	h2 {
+		margin-top: 5px;
+		margin-bottom: 15px;
+	}
+	
+	.group {
+		margin-bottom: 30px;
+	}
+}
 
+.tags {
+	list-style: none;
+	margin:15px 0px;
+	padding: 15px 0px;
+	width: 100%;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	overflow: hidden;
+	 
+	li {
+		float:left;
+		margin-right: 10px;
+		line-height:24px;
+	}
+	
+	a {
+		.btn();
+		font-style: italic;
+		font-family:Georgia, "Times New Roman", Times, serif;
+	}
+}
 
 /* Upload article page
 ----------------------------- */

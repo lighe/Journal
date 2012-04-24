@@ -30,6 +30,7 @@ public class Edition extends Model {
 		this.volume = volume;
     }
 	
+	
 	public List<Published> getPublished() {
 		return Published.find("byEdition", this).fetch();		
 	}
