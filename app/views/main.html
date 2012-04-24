@@ -14,21 +14,25 @@
         #{get 'moreScripts' /}
     </head>
     <body>
-    <div class="userpannel">
-   	  Welcome ${user} (<a href="@{Secure.logout()}">Log out</a>)
-    </div>
     
 	<div class="navbar">
 	  <div class="navbar-inner" id="menu">
 		<div class="container">
 			<h1>
-				<a href="#" id="logo" class="brand">Journal CMS</a>
+				<a href="@{ApplicationController.index()}" id="logo" class="brand">Journal CMS</a>
 			</h1>
-			<ul class="nav">
+			<ul class="nav pull-left">
 				<li class="active"><a href="#">Menu item 1</a></li>
 				<li><a href="#">Menu item 2</a></li>
 				<li><a href="#">Menu item 3</a></li>
 				<li><a href="#">Menu item 4</a></li>
+			</ul>
+			<ul class="nav pull-right">
+				<li class="divider-vertical"></li>
+				<li><a href="#">${user}</a></li>
+				<li class="divider-vertical"></li>
+				<li><a href="@{Secure.logout()}">Log out</a></li>
+				<li class="divider-vertical"></li>
 			</ul>
 		</div>
 	  </div>

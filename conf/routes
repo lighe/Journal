@@ -3,20 +3,25 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
+GET     /                                       ApplicationController.index
 # newsletter pages
 GET     /newsletter                             Newsletter.index
 GET     /newsletter/index                       Newsletter.index
 GET     /newsletter/upload                      Newsletter.upload
 
 # article pages
-GET     /article                             Article.index
-GET     /article/index                       Article.index
-GET     /article/new                         Article.newArticle
-GET     /article/new                         Article.newarticle
-GET     /article/edit                        Article.edit
-GET     /article/delete                      Article.delete
-GET     /unpublished/index                   Application.unpublishedShow
+GET     /article                             ArticleController.index
+GET     /article/index                       ArticleController.index
+GET     /article/show                        ArticleController.show
+GET     /article/new                         ArticleController.newArticle
+GET     /article/new                         ArticleController.newarticle
+GET     /article/edit                        ArticleController.edit
+GET     /article/delete                      ArticleController.delete
+GET     /unpublished/index                   ApplicationController.unpublishedShow
+
+# browse pages
+GET     /browse			                     BrowseController.index
+GET     /browse/index                        BrowseController.index
 
 # Import Secure routes
 *      /                module:secure

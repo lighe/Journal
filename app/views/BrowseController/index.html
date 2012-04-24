@@ -1,0 +1,52 @@
+#{extends 'main.html' /}
+#{set title:'Archive' /}
+
+<div class="container">
+	<div class="row">
+		<div id="volume-browse" class="span4">
+			<ul class="nav nav-list">
+				<li class="nav-header">Volumes</li>
+				#{if volumes.size() == 0}
+					<li><p>No volumes found</p></li>
+				#{/if} 
+				#{list items:volumes, as:'volume'}
+				<li #{if volume.id == selectedVolumeID } class="active default" #{/if}>
+					
+					<a href="@{BrowseController.index(volume.id)}">
+						${volume.name} 
+						<!--<i class="icon-chevron-right #{if volume.id == selectedVolumeID } icon-white #{/if}"></i>-->
+					</a>
+					
+					<ul class="editions nav nav-list">
+						#{if volume.editions.size() == 0} 
+							<li><p>No editions found</p></li>
+						#{/if} 
+						#{list items:volume.editions, as:'edition'}
+							<li #{if edition.id == selectedEditionID } class="active default" #{/if}>
+								<a href="@{BrowseController.index(volume.id, edition.id)}">${edition.name}</a>
+							</li>						
+						#{/list}
+					</ul>
+				
+				</li>	
+				#{/list}
+			</ul>
+		</div>
+		<div class="span8" id="articles">
+			#{if publishedArticles.size() == 0} 
+				<div class="alert alert-warning">
+					<strong>No articles found in this edition.</strong>
+				</div>
+			#{/if} 
+			#{list items:publishedArticles, as:'published'}
+			<div class="article">
+				<h3><a href="@{ArticleController.show(published.article.id)}">${published.article.title}</a></h3>
+				<p>	${published.article.summary}</p>
+			</div>	
+			#{/list}	
+		</div>
+		<div class="span6">
+		
+		</div>
+	</div>
+</div>
