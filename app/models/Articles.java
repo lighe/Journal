@@ -11,25 +11,28 @@ import play.db.jpa.*;
 public class Articles extends Model {
 
     public String title;
-	public String pdf;
-	@Lob
-	public String summary;
+    public String pdf;
+    public boolean published;
+    
+    @Lob
+    public String summary;
     
     @ManyToOne
     public Users user;
-	
-	@ManyToMany(mappedBy="articles") 
-	public List<Tag> tags;
     
-	public Articles (Users user, String title, List<Tag> tags) {
-		this(user, title, "", tags);
-	}
-	
-    public Articles(Users user, String title, String summary, List<Tag> tags){
+    @ManyToMany(mappedBy="articles") 
+    public List<Tag> tags;
+ 
+    public Articles (Users user, String title, List<Tag> tags) {
+        this(user, false , title, "", tags);
+    }
+            
+    public Articles(Users user, boolean published, String title, String summary, List<Tag> tags){
         this.user = user;
+        this.published = published;
         this.title = title;
         this.summary = summary;
-		this.tags = tags;
+	this.tags = tags;
     }
  
 }
