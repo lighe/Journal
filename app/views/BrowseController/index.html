@@ -41,7 +41,7 @@
 			#{list items:publishedArticles, as:'published'}
 			<div class="article">
 				<h3><a href="@{ArticleController.show(published.article.id)}">${published.article.title}</a></h3>
-				<p>	${published.article.summary}</p>
+				<p>	${published.article.getShortSummary()} <a href="@{ArticleController.show(published.article.id)}">More &raquo;</a></p>
 			</div>	
 			#{/list}	
 		</div>

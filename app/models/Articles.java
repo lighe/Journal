@@ -31,7 +31,14 @@ public class Articles extends Model {
         this.summary = summary;
 		this.tags = tags;
     }
- 
+	
+	public String getShortSummary() {
+		int length = 150;
+		if (summary != null && summary.length() > length) {
+	  		return summary.substring(0, length).trim() + "...";
+		}
+ 		return summary;
+	}
 }
 
 
