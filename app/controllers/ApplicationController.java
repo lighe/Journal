@@ -31,10 +31,6 @@ public class ApplicationController extends Controller {
         render(publishedArticles);
     }
     
-    public static void discussionShow(int id){
-        /**if (getUser().user_ID = (Discussion.recievers_ID || Discussion.senders_ID)){ 
-         need to find how to get user id **/ 
-        Discussion comment = Discussion.findById(id);
-        render (comment);}
+   
       
 }
