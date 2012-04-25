@@ -10,7 +10,6 @@ import play.db.jpa.*;
 @Entity
 public class Notification extends Model {
 
-    public int notification_ID;
     public int sender_ID;
     public int reciever_ID;
     public String message;
@@ -23,8 +22,7 @@ public class Notification extends Model {
     * change these so they are sender and reciever rspectively and change text bellow and above
     */        
     
-    public Notification(int notification_ID, int sender_ID, int reciever_ID, String message){
-        this.notification_ID = notification_ID;
+    public Notification(int sender_ID, int reciever_ID, String message){
         this.sender_ID = sender_ID;
         this.reciever_ID = reciever_ID;
         this.message = message;

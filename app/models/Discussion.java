@@ -10,7 +10,6 @@ import play.db.jpa.*;
 @Entity
 public class Discussion extends Model {
 
-    public int discussion_ID;
     public Date comment_Date;    
     public String comment;     
     
@@ -23,8 +22,7 @@ public class Discussion extends Model {
     
     
     
-    public Discussion(int discussion_ID, Reviews reviewers_ID, Articles article_ID, Date comment_Date, String comment) {
-        this.discussion_ID= discussion_ID;
+    public Discussion(Reviews reviewers_ID, Articles article_ID, Date comment_Date, String comment) {
         this.recievers_ID = reviewers_ID;
         this.senders_ID = reviewers_ID;
         this.article_ID = article_ID;
