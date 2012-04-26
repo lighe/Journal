@@ -21,7 +21,7 @@
 						<td class="actions">
 							#{if selection.status == 0}
 								&nbsp;
-								<a href="#" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Start Review</a> 
+								<a href="@{ReviewController.add(selection.article.id)}" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Start Review</a> 
 								&nbsp;
 								<i>- or -</i> 
 								&nbsp;
@@ -29,7 +29,7 @@
 							#{/if}	
 							#{if selection.status == 1}
 								&nbsp;
-								<a href="#" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Start Review</a> 
+								<a href="@{ReviewController.add(selection.article.id)}" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Start Review</a> 
 								&nbsp;
 								<i>You are committed to this review.</i>
 							#{/if}

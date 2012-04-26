@@ -15,7 +15,7 @@ public class Review extends Model {
 	
 	public String date; /* For some reason "date" type doesn't work; maybe it's because of yml */
 	
-	public String score;
+	public int score;
 	
 	public String smallErrors;
 	
@@ -26,13 +26,14 @@ public class Review extends Model {
 	@ManyToOne
     public Users user;
 		 
-	public Review(Articles article, String date, String score, String smallErrors, int authorExpertiseLevel, Users user) {
+	public Review(Articles article, String date, int score, String smallErrors, int authorExpertiseLevel, Users user) {
 		this.article = article;
 		this.date = date;
 		this.score = score;
 		this.smallErrors = smallErrors;
 		this.authorExpertiseLevel = authorExpertiseLevel;	
 		this.user = user;
+		this.acceptedByEditor = false;
 	}
   
   	public static List<Review> getReviews(Users user) {
@@ -43,6 +44,14 @@ public class Review extends Model {
 		Date today = new Date();	
 		Date reviewDate = new Date(this.date);
 		return (today.getTime() - reviewDate.getTime())/86400000 <= 7;	
+	}
+	
+
+	public void addComments(String[] comments) {
+		for(int i =0; i<comments.length; i++) {
+			ReviewComm reviewComment = new ReviewComm(comments[i], this);
+			reviewComment.save();	
+		}
 	}
 
     

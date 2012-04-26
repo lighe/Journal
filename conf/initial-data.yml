@@ -97,7 +97,7 @@ SelectedArticle(sa3):
 Review(rev1):
     article: thirdArticle
     date: 04/22/2012
-    score: this is some text
+    score: 1
     smallErrors: these are some small errors, like gramatical errors. they all go in one place.
     authorExpertiseLevel: 2
     acceptedByEditor: true
@@ -106,7 +106,7 @@ Review(rev1):
 Review(rev2):
     article: thirdArticle
     date: 04/18/2012
-    score: this is some text
+    score: 2
     smallErrors: these are some small errors, like gramatical errors. they all go in one place.
     authorExpertiseLevel: 2
     acceptedByEditor: true

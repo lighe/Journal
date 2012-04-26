@@ -24,4 +24,11 @@ $(document).ready(function () {
 		}
 	});
 	
+	var criticismTextarea = $(".criticism-textarea").clone();
+	
+	$("#add-criticism-button").click(function(e) {
+		e.preventDefault();
+		criticismTextarea.clone().appendTo("#criticism-section");
+	});
+	
 });
