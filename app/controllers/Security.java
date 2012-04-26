@@ -54,7 +54,7 @@ public class Security extends Secure.Security {
     private static List<Roles> getRoles(){
         Users user = Users.find("email", Security.connected()).first();
         User_Roles userRole = User_Roles.find("user_ID", user).first();
-        List<Roles> roles = Roles.find("role_ID", userRole.role_ID.role_ID).fetch();
+        List<Roles> roles = Roles.find("role_ID", userRole.role_ID).fetch();
 		return roles;
     }
 	
