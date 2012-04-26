@@ -28,10 +28,6 @@ public class SelectedArticle extends Model {
 		this.user = user;
 	} 
 	
-	public static List<SelectedArticle> getSelectedArticles(Users user) {
-		return SelectedArticle.find("byUser", user).fetch();
-	}
-	
 	public String getReadableStatus() {
 		switch(status) {
 			case 0: return "Article Selected";	
@@ -40,6 +36,15 @@ public class SelectedArticle extends Model {
 			case 3: return "Review Accepted";
 			default: return "Error";
 		}
+	}
+	
+	public static List<SelectedArticle> getSelectedArticles(Users user) {
+		return SelectedArticle.find("user = ? order by status asc", user).fetch();
+	}
+	
+	public static void remove(Long selectedArticleId) {
+		SelectedArticle selectedArticle = SelectedArticle.findById(selectedArticleId);
+		selectedArticle.delete();
 	}
 }
 

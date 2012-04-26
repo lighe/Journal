@@ -16,7 +16,7 @@
 			<tbody>
 				#{list items:selectedArticles, as:'selection'}
 					<tr>
-						<td>${selection.article.title}</td>
+						<td><a href="@{ArticleController.show(selection.article.id)}">${selection.article.title}</a></td>
 						<td>${selection.getReadableStatus()}</td>
 						<td class="actions">
 							#{if selection.status == 0}
@@ -25,7 +25,7 @@
 								&nbsp;
 								<i>- or -</i> 
 								&nbsp;
-								<a href="#" class="btn"><i class="icon-trash"></i> Remove selection</a>
+								<a href="@{ReviewController.remove(selection.id)}" class="btn"><i class="icon-trash"></i> Remove selection</a>
 							#{/if}	
 							#{if selection.status == 1}
 								&nbsp;
@@ -56,7 +56,7 @@
 			<tbody>
 				#{list items:reviews, as:'review'}
 					<tr>
-						<td>${review.article.title}</td>
+						<td><a href="@{ArticleController.show(review.article.id)}">${review.article.title}</a></td>
 						<td>
 							#{if review.acceptedByEditor}
 								Your review was accepted.

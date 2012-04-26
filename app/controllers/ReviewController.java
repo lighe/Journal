@@ -23,5 +23,10 @@ public class ReviewController extends Controller {
 		List<Review> reviews = Review.getReviews(user);
 		
         render(selectedArticles, reviews);
-    }      
+    } 
+	
+	public static void remove(Long selectedArticleId ) {
+		SelectedArticle.remove(selectedArticleId);
+		index();	
+	}
 }

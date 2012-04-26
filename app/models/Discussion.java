@@ -31,8 +31,7 @@ public class Discussion extends Model {
         this.senders_ID = reviewers_ID;
         this.article_ID = article_ID;
         this.comment_Date = new Date();
-        this.comment = comment;
-        
+        this.comment = comment; 
     }
  
 }

@@ -72,9 +72,9 @@ public class ArticleController extends Controller {
         		Users user = new Users((int) (Users.count()+1), "SomeEmail", "xxx");
           		
         		Articles art = new Articles(user , title, null);  
-        		Revisions rev = new Revisions((int) (Revisions.count()+1), art, date, discription, 1, url);   
+        		//Revisions rev = new Revisions((int) (Revisions.count()+1), art, date, discription, 1, url);   
         		//Save the article and the revision
-        		rev.save();
+        		//rev.save();
         		art.save();
         		
         		responce = title + " was sucessfully uploaded";

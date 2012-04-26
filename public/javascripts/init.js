@@ -18,7 +18,6 @@ $(document).ready(function () {
 	});
 	
 	$("body").click(function(e) {
-		e.preventDefault();
 		if($(e.target).parents("#home-search").length != 1) {
 			homeSearch.find("button").fadeOut("fast");
 			searchInput.animate({"width":initialSearchWidth + "px"}, 100, function() {homeSearch.removeClass("selected")});

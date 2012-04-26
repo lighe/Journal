@@ -27,6 +27,9 @@ GET     /browse/index                        BrowseController.index
 GET     /review	                     ReviewController.index
 GET     /review/index                ReviewController.index
 
+#crud
+GET		/admin              module:crud
+
 # Import Secure routes
 *      /                module:secure
 
