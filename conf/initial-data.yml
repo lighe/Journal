@@ -75,4 +75,41 @@ Roles(r1):
 User_Roles(ur1):
     user_ID: u1
     role_ID: r1   
+
+SelectedArticle(sa1):
+    article: firstArticle
+    status: 0
+    date: 04/22/2012
+    user: u1
+
+SelectedArticle(sa2):
+    article: secondArticle
+    status: 1
+    date: 04/22/2012
+    user: u1
+
+SelectedArticle(sa3):
+    article: thirdArticle
+    status: 2
+    date: 04/22/2012
+    user: u1
+
+Review(rev1):
+    article: thirdArticle
+    date: 04/22/2012
+    score: this is some text
+    smallErrors: these are some small errors, like gramatical errors. they all go in one place.
+    authorExpertiseLevel: 2
+    acceptedByEditor: true
+    user: u1
+
+Review(rev2):
+    article: thirdArticle
+    date: 04/18/2012
+    score: this is some text
+    smallErrors: these are some small errors, like gramatical errors. they all go in one place.
+    authorExpertiseLevel: 2
+    acceptedByEditor: true
+    user: u1
+
   

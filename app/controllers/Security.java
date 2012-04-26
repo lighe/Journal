@@ -5,12 +5,12 @@ import play.mvc.Before;
 import models.*;
  
 public class Security extends Secure.Security {
-    
+    		
 	@Before
     static void setConnectedUser() {
         if(Security.isConnected()) {
             Users user = Users.find("email", Security.connected()).first();
-            renderArgs.put("user", user.email);
+            renderArgs.put("user", user);
         }
     }
 	
@@ -57,5 +57,9 @@ public class Security extends Secure.Security {
         List<Roles> roles = Roles.find("role_ID", userRole.role_ID.role_ID).fetch();
 		return roles;
     }
-    
+	
+	public static Users getConnectedUser() {
+		return Users.find("email", Security.connected()).first();	
+	}
+
 }

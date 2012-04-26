@@ -9,23 +9,18 @@ import play.db.jpa.*;
  
 @Entity
 public class Review_comments extends Model {
-
-    public Date review_Date;    
+  
     public String comment;     
-    
+	
+	public Date date;  
+	    
     @ManyToOne
-    public Users user_ID;
+    public Review review;
     
-    @ManyToOne
-    public Reviews review_ID;
-    
-    
-    public Review_comments(Reviews review_ID, Users user_ID, Date review_Date, String comment) {
-        this.review_ID = review_ID;
-        this.user_ID = user_ID;
-        this.review_Date = review_Date;
+    public Review_comments(Date date, String comment, Review review) {
+        this.review = review;
+        this.date = date;
         this.comment = comment;
-        
     }
  
 }

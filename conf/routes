@@ -23,6 +23,10 @@ GET     /unpublished/index                   ApplicationController.unpublishedSh
 GET     /browse			                     BrowseController.index
 GET     /browse/index                        BrowseController.index
 
+# review pages
+GET     /review	                     ReviewController.index
+GET     /review/index                ReviewController.index
+
 # Import Secure routes
 *      /                module:secure
 

@@ -15,15 +15,15 @@ public class Discussion extends Model {
     public String comment;     
     
     @ManyToOne
-    public Reviews recievers_ID;
-    public Reviews senders_ID;
+    public Review recievers_ID;
+    public Review senders_ID;
     
     @ManyToOne
     public Articles article_ID;
     
     
     
-    public Discussion(int discussion_ID, Reviews reviewers_ID, Articles article_ID, Date comment_Date, String comment) {
+    public Discussion(int discussion_ID, Review reviewers_ID, Articles article_ID, Date comment_Date, String comment) {
         this.discussion_ID= discussion_ID;
         this.recievers_ID = reviewers_ID;
         this.senders_ID = reviewers_ID;
