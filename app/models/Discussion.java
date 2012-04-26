@@ -19,14 +19,14 @@ public class Discussion extends Model {
     @ManyToOne
     public Articles article_ID;
     
-    public Discussion addDiscussion(Reviews reviewers_ID, Articles article_ID){
+    public Discussion addDiscussion(Review reviewers_ID, Articles article_ID){
         Discussion newdiscussion = new Discussion(reviewers_ID, article_ID, comment).save();
         this.comment.add(newdiscussion);
         this.save();
         return this;
     }
     
-    public Discussion(Reviews reviewers_ID, Articles article_ID, ArrayList comment) {
+    public Discussion(Review reviewers_ID, Articles article_ID, ArrayList comment) {
         this.recievers_ID = reviewers_ID;
         this.senders_ID = reviewers_ID;
         this.article_ID = article_ID;
