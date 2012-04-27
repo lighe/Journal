@@ -8,16 +8,16 @@ import javax.persistence.*;
 import play.db.jpa.*;
  
 @Entity
-public class Review_comments extends Model {
+public class ReviewComment extends Model {
   
     public String comment;     
 	
-	public Date date;  
+    public Date date;  
 	    
     @ManyToOne
     public Review review;
     
-    public Review_comments(Date date, String comment, Review review) {
+    public ReviewComment(Date date, String comment, Review review) {
         this.review = review;
         this.date = date;
         this.comment = comment;

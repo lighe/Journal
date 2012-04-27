@@ -19,7 +19,7 @@ public class ReviewController extends Controller {
 
     public static void index() {
     
-		Users user = Security.getConnectedUser();
+		User user = Security.getConnectedUser();
 		
 		List<SelectedArticle> selectedArticles = SelectedArticle.getSelectedArticles(user);
 		List<Review> reviews = Review.getReviews(user);
@@ -40,7 +40,7 @@ public class ReviewController extends Controller {
 		render(articleId);
 	}
 	
-	public static void save(Long articleId, int judgment, String smallErrors, int expertise, String[] criticism) {
+	public static void save(Long articleId, int judgment, String smallErrors, int expertise, String criticism) {
 		
 		//if no articleId present redirect
 		if(validation.required(articleId).error != null) {
@@ -59,15 +59,15 @@ public class ReviewController extends Controller {
 			render("ReviewController/add.html", articleId);
 		}
 		
-		Articles article = Articles.findById(articleId);
+		Revision rev = Revision.findById(articleId);
 		Date today = new Date();
 		
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		String todayString = df.format(today);
-		
-		Review review = new Review(article, todayString, judgment, smallErrors, expertise, Security.getConnectedUser());
+                		
+		Review review = new Review(rev, todayString, judgment, smallErrors, expertise, Security.getConnectedUser());
 		review.save();
-		review.addComments(criticism);
+		review.addComment(criticism);
 		flash.success("Review added successfully. You can edit it within 7 days.");
 		index();
 	}

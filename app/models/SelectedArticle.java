@@ -11,7 +11,7 @@ import play.db.jpa.*;
 public class SelectedArticle extends Model {
 	
 	@ManyToOne
-	public Articles article;
+	public Article article;
 	
 	//0 selected, 1 downloaded, 2 submitted, 3 accepted
 	public int status;
@@ -19,9 +19,9 @@ public class SelectedArticle extends Model {
 	public Date date;
 	
 	@ManyToOne
-    public Users user;
+    public User user;
 		 
-	public SelectedArticle(Articles article, int status, Date date, Users user) {
+	public SelectedArticle(Article article, int status, Date date, User user) {
 		this.article = article;
 		this.status = status;
 		this.date = date;
@@ -38,7 +38,7 @@ public class SelectedArticle extends Model {
 		}
 	}
 	
-	public static List<SelectedArticle> getSelectedArticles(Users user) {
+	public static List<SelectedArticle> getSelectedArticles(User user) {
 		return SelectedArticle.find("user = ? order by status asc", user).fetch();
 	}
 	

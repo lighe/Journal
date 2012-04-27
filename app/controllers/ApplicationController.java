@@ -11,11 +11,11 @@ import models.*;
 public class ApplicationController extends Controller {
 	
 	private static Edition selectedEdition; //this is populated in getBrowseData()
-
+           
 	@Before
-    static void setConnectedUser() {
-        Security.setConnectedUser();
-    }
+        static void setConnectedUser() {
+            Security.setConnectedUser();
+        }
 	
 	@Before
 	static void getBrowseData() {
@@ -23,12 +23,16 @@ public class ApplicationController extends Controller {
 		selectedEdition = BrowseController.selectedEdition;
 	}
 	
-    public static void index() {
-    
+   public static void index() {
+        List<Volume> volumes = Volume.find(
+            "order by ID desc"
+        ).fetch(5); //this repeats db values if not enough entries in db. Solutions?
 		String user = Security.connected();
-		
+		Volume selectedVolume = volumes.get(0);
+		List<Edition> editions = selectedVolume.getEditions();
+		Edition selectedEdition = editions.get(0);
 		List<Published> publishedArticles = selectedEdition.getPublished();
-        render(publishedArticles);
+        render(volumes, editions, publishedArticles);
     }
     
    

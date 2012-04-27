@@ -12,17 +12,21 @@ import play.db.jpa.*;
 public class Volume extends Model {
  
     public String name;   
-	public String date; //change this back to date
+    public Date date; 
     
-    //@ManyToOne
-    //public Published author; //explain this? --alex
+    public User published_by_editor;
 			
-    public Volume(String name, String date) {
+    public Volume(String name, Date date, User editor) {
         this.name = name;
-		this.date = date;
+	this.date = date;
+        this.published_by_editor = editor;
     }
  
- 	public List<Edition> getEditions() {
-		return Edition.find("byVolume", this).fetch();		
-	}
+    /**
+     * returns a list of editions published in this volume
+     * @return 
+     */
+    public List<Edition> getEditions() {
+        return Edition.find("byVolume", this).fetch();		
+    }
 }

@@ -8,13 +8,13 @@ import javax.persistence.*;
 import play.db.jpa.*;    
 
 @Entity
-public class Users extends Model {
+public class User extends Model {
  
     public String email;
     public String password;
    
     
-    public Users(int user_ID, String email, String password) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
     }

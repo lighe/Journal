@@ -37,7 +37,7 @@ function emailAll(){
   	if(selectedFile == null){
   		alert("Please select a newsletter to send");
   	} else {	
-		var target = "@{Newsletter.sendEmail()}?newsletter=" + selectedFile
+		var target = "@{NewsletterController.sendEmail()}?newsletter=" + selectedFile
 		httpObj.open("GET", target,true)
 		httpObj.send()
 	}
@@ -47,14 +47,14 @@ function emailAll(){
     <input type="button" value="Email all" onclick="emailAll()"/>
 </form>
 
-<form action="@{Newsletter.delete()}" method="POST" name="delete" enctype="multipart/form-data"> 
+<form action="@{NewsletterController.delete()}" method="POST" name="delete" enctype="multipart/form-data"> 
     <input type="hidden" name="newsletter"/>
     <input type="submit" value="Delete newsletter""/>
 </form>
 
 <hr />
 <u>Upload a new newsletter:</u>
-<form action="@{Newsletter.upload()}" method="POST" enctype="multipart/form-data"> 
+<form action="@{NewsletterController.upload()}" method="POST" enctype="multipart/form-data"> 
     <input type="file" name="newsletter"><br/>
     <input type="submit" value="Submit" />
 </form>

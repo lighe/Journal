@@ -9,19 +9,19 @@ public class Security extends Secure.Security {
 	@Before
     static void setConnectedUser() {
         if(Security.isConnected()) {
-            Users user = Users.find("email", Security.connected()).first();
+            User user = User.find("email", Security.connected()).first();
             renderArgs.put("user", user);
         }
     }
 	
     static boolean authenticate(String username, String password) {
-        Users user = Users.find("byEmail", username).first();
+        User user = User.find("byEmail", username).first();
         return user != null && user.password.equals(password);
     }   
     
-    //returns true if user is an auditor
-    public static boolean isAuditor() {
-    	return isUserOfRole("auditor");
+    //returns true if user is an author
+    public static boolean isAuthor() {
+    	return isUserOfRole("author");
     }
     
     //returns true if user is a reviewer
@@ -41,7 +41,7 @@ public class Security extends Secure.Security {
     
     //Determines if a user is of the inputed role
     private static boolean isUserOfRole(String role){
-    	List<Roles> roles = getRoles();
+    	List<Role> roles = getRoles();
         boolean isOfRole = false;
         for(int x = 0; roles.size() > x; x++){
         	if(roles.get(x).role.contentEquals(role)){
@@ -51,15 +51,15 @@ public class Security extends Secure.Security {
         return isOfRole;
     }
     
-    private static List<Roles> getRoles(){
-        Users user = Users.find("email", Security.connected()).first();
-        User_Roles userRole = User_Roles.find("user_ID", user).first();
-        List<Roles> roles = Roles.find("role_ID", userRole.role_ID).fetch();
+    private static List<Role> getRoles(){
+        User user = User.find("email", Security.connected()).first();
+        UserRole userRole = UserRole.find("user_ID", user).first();
+        List<Role> roles = Role.find("role_ID", userRole.role_ID).fetch();
 		return roles;
     }
 	
-	public static Users getConnectedUser() {
-		return Users.find("email", Security.connected()).first();	
+	public static User getConnectedUser() {
+		return User.find("email", Security.connected()).first();	
 	}
 
 }

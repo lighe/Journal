@@ -9,23 +9,19 @@ import java.util.List;
 import org.apache.commons.mail.EmailException;
 
 import models.Emailer;
-import models.File_managment;
-import models.Users;
+import models.FileManagment;
+import models.User;
 import play.*;
 import play.data.Upload;
 import play.data.validation.Required;
 import play.mvc.*;
 
 @With(Secure.class)
-public class Newsletter extends Controller {
+public class NewsletterController extends Controller {
 
-	@Before
+    @Before
     static void setConnectedUser() {
         Security.setConnectedUser();
-    	System.out.println("User is admin: " + Security.isAdmin());
-    	System.out.println("User is auditor: " + Security.isAuditor());
-    	System.out.println("User is reviewer: " + Security.isReviewer());
-    	System.out.println("User is editor: " + Security.isEditor());
     }
 	
 	
@@ -35,7 +31,7 @@ public class Newsletter extends Controller {
 	 */
     public static void index() {
     	String filesTable = buildTable();
-    	render(filesTable);
+    	render("newsletter/index.html", filesTable);
     }
     
     /**
@@ -47,8 +43,8 @@ public class Newsletter extends Controller {
 		List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
 		if(uploads != null){
     		//save file
-			String destinationPrefix = "public\\files\\newsletters\\";
-			File_managment.upload(uploads, destinationPrefix);
+			String destinationPrefix = "\\public\\files\\newsletters\\";
+			FileManagment.upload(uploads, destinationPrefix);
 			index(); //re-render index
     	} else {
     		index(); //if no upload found, send back to upload page
@@ -60,7 +56,7 @@ public class Newsletter extends Controller {
      * @param newsletter String representing the newsletter files path
      */
     public static void delete(@Required String newsletter){
-    	File_managment.delete(newsletter);
+    	FileManagment.delete(newsletter);
 		index();
     }
 
@@ -71,10 +67,10 @@ public class Newsletter extends Controller {
     public static void sendEmail(@Required String newsletter){
     	String fileDestination = newsletter;
 		File newFile = new File(fileDestination);
-		for(long x = 1; x < Users.count(); x++){
-			Users user = Users.findById(x);
+		for(long x = 1; x < User.count(); x++){
+			User user = User.findById(x);
 			try {
-				Emailer.sendNewsletterTo(user.email, newFile);
+				Emailer.sendNewsletterTo(user.email, "JEcomJournal@gmail.com", newFile);
 			} catch (EmailException e) {
 				e.printStackTrace();
 			}
@@ -84,31 +80,40 @@ public class Newsletter extends Controller {
     //Returns a list of all files uploaded to the newsletter directory (
     private static String[][] getAvailableNewsletters(){
     	//Directory path here
-    	String path = "public\\files\\newsletters\\";
+    	String path = "\\public\\files\\newsletters\\";
     	 
     	File folder = new File(path);
-    	File[] listOfFiles = folder.listFiles(); 
-    	String[][] files = new String[listOfFiles.length+1][2];
+    	File[] listOfFiles = folder.listFiles();
+        System.out.println(folder.listFiles());
+        String[][] files = null;
+        if(listOfFiles != null){
+            files = new String[listOfFiles.length+1][2];
     	
-    	for (int i = 0; i < listOfFiles.length; i++){
-    	   if (listOfFiles[i].isFile()){
-    		   files[i][0] = listOfFiles[i].getName();
-    		   String uri = listOfFiles[i].getPath();
-    		   files[i][1] = uri.replaceAll("\\\\", "/");
-    	   }
-    	}
+            for (int i = 0; i < listOfFiles.length; i++){
+                if (listOfFiles[i].isFile()){
+                       files[i][0] = listOfFiles[i].getName();
+                       String uri = listOfFiles[i].getPath();
+                       files[i][1] = uri.replaceAll("\\\\", "/");
+                }
+           }
+        }
     	return files;
     }    
     
     //Returns a String that contains a html table that neatly presents the files available for use as newsletters
     private static String buildTable(){
     	String files[][] = getAvailableNewsletters();
-		String filesTable = "<div id='fileTable' name='fileTable'> \n<Table>\n";
+        String filesTable = "";
+        if(files != null){
+		filesTable = "<div id='fileTable' name='fileTable'> \n<Table>\n";
 		for(int x = 0; x < files.length-1; x++ ){
 			filesTable += "<tr><td width=20px><center><input type='radio' name="+files[x][0]+" value="+files[x][1]+" onchange='newSelection(this);' /></center></td><td><a href='" + files[x][1] + "'> " + files[x][0] + "</a></td>\n";
 			filesTable += "</tr>\n";
 		}
 		filesTable += "</table>\n</div>\n";
-		return filesTable; 	
+        } else {
+            filesTable = "<div id='fileTable' name='fileTable'>No newsletter found</div>";
+        }
+	return filesTable; 	
     }
 }

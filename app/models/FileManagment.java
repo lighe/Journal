@@ -11,7 +11,7 @@ import play.data.Upload;
  * @author Ioan
  * This model manages the uploading and moving of files
  */
-public class File_managment {
+public class FileManagment {
 	
 	/**
      * Upload method for files.  Returns true if file was successfully uploaded

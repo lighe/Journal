@@ -11,28 +11,27 @@ import play.db.jpa.*;
 public class Edition extends Model {
  
     public String name;   
-	public String date; //change this back to date
-	
-	@OneToMany
-	public List<Published> articles;
-	
-	@ManyToOne
-	public Volume volume;
+    public Date date; //change this back to date
+		
+    @ManyToOne
+    public Volume volume;
     
-    //@ManyToOne
-    //public Published author; //explain this? --alex
+    public User published_by_editor; 
 	
     
-    public Edition(String name, String date, Volume volume) {
+    public Edition(String name, Date date, Volume volume, User editor) {
         this.name = name;
-		this.date = date;
-		this.articles = new ArrayList<Published>();
-		this.volume = volume;
+	this.date = date;
+	this.volume = volume;
+        this.published_by_editor = editor;
     }
 	
-	
-	public List<Published> getPublished() {
-		return Published.find("byEdition", this).fetch();		
-	}
+    /**
+     * Returns a list of published articles in this volume
+     * @return 
+     */
+    public List<Published> getPublished() {
+	return Published.find("byEdition", this).fetch();		
+    }
  
 }

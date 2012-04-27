@@ -11,11 +11,11 @@ public class Tag extends Model {
     public String title;
 	
 	@ManyToMany
-	public List<Articles> articles;
+	public List<Article> articles;
 	
 	//public Author author;
     
-    public Tag(List<Articles> articles, String title) {
+    public Tag(List<Article> articles, String title) {
     	this.articles = articles;
 		this.title = title;
     }

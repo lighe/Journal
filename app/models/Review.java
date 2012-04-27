@@ -11,7 +11,7 @@ import play.db.jpa.*;
 public class Review extends Model {
 	
 	@ManyToOne
-	public Articles article;
+	public Revision revision;
 	
 	public String date; /* For some reason "date" type doesn't work; maybe it's because of yml */
 	
@@ -24,10 +24,10 @@ public class Review extends Model {
 	public boolean acceptedByEditor;
 	
 	@ManyToOne
-    public Users user;
+    public User user;
 		 
-	public Review(Articles article, String date, int score, String smallErrors, int authorExpertiseLevel, Users user) {
-		this.article = article;
+	public Review(Revision revision, String date, int score, String smallErrors, int authorExpertiseLevel, User user) {
+		this.revision = revision;
 		this.date = date;
 		this.score = score;
 		this.smallErrors = smallErrors;
@@ -36,7 +36,7 @@ public class Review extends Model {
 		this.acceptedByEditor = false;
 	}
   
-  	public static List<Review> getReviews(Users user) {
+  	public static List<Review> getReviews(User user) {
 		return Review.find("byUser", user).fetch();	//add order by status
 	}
 	
@@ -47,11 +47,11 @@ public class Review extends Model {
 	}
 	
 
-	public void addComments(String[] comments) {
-		for(int i =0; i<comments.length; i++) {
-			ReviewComm reviewComment = new ReviewComm(comments[i], this);
-			reviewComment.save();	
-		}
+	public void addComment(String comment) {
+		
+		ReviewComment reviewComment = new ReviewComment(new Date(), comment, this);
+		reviewComment.save();	
+		
 	}
 
     

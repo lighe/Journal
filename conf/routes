@@ -5,9 +5,10 @@
 # Home page
 GET     /                                       ApplicationController.index
 # newsletter pages
-GET     /newsletter                             Newsletter.index
-GET     /newsletter/index                       Newsletter.index
-GET     /newsletter/upload                      Newsletter.upload
+GET     /newsletter                             NewsletterController.index
+GET     /newsletter/index                       NewsletterController.index
+GET     /newsletter/upload                      NewsletterController.upload
+POST     /newsletter/upload                      NewsletterController.upload
 
 # article pages
 GET     /article                             ArticleController.index
@@ -20,7 +21,7 @@ GET     /article/delete                      ArticleController.delete
 GET     /unpublished/index                   ApplicationController.unpublishedShow
 
 # browse pages
-GET     /browse			                     BrowseController.index
+GET     /browse			             BrowseController.index
 GET     /browse/index                        BrowseController.index
 
 # review pages
@@ -28,7 +29,7 @@ GET     /review	                     ReviewController.index
 GET     /review/index                ReviewController.index
 
 #crud
-GET		/admin              module:crud
+GET	/admin              module:crud
 
 # Import Secure routes
 *      /                module:secure

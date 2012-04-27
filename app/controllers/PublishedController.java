@@ -12,10 +12,6 @@ public class PublishedController extends Controller {
     @Before
     static void setConnectedUser() {
         Security.setConnectedUser();
-    	System.out.println("User is admin: " + Security.isAdmin());
-    	System.out.println("User is auditor: " + Security.isAuditor());
-    	System.out.println("User is reviewer: " + Security.isReviewer());
-    	System.out.println("User is editor: " + Security.isEditor());
     }
     public static void unpublishedShow(){
         /*add user login check*/

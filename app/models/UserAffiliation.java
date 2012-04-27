@@ -8,16 +8,16 @@ import javax.persistence.*;
 import play.db.jpa.*;
  
 @Entity
-public class Users_affiliation extends Model {
+public class UserAffiliation extends Model {
 
          
   @ManyToOne
-  public Users user_ID;
+  public User user_ID;
   
   @ManyToOne
   public Affiliation affiliation_ID;
     
-  public Users_affiliation(Affiliation affiliation_ID, Users user_ID) {
+  public UserAffiliation(Affiliation affiliation_ID, User user_ID) {
         this.affiliation_ID = affiliation_ID;
         this.user_ID = user_ID;
     }
