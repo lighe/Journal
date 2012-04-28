@@ -18,7 +18,7 @@ GET     /article/new                         ArticleController.newArticle
 GET     /article/new                         ArticleController.newarticle
 GET     /article/edit                        ArticleController.edit
 GET     /article/delete                      ArticleController.delete
-GET     /unpublished/index                   ApplicationController.unpublishedShow
+GET     /unpublished/index                   PublishedController.unpublishedShow
 
 # browse pages
 GET     /browse			             BrowseController.index

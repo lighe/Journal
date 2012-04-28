@@ -1,3 +1,6 @@
+#{extends 'main.html' /}
+#{set title:'Article index' /}
+
 #{list items:unpublished, as:'unpublishedR' }
-        <li>${unpublishedR}</li>
-    #{/list}
+    <li><a href="@{ArticleController.show(unpublishedR.id)}">${unpublishedR.title}</a></li>
+#{/list}

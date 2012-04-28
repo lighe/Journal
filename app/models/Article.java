@@ -56,7 +56,7 @@ public class Article extends Model {
             return contributors;
         }
         */
-         public Revision getLatestRevision(models.Article article){
+         public Revision getLatestRevision(Article article){
 		List<Revision> revisions = Revision.find("article_ID", article).fetch();
 
 		int highestRevision = 0;

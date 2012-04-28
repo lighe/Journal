@@ -145,5 +145,21 @@ public class ArticleController extends Controller {
 		FileManagment.delete(article);
 		render();
     }
+    
+    public static void showOwnArticle(Long id) {
+        User user = Security.getConnectedUser();
+        Article art = Article.findById(id);
+            if(art.user ==  user){
+                Article article = Article.findById(id);
+                Revision latestRev = article.getLatestRevision(article);
+                if(latestRev.revision_number > 0){
+                    int previous_revision_number = latestRev.revision_number -1; 
+                    render(latestRev, article, previous_revision_number);
+                } else {
+                    render(latestRev, article);
+                }
+            }
+                         
+    }
 }
  
