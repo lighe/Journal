@@ -1,0 +1,169 @@
+#initial data
+JournalConfiguration(jc1):
+
+# Test data
+Article(firstArticle):
+    title: Test title 1
+    summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    tags: t1, t2
+    published: true
+    
+Article(secondArticle):
+    title: Test title 2
+    summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    tags: t1, t2
+    published: false
+
+Article(thirdArticle):
+    title: Test title 3
+    summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    published: true
+
+Article(fourthArticle):
+    title: Test title 4
+    summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    published: false
+    
+Tag(t1):
+    articles: firstArticle
+    title: Tag1
+
+Tag(t2):
+    articles: firstArticle
+    title: Tag2
+
+Revision(rev1):
+  article:          firstArticle
+  date:             2009-06-14
+  revision_number:  1
+  pdf_url:          secret
+
+Revision(rev2):
+  article:          secondArticle
+  date:             2010-06-14
+  revision_number:  2
+  pdf_url:          secret2
+
+Revision(rev3):
+  article:          firstArticle
+  date:             2012-12-14
+  revision_number:  3
+  pdf_url:          secret3
+
+Revision(rev4):
+  article:          thirdArticle
+  date:             2012-12-14
+  revision_number:  3
+  pdf_url:          secret3
+
+Revision(rev5):
+  article:          fourthArticle
+  date:             2012-01-14
+  revision_number:  3
+  pdf_url:          secret3
+
+Volume(firstVolume):
+    name: Volume 1
+    date: 23/04/2012
+
+Volume(secondVolume):
+    name: Volume 2
+    date: 26/04/2012
+
+Edition(firstEdition):
+    name: Edition 1
+    date: some date
+    volume: secondVolume
+
+Edition(secondEdition):
+    name: Edition 2
+    date: some date
+    volume: secondVolume
+
+Edition(thirdEdition):
+    name: Edition 3
+    date: some date
+    volume: secondVolume
+
+Edition(fourthEdition):
+    name: Edition 4
+    date: some date
+    volume: secondVolume
+
+User(u1):
+    email: alighe89@gmail.com
+    password: tester
+
+User(u2):
+    email: aca08im@sheffield.ac.uk
+    password: test
+    author: true
+    editor: true
+    reviewer: true
+    
+User(u2):
+    email: aca08iam@sheffield.ac.uk
+    password: tester
+    author: true
+    editor: true
+    reviewer: true    
+
+Published(firstPublished):
+    revision: rev1
+    edition: firstEdition
+    published_by_editor: u2
+
+Published(secondPublished):
+    revision: rev2
+    edition: firstEdition
+    published_by_editor: u2
+
+Published(thirdPublished):
+    revision: rev3
+    edition: firstEdition
+    published_by_editor: u1
+
+Role(r1):
+    role: "auditor" 
+    
+UserRole(ur1):
+    user_ID: u1
+    role_ID: r1   
+
+SelectedArticle(sa1):
+    article: firstArticle
+    status: 0
+    date: 04/22/2012
+    user: u1
+
+SelectedArticle(sa2):
+    article: secondArticle
+    status: 1
+    date: 04/22/2012
+    user: u1
+
+SelectedArticle(sa3):
+    article: thirdArticle
+    status: 2
+    date: 04/22/2012
+    user: u1
+
+Review(rev1):
+    article: thirdArticle
+    date: 04/22/2012
+    score: 1
+    smallErrors: these are some small errors, like gramatical errors. they all go in one place.
+    authorExpertiseLevel: 2
+    acceptedByEditor: true
+    user: u1
+
+Review(rev2):
+    article: thirdArticle
+    date: 04/18/2012
+    score: 2
+    smallErrors: these are some small errors, like gramatical errors. they all go in one place.
+    authorExpertiseLevel: 2
+    acceptedByEditor: true
+    user: u1
+
+  

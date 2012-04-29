@@ -1,0 +1,58 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+		
+<div class="hero-unit">
+	<div class="container">
+		<h1>The Journal CMS</h1>
+		<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+	</div>
+</div>
+
+<div id="vol-nav" class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<h2>Recent volumes:</h2>
+			<ul class="nav">
+				#{if volumes}				
+					#{list items:volumes, as:'volume'}
+						<li><a href="@{BrowseController.index(volume.id)}">${volume.name}</a></li>					
+					#{/list}
+				#{/if}
+				<li><a href="@{BrowseController.index()}">Archive</a></li>
+			</ul>
+			<form class="navbar-search" id="home-search">
+				<input type="text" class="search-query" placeholder="Search articles" />
+				<button type="submit" class="btn btn-primary">Search</button>
+				<a href="#" id="advanced">Advanced</a>
+			</form>
+		</div>    
+	</div>
+</div>
+<div id="edition-nav" class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<ul class="nav">
+				#{list items:editions, as:'edition'}
+					<li><a href="#">${edition.name}</a></li>						
+				#{/list}
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div id="articles">
+			%{ i = 0; }%
+			#{list items:publishedArticles, as:'published'}
+				#{ if published_parity == "odd" } 
+				<div class="row">
+				#{/if}
+					<div class="article span6">
+						<h3><a href="@{ArticleController.show(published.revision.id)}">${published.revision.article.title}</a></h3>
+						<p>	${published.revision.article.summary} <a href="@{ArticleController.show(published.revision.id)}">More &raquo;</a></p>
+					</div>
+				#{ if published_parity == "even" } 
+				</div>
+				#{/if}					
+			#{/list}
+	</div>
+</div>

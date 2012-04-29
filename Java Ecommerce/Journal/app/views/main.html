@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="${_response_encoding}">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+		<script src="@{'public/javascripts/init.js'}"></script>
+        <link rel="stylesheet/less" type="text/css" href="@{'public/stylesheets/style.less'}" />
+        <script src="@{'public/javascripts/less.js'}" type="text/javascript"></script>
+        #{get 'moreScripts' /}
+    </head>
+    <body>
+    
+	<div class="navbar">
+	  <div class="navbar-inner" id="menu">
+		<div class="container">
+			<h1>
+				<a href="@{ApplicationController.index()}" id="logo" class="brand">Journal CMS</a>
+			</h1>
+			<ul class="nav pull-left">
+				<li class="active"><a href="@{ApplicationController.index()}">Home</a></li>
+				<li><a href="@{BrowseController.index()}">Explore</a></li>
+				<li><a href="@{BrowseController.journalGoals()}">Journal Goals</a></li>
+				<li><a href="@{ArticleController.newArticle()}>New Article</a></li>
+			</ul>
+			<ul class="nav pull-right">
+				#{if user}	
+					<li class="divider-vertical"></li>
+					<li><a href="@{ArticleController.index()}">My Articles</a></li>
+					<li class="divider-vertical"></li>
+					<li><a href="@{ControlPanelsController.index()}">${user.email}</a></li>
+				
+					#{if user.editor}				
+						<li class="divider-vertical"></li>
+						<li><a href="@{ControlPanelsController.journalControlPanel()}">Journal Settings</a></li>
+					#{/if}
+					<li class="divider-vertical"></li>
+					<li><a href="@{Secure.logout()}">Log out</a></li>
+				
+				<li class="divider-vertical"></li>
+				#{/if}
+				#{if !user}
+					<li class="divider-vertical"></li>
+					<li><a href="@{Secure.login()}">Login</a></li>
+					<li class="divider-vertical"></li>
+					<li><a href="@{Security.register()}">Register</a></li>
+				#{/if}
+			</ul>
+		</div>
+	  </div>
+	</div>
+        
+	<div id="content">
+		#{doLayout /}
+    </div>
+	 
+    </body>
+</html>

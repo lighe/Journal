@@ -1,0 +1,38 @@
+#{extends 'main.html' /}
+#{set title:'Control Panel' /}
+
+#{if user}	
+	<div class='controlpannel'>
+		<u>User control panel</u>
+		<br><br>
+			#{ifErrors}
+				<div class='errors'>
+        		#{errors}
+       				<li>${error}</li>
+   				#{/errors}
+   				</div>
+   				<br><br>
+    		#{/ifErrors}
+    		#{if flash.success}
+    			<div class="success">${flash.success}</div>
+    			<br><br>
+			#{/if}
+		
+		
+		<u>Change Password</u>
+		#{form @ControlPanelsController.changePassword()}
+		
+			<p>New password:<input type="text" name="password1"></p>
+			<p>Retype password:<input type="text" name="password2"></p>
+    		<input type="submit" value="Submit" />
+    	#{/form}
+	</div>	
+	
+	#{if user.editor}	
+		<u>Resign as editor</u>
+		#{form @ControlPanelsController.resignEditor()}
+			<p>Password:<input type="password" name="password"></p>
+    		<input type="submit" value="Resign" />
+    	#{/form}
+	#{/if}
+#{/if}

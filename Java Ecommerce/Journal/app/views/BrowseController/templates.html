@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'Templates' /}
+
+<u>Templates</u>
+
+#{if jc.urlToDocTemplate}
+	<a href='${jc.urlToDocTemplate}'>Template as a Doc</a>
+#{/if}
+#{if jc.urlToDocTemplate}
+	<a href='${jc.urlToDocTemplate}'>Template as a PDF</a>
+#{/if}
+
+#{if !jc.urlToDocTemplate}
+	#{if !jc.urlToDocTemplate}
+		Unfortunately there are no templates available at this time.  
+	#{/if}
+#{/if}

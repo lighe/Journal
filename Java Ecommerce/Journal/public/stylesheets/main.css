@@ -1,0 +1,24 @@
+div.userpannel
+{
+position:fixed;
+top:0px;
+right:10px;
+}
+
+div.controlpannel
+{
+border-style:solid;
+border-width:2px;
+margin-top:6px;
+margin-bottom:6px;
+margin-right:6px;
+margin-left:6px;
+}
+div.errors{
+  background-color:#FF0000;
+
+}
+div.success{
+  background-color:#00ff00;
+}
+

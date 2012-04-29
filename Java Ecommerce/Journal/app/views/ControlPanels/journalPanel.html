@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+#{set title:'Journal Control Panel' /}
+
+#{if user}	
+	#{if user.editor}	
+	#{if jc}				
+	<div class='controlpannel'>
+		<u>Journal control panel</u>
+		
+		#{form @ControlPanelsController.updateJournal()}
+			#{ifErrors}
+				<div class='errors'>
+        		#{errors}
+       				<li>${error}</li>
+   				#{/errors}
+   				</div>
+    		#{/ifErrors}
+    		#{if flash.success}
+    			<div class="success">${flash.success}</div>
+			#{/if}
+			<p>Journal Name:<input type="text" name="name" value='${jc.journalName}'></p>
+			<p>Journal Goals:<textarea name="goals"> ${jc.journalGoals} </textarea></p>
+    		<input type="submit" value="Submit" />
+    	#{/form}
+	</div>
+	#{/if}	
+	#{/if}	
+#{/if}
