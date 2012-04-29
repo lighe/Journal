@@ -16,38 +16,41 @@ import play.mvc.*;
 
 public class ArticleController extends Controller {
 
-	@Before
-    static void setConnectedUser() {
-        Security.setConnectedUser();
-    }
-
-    //TODO change error messages to plays flash messages
+	//@Before
+    //static void setConnectedUser() {
+    //    Security.setConnectedUser();
+    //}
 
 	/**
 	 * renders the index.html page
 	 */
     public static void index() {
-    	List<Article> articles = Article.all().fetch();
+    	User user = Security.getConnectedUser();
+    	List<Article> articles = Article.find("user", user).fetch();
     	render(articles);
     }
 
     public static void show(Long id) {
     	Article article = Article.findById(id);
-	Revision latestRev = article.getLatestRevision(article);
-	if(latestRev.revision_number > 0){
-            int previous_revision_number = latestRev.revision_number -1; 
-	    render(latestRev, article, previous_revision_number);
-	} else {
-            render(latestRev, article);
-	}
+		Revision latestRev = article.getLatestRevision(article);
+		if(latestRev.revision_number > 0){
+	        int previous_revision_number = latestRev.revision_number -1; 
+		    render(latestRev, article, previous_revision_number);
+		} else {
+	            render(latestRev, article);
+		}
     }
         
     public static void showRevision(long id, int revision_num) {
     	Article article = models.Article.findById(id);
-	Revision revision = Revision.find("revision_number", revision_num).first();
-        render("article/show.html", revision, article);
+    	Revision revision = Revision.find("revision_number", revision_num).first();
+        render("articleController/show.html", revision, article);
     }
-       
+    
+    public static void newArticleA(){
+ 		render("articleController/new.html");
+    }
+    
     /**
      * For adding new articles.  If no params are given it renders and empty form, if title and article params are given it adds
      * the new article
@@ -57,82 +60,56 @@ public class ArticleController extends Controller {
      * @param discription Article abstract
      * @param article the file containing the article
      */
-    public static void newArticle(@Required String title, String tags, String authors,@Required String discription,@Required Upload article){
+    public static void newArticle(String title, String tags, String authors, String discription,Upload article, String email, String password){
 
     	//TODO - tags and authors, need to be able to parse them and split them up
-    	
+    	List<Tag> tagsList = null;
     	//get the uploaded file parts and check a title is given
     	List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
-    	String responce = "";
-    	if(title == null || uploads.isEmpty()){
-    		responce = "Please chouse a title and upload youre article";
+    	
+    	User user = null;
+    	if(email.isEmpty()||password.isEmpty()){
+    		if(Security.isConnected()){
+    			user = Security.getConnectedUser();
+    		} else {
+   			 	validation.addError(null, "Please provide login details");
+    		}
     	} else {
-        	if(FileManagment.upload(uploads, "\\public\\files\\unpublished\\")){
-        		Date date = new Date();
-        		String url = "\\public\\files\\unpublished\\" + uploads.get(0).getFileName();
-        		
-        		User user = Security.getConnectedUser();
-          		
-        		Article art = new models.Article(user , title, null); 
-        		Revision rev = new Revision(art, date, (int)(Revision.count()+1), url);   
-        		//Save the article and the revision
-        		rev.save();
-        		art.save();
-        		
-        		responce = title + " was sucessfully uploaded";
-        	}else{
-        		responce = "There was an issue uploading youre article, please try again later.";
-        	}
+    		if(Security.authenticate(email, password)){
+    			user = Security.getConnectedUser();
+    		} else {
+   			 	validation.addError(null, "Please provide login details");
+    		}
     	}
-		render("article/new.html", responce);
+    	
+    	 if(title.isEmpty()||uploads.isEmpty()){
+			 validation.addError(null, "Please fill in atleast the title field and selects a file to upload");
+		 } 
+	     if(!validation.hasErrors()) {
+
+	        Date date = new Date();
+
+	        Article art = new models.Article(user , false, title, discription, tagsList); 
+	        Revision rev = new Revision(art, date, 1, "");   
+	        String url = "\\public\\files\\articles\\" + rev.id.toString();
+	        rev.pdf_url = url;
+	    	if(FileManagment.upload(uploads, "\\public\\files\\articles\\", rev.id.toString())){		        	
+		        //Save the article and the revision
+		        rev.save();
+		        art.save();
+			    flash.success("Article added");
+
+			    showOwnArticle(art.id);
+	    	 } else {
+	    		 validation.addError(null, "There was an issue uploading youre article, please try again later.");
+	    	 }
+	     }
+	     
+	     if(validation.hasErrors()){
+	 		render("articleController/new.html");
+	     }
     }
       
-    /**
-     * Edits articles
-     * @param article the article to edit
-     */
-    public static void edit(@Required long id){
-    	if(id == 0){
-    		String responce = "No article was selected to edit, would you like to make one?";
-    		render("article/new.html", responce);
-    	} else {
-    		String responce = " ";
-    		Article article = models.Article.findById(id);
-    		Revision revision = article.getLatestRevision(article);
-    		render(article, revision, responce);
-    	}
-    }
-    
-    public static void submitEdit(@Required String id, @Required String title, String tags, String authors,@Required String discription,@Required Upload article){
-    	//TODO - tags and authors, need to be able to parse them and split them up
-    	
-    	//get the uploaded file parts and check a title is given
-    	List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
-    	String responce = "";
-    	if(title == null || uploads.isEmpty()){
-    		responce = "Please chouse a title and upload youre article";
-    	} else {
-        	if(FileManagment.upload(uploads, "\\public\\files\\unpublished\\")){
-        		Date date = new Date();
-        		String url = "\\public\\files\\unpublished\\" + uploads.get(0).getFileName();
-        		
-        		User user = Security.getConnectedUser();
-          		
-        		models.Article art = new models.Article(user , title, null);  
-        		Revision rev = new Revision(art, date, (int)(Revision.count()+1), url);   
-        		//Save the article and the revision
-        		rev.save();
-        		art.save();
-        		
-        		responce = title + " was sucessfully uploaded";
-        	}else{
-        		responce = "There was an issue uploading youre article, please try again later.";
-        	}
-    	}
-		render("article/new.html", responce);
-    }
-   
-    
     //TODO - basic html file already made, 
     /**
      * deletes articles

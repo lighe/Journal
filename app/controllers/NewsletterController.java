@@ -44,7 +44,7 @@ public class NewsletterController extends Controller {
 		if(uploads != null){
     		//save file
 			String destinationPrefix = "\\public\\files\\newsletters\\";
-			FileManagment.upload(uploads, destinationPrefix);
+			FileManagment.upload(uploads, destinationPrefix, uploads.get(0).getFileName());
 			index(); //re-render index
     	} else {
     		index(); //if no upload found, send back to upload page

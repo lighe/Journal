@@ -2,13 +2,51 @@
 #{extends 'main.html' /}
 #{set title:'New Article' /}
 
-&{responce}
-
+#{ifErrors}
+	<div class='errors'>
+		#{errors}
+			<li>${error}</li>
+		#{/errors}
+	</div>
+   	<br><br>
+#{/ifErrors}
+#{if flash.success}
+	<div class="success">${flash.success}</div>
+<br><br>
+#{/if}
 <form action="newArticle" method="POST" enctype="multipart/form-data">
+	#{if !user}
+		Welcome to the new articles page.  Please follow the two steps to submit you're article.
+		<br>
+		<u>Step 1. Detail and upload youre article</u>
+	#{/if}
+	#{if user}
+		Welcome ${user.email}, please fill in the form provided to submit you're article. <br> 		
+	#{/if}
+	It will then undergo a reviewing process where you will given feedback and a score from a number of reviewers.<br>
+	Then it will either then be published or you will be given an opertunity to revise it and re-submit new revisions.<br>
+	In the meantime please contribute to the sight by reviewing articles by other authors.  <br>
+	For every 3 reviews you give you will be granted an additional revision (up to 3 revisions).
+	
+	<br><br>Templates for articles can be found <a href="@{BrowseController.templates()}">here</a>
+		
+	<u>Detail and upload youre article</u><br/><br/>
     Title: <input type="text" name="title"><br/> 
     Abstract: <textarea rows="8" cols="40" name=discription></textarea> <br/> 
     Keywords (optional): <input type="text" name="keywords"><br/> 
     Additional Authors (optional): <input type="text" name="authors"><br/> 
     Upload Article: <input type="file" name="article"><br/>
+    
+    #{if !user}
+	
+    	<br/><br/>
+		<u>Login with you're user account</u><br/><br/>
+	
+		If you don't already have a user account please <a href='@{Security.register()}' target="_blank">Register one now</a> and then use that.
+	
+		<p>Email Address:<input type="text" name="email"></p>
+		<p>Password:<input type="password" name="password"></p>
+	#{/if}
+    
     <input type="submit" value="Submit" />
 </form>

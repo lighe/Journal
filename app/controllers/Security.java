@@ -14,6 +14,28 @@ public class Security extends Secure.Security {
         }
     }
 	
+	public static void register(){
+		render("register.html");
+	}
+	
+	public static void submitRegister(String email, String password1, String password2){
+		
+		 if(password1.isEmpty()||password2.isEmpty()||email.isEmpty()){
+			 validation.addError(null, "Please fill in all fields");
+		 } else {
+			 if(password1.contentEquals(password2)){
+				 User user = new User(email, password1);
+				 user.save();
+		     } else {
+			     validation.addError(null, "Passwords did not match");
+		     }
+		 }
+	     if(!validation.hasErrors()) {
+	    	 flash.success("User Created successfully.");
+	     }
+		render("register.html");
+	}
+	
     static boolean authenticate(String username, String password) {
         User user = User.find("byEmail", username).first();
         return user != null && user.password.equals(password);
@@ -38,7 +60,8 @@ public class Security extends Secure.Security {
     }
     
     public static User getConnectedUser() {
-	return User.find("email", Security.connected()).first();	
+    	return User.find("email", Security.connected()).first();	
     }
+    
 
 }

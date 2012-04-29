@@ -7,15 +7,15 @@ import java.util.*;
 
 import models.*;
 
-@With(Secure.class)
+
 public class ApplicationController extends Controller {
 	
 	private static Edition selectedEdition; //this is populated in getBrowseData()
-           
-	@Before
-        static void setConnectedUser() {
-            Security.setConnectedUser();
-        }
+       
+	//@Before
+    //    static void setConnectedUser() {
+    //        Security.setConnectedUser();
+    //   }
 	
 	@Before
 	static void getBrowseData() {
@@ -32,6 +32,7 @@ public class ApplicationController extends Controller {
 		List<Edition> editions = selectedVolume.getEditions();
 		Edition selectedEdition = editions.get(0);
 		List<Published> publishedArticles = selectedEdition.getPublished();
+
         render(volumes, editions, publishedArticles);
     }
     

@@ -1,3 +1,6 @@
+#initial data
+JournalConfiguration(jc1):
+
 # Test data
 Article(firstArticle):
     title: Test title 1
@@ -97,6 +100,13 @@ User(u2):
     author: true
     editor: true
     reviewer: true
+    
+User(u2):
+    email: aca08iam@sheffield.ac.uk
+    password: tester
+    author: true
+    editor: true
+    reviewer: true    
 
 Published(firstPublished):
     revision: rev1

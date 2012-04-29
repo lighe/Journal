@@ -1,8 +1,0 @@
-#{extends 'main.html' /}
-#{set title:'Article index' /}
-
-#{if articles}				
-	#{list items:articles, as:'article'}
-		<li><a href="@{ArticleController.show(article.id)}">${article.title}</a></li>						
-	#{/list}
-#{/if}

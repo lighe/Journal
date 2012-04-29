@@ -11,11 +11,13 @@ import models.*;
 public class BrowseController extends Controller {
 	
 	public static Edition selectedEdition;
-
+	/*Requirments say that no need to log in the browse
 	@Before
     static void setConnectedUser() {
         Security.setConnectedUser();
     }
+	*/
+	
 	
 	//might be best to move this in application controlelr
 	@Before
@@ -67,7 +69,17 @@ public class BrowseController extends Controller {
 		List<Published> publishedArticles = null;
 		
 		if(selectedEdition!=null)  publishedArticles = selectedEdition.getPublished();
-		
+				
 		render(volumes, publishedArticles, selectedVolumeID, selectedEditionID);
+	}	
+
+    public static void journalGoals() {
+		JournalConfiguration jc  = JournalConfiguration.all().first();
+    	render("BrowseController/journalGoals.html", jc);	
+	}	
+
+    public static void templates() {
+		JournalConfiguration jc  = JournalConfiguration.all().first();
+    	render("BrowseController/templates.html", jc);
 	}	
 }

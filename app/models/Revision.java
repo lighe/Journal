@@ -23,5 +23,4 @@ public class Revision extends Model {
         this.revision_number = revision_number;
         this.pdf_url = url_for_pdf;
     }
- 
 }

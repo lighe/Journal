@@ -19,11 +19,11 @@ public class FileManagment {
      * @param destinationPrefix The directory to where the file is to be stored
      * @return true if successfully uploaded
      */
-    public static boolean upload(List<Upload> uploads, String destinationPrefix) {
+    public static boolean upload(List<Upload> uploads, String destinationPrefix, String filename) {
 		if(uploads != null){
     		//save file
 			// Create file output stream
-			String fileDestination = destinationPrefix + uploads.get(0).getFileName();
+			String fileDestination = destinationPrefix + filename;
     		try{
     			
     			FileOutputStream fos = new FileOutputStream(fileDestination);			
