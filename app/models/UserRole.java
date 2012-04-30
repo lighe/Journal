@@ -10,10 +10,10 @@ import play.db.jpa.*;
 @Entity
 public class UserRole extends Model {
 
-    @ManyToOne
+    @Column(name="user_ID",length=1000) 
     public User user_ID;
     
-    @ManyToOne
+    @Column(name="role_ID",length=1000) 
     public Role role_ID;
    
     

@@ -1,0 +1,29 @@
+#{extends 'main.html' /}
+#{set title:'Users Control Panel' /}
+
+#{if user}	
+	#{if user.editor}	
+	<div class='controlpannel'>
+		<u>Users control panel</u>
+		
+		#{form @ControlPanelsController.promoteToEditor()}
+			#{ifErrors}
+				<div class='errors'>
+        		#{errors}
+       				<li>${error}</li>
+   				#{/errors}
+   				</div>
+    		#{/ifErrors}
+    		#{if flash.success}
+    			<div class="success">${flash.success}</div>
+			#{/if}
+			#{if users}
+				#{list items:users, as:'user'}	
+						<input type="radio" name="user_id" value="${user.id}" /> ${user.email}<br />			
+				#{/list}
+			#{/if}
+    		<input type="submit" value="Submit" />
+    	#{/form}
+	</div>
+	#{/if}	
+#{/if}

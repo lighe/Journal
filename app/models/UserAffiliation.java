@@ -10,11 +10,10 @@ import play.db.jpa.*;
 @Entity
 public class UserAffiliation extends Model {
 
-         
-  @ManyToOne
+  @Column(name="user_ID",length=1000) 
   public User user_ID;
   
-  @ManyToOne
+  @Column(name="affiliation_ID",length=1000) 
   public Affiliation affiliation_ID;
     
   public UserAffiliation(Affiliation affiliation_ID, User user_ID) {

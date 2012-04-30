@@ -13,9 +13,10 @@ public class Edition extends Model {
     public String name;   
     public Date date; //change this back to date
 		
-    @ManyToOne
+    @Column(name="volume",length=1000) 
     public Volume volume;
-    
+
+    @Column(name="published_by_editor",length=1000) 
     public User published_by_editor; 
 	
     

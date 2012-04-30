@@ -43,7 +43,7 @@ public class NewsletterController extends Controller {
 		List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
 		if(uploads != null){
     		//save file
-			String destinationPrefix = "\\public\\files\\newsletters\\";
+			String destinationPrefix = "public/files/newsletters/";
 			FileManagment.upload(uploads, destinationPrefix, uploads.get(0).getFileName());
 			index(); //re-render index
     	} else {
@@ -69,8 +69,9 @@ public class NewsletterController extends Controller {
 		File newFile = new File(fileDestination);
 		for(long x = 1; x < User.count(); x++){
 			User user = User.findById(x);
+			User current = Security.getConnectedUser();
 			try {
-				Emailer.sendNewsletterTo(user.email, "JEcomJournal@gmail.com", newFile);
+				Emailer.sendNewsletterTo(user.email, current.email, newFile);
 			} catch (EmailException e) {
 				e.printStackTrace();
 			}

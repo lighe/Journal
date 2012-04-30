@@ -2,8 +2,10 @@ package controllers;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.mail.EmailException;
 
@@ -16,6 +18,7 @@ import play.mvc.*;
 
 public class ArticleController extends Controller {
 
+	//Removed to allow readers to submit articles without the need to login
 	//@Before
     //static void setConnectedUser() {
     //    Security.setConnectedUser();
@@ -37,7 +40,7 @@ public class ArticleController extends Controller {
 	        int previous_revision_number = latestRev.revision_number -1; 
 		    render(latestRev, article, previous_revision_number);
 		} else {
-	            render(latestRev, article);
+	        render(latestRev, article);
 		}
     }
         
@@ -60,57 +63,123 @@ public class ArticleController extends Controller {
      * @param discription Article abstract
      * @param article the file containing the article
      */
-    public static void newArticle(String title, String tags, String authors, String discription,Upload article, String email, String password){
+    public static void newArticle(String title, String tags, String authors, String discription, File article, String email, String password){
 
     	//TODO - tags and authors, need to be able to parse them and split them up
     	List<Tag> tagsList = null;
     	//get the uploaded file parts and check a title is given
     	List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
     	
-    	User user = null;
-    	if(email.isEmpty()||password.isEmpty()){
-    		if(Security.isConnected()){
-    			user = Security.getConnectedUser();
-    		} else {
-   			 	validation.addError(null, "Please provide login details");
-    		}
-    	} else {
+    	User user = new User();
+    	/*
+    	 * Force minimum of title, abstract and article
+    	 */
+    	if(title.isEmpty()||uploads == null||discription.isEmpty()){ //Force minimum amount of data to be filled in
+    		validation.addError(null, "Please fill in atleast the title and discription fields and select a PDF to upload");
+    	}
+    	/*If no email given and no user connected,
+			then return error
+		 */ 
+    	else if(!Security.isConnected() && email.isEmpty()){
+    		validation.addError(null, "You must provide an email address");
+    	}
+    	/*If email given but no password,
+			then check if user is already registered - if so return error
+			else create user and email password to account    	
+    	 */
+    	else if((!email.isEmpty()) && password.isEmpty()) {
+    		String pass = generatePassword();
+    		user = new User(email, pass);
+    		JournalConfiguration jc  = JournalConfiguration.all().first();
+    		String message = "Welcome to " + jc.journalName + ".  Your account has been created and is ready for you to use, youre password is '"+pass+"' (Without quotes).  You may change it from youre user control panel once you have loged on.";
+    		try {
+    			//Get current primary editor
+    			User sender = User.find("editor", true).first();
+				Emailer.sendEmailTo(email, sender.email, message, "Account created");
+				//once everything is successful, save the user
+				user.save();
+			} catch (EmailException e) {
+		    	validation.addError(null, "There was an issue emailing youre email account, are you sure it is correct?");
+			}
+    	}
+    	/*If email given and password,
+			then validate - return error if not valid
+			else use that user
+    	 */
+    	else if ((!email.isEmpty()) && (!password.isEmpty())){
     		if(Security.authenticate(email, password)){
     			user = Security.getConnectedUser();
     		} else {
-   			 	validation.addError(null, "Please provide login details");
+		    	validation.addError(null, "Youre login details were incorrect, please try again.");
     		}
     	}
-    	
-    	 if(title.isEmpty()||uploads.isEmpty()){
-			 validation.addError(null, "Please fill in atleast the title field and selects a file to upload");
-		 } 
+    	//If no errors so far, try and save the article and create article/revision
 	     if(!validation.hasErrors()) {
-
+	    	 
 	        Date date = new Date();
 
-	        Article art = new models.Article(user , false, title, discription, tagsList); 
-	        Revision rev = new Revision(art, date, 1, "");   
-	        String url = "\\public\\files\\articles\\" + rev.id.toString();
-	        rev.pdf_url = url;
-	    	if(FileManagment.upload(uploads, "\\public\\files\\articles\\", rev.id.toString())){		        	
-		        //Save the article and the revision
-		        rev.save();
-		        art.save();
-			    flash.success("Article added");
+	        //Brake down the tags into a list or no more than 10
+	        ArrayList<String> tagSArray = new ArrayList<String>();
+	        if(tags != null){
+	        	while((tags.contains(",")) && (tagSArray.size()<=10)){
+	        		tagSArray.add(tags.substring(0,tags.indexOf(",")));
+	        	}
+	        }
+	        
+	        //Brake down the additional authors into a list
+	        ArrayList<String> authorArray = new ArrayList<String>();
+	        if(authors != null){
+	        	while(authors.contains(",")){
+	        		authorArray.add(authors.substring(0,authors.indexOf(",")));
+	        	}
+	        }
 
-			    showOwnArticle(art.id);
-	    	 } else {
-	    		 validation.addError(null, "There was an issue uploading youre article, please try again later.");
-	    	 }
+	        Article art = new models.Article(user , false, title, discription); 
+	        art.addContributors(authorArray);
+	        ArrayList<Tag> tagArray = new ArrayList<Tag>();
+	        for(int x = 0; x < tagSArray.size(); x++){
+	        	Tag tag = new Tag(art, tagSArray.get(x));
+	        	tagArray.add(tag);
+	        }
+	        art.addTags(tagArray);
+	        Revision rev = new Revision(art, date, 1, " ");   
+	        String urlPrefix = "public/files/articles/";
+	        String urlSufix = art.title.trim()+String.valueOf(rev.revision_number).trim()+".pdf";
+	        rev.pdf_url = urlPrefix + urlSufix;
+	        String fileName = uploads.get(0).getFileName();
+	        if(FileManagment.isPDF(fileName)){
+		    	if(FileManagment.upload(uploads, urlPrefix, urlSufix)){	        	
+			        //Save the article and the revision
+			        art.save();
+			        rev.save();
+				    flash.success("Article added.  Thanks for youre contribution.");
+				    //if all is sucessfull, show the article
+				    render("articleController/new.html");
+		    	 } else {
+		    		 validation.addError(null, "There was an issue uploading youre article, please try again later.");
+		    	 }
+	        } else {
+	        	 validation.addError(null, "File was not a PDF.  Please make sure the file is a PDF");
+	        }
 	     }
 	     
 	     if(validation.hasErrors()){
 	 		render("articleController/new.html");
 	     }
     }
+    
+    private static String generatePassword(){
+    	String[] alpha = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9"};
+        Random randomGenerator = new Random();
+        String password = "";
+    	for(int x=0;x<8;x++){
+    	   int ran = randomGenerator.nextInt(alpha.length);
+    	   password += alpha[ran];
+    	}
+    	return password;
+    }
       
-    //TODO - basic html file already made, 
+    //TODO - basic html file already made, But do we actually need this function?
     /**
      * deletes articles
      * @param id the id of the article to delete
@@ -126,17 +195,44 @@ public class ArticleController extends Controller {
     public static void showOwnArticle(Long id) {
         User user = Security.getConnectedUser();
         Article art = Article.findById(id);
-            if(art.user ==  user){
-                Article article = Article.findById(id);
-                Revision latestRev = article.getLatestRevision(article);
-                if(latestRev.revision_number > 0){
-                    int previous_revision_number = latestRev.revision_number -1; 
-                    render(latestRev, article, previous_revision_number);
-                } else {
-                    render(latestRev, article);
-                }
-            }
-                         
+        if(art.user ==  user){
+        	Article article = Article.findById(id);
+            Revision latestRev = article.getLatestRevision(article);
+            if(latestRev.revision_number > 0){
+            	int previous_revision_number = latestRev.revision_number -1; 
+                render(latestRev, article, previous_revision_number);
+            } else {
+            	render(latestRev, article);
+          	}
+    	}           
+    }
+    
+    public static boolean isAuthorAuthorisedToReiviseArticle(Article article){
+    	/*
+    	 * Check if enough reviews have been done on the paper 
+    	 */
+    	Revision revision = article.getLatestRevision(article);
+    	List<Review> reviewsForArt = Review.find("revision", revision).fetch();
+    	if(reviewsForArt.size() >= 3){
+        	/*
+        	 * now check the author has conducted enough reviews
+        	 */
+    		List<Review> reviewsByAuth = Review.find("user", article.user).fetch();
+    		List<Article> articlesByAuth = Article.find("user", article.user).fetch();
+    		int submittionsByAuth = 0;
+    		for(int x=0; x>articlesByAuth.size();x++){
+    			List<Revision> revisionsOnArt = Revision.find("article", articlesByAuth.get(x)).fetch();
+    			submittionsByAuth = submittionsByAuth + revisionsOnArt.size();
+    		}
+    		if(submittionsByAuth > (reviewsByAuth.size()*3)){
+    			return false;
+    		} else {
+    			return true;
+    		}
+    	} else{
+    		return false;
+    	}
+    	
     }
 }
  

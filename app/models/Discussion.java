@@ -2,6 +2,8 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import play.db.jpa.Model;
@@ -12,8 +14,9 @@ public class Discussion extends Model {
     public Date comment_Date;    
     public String comment;     
     
-    @ManyToOne
+    @Column(name="reviewA",length=1000) 
     public Review reviewA;
+    @Column(name="reviewB",length=1000) 
     public Review reviewB;
     
     /*TODO save in controller, see artcles controller

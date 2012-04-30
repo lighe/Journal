@@ -54,7 +54,8 @@ function emailAll(){
 
 <hr />
 <u>Upload a new newsletter:</u>
-<form action="@{NewsletterController.upload()}" method="POST" enctype="multipart/form-data"> 
-    <input type="file" name="newsletter"><br/>
+
+#{form @NewsletterController.upload(), enctype:'multipart/form-data'}
+    <input type="file" name="file"><br/>
     <input type="submit" value="Submit" />
-</form>
+#{/form}

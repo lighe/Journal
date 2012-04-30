@@ -9,13 +9,13 @@ public class JournalConfiguration extends Model {
  
 	//Defaults
     public String journalName = "Example Journal";
-    public String urlToDocTemplate;
+    public String urlToLatexTemplate;
     public String urlToPDFTemplate;
     public String journalGoals = "Journal Goals to be defined";
     
-	public JournalConfiguration(String journalName, String urlToDocTemplate, String urlToPDFTemplate, String journalGoals) {
+	public JournalConfiguration(String journalName, String urlToLatexTemplate, String urlToPDFTemplate, String journalGoals) {
 		this.journalName = journalName;
-	    this.urlToDocTemplate = urlToDocTemplate;
+	    this.urlToLatexTemplate = urlToLatexTemplate;
 	    this.urlToPDFTemplate = urlToPDFTemplate;
 	    this.journalGoals = journalGoals;
 	 } 

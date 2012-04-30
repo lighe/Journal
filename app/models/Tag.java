@@ -9,14 +9,14 @@ import play.db.jpa.*;
 public class Tag extends Model {
  
     public String title;
-	
-	@ManyToMany
-	public List<Article> articles;
+
+    @Column(name="article",length=1000) 
+	public Article article;
 	
 	//public Author author;
     
-    public Tag(List<Article> articles, String title) {
-    	this.articles = articles;
+    public Tag(Article article, String title) {
+    	this.article = article;
 		this.title = title;
     }
  

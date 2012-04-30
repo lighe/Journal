@@ -3,7 +3,6 @@ package models;
 import java.util.Date;
  
 import java.util.*;
-import java.util.List;
 import javax.persistence.*;
  
 import play.db.jpa.*;
@@ -16,23 +15,34 @@ public class Article extends Model {
     
     @Lob
     public String summary;
-    
+
+    @Column(name="user",length=1000) 
     public User user;
-    //public List<User> contributors;
     
-    @ManyToMany(mappedBy="articles") 
-    public List<Tag> tags;
+    //String as some may not have user accounts
+    @Column(name="contributors",length=1000) 
+    public ArrayList<String> contributors;
+
+    @Column(name="tags",length=1000) 
+    public ArrayList<Tag> tags;
  
-    public Article (User user, String title, List<Tag> tags) {
-        this(user, false , title, "", tags);
+    public Article (User user, String title, String summary) {
+        this(user, false , title, summary);
     }
             
-    public Article(User user, boolean published, String title, String summary, List<Tag> tags){
+    public Article(User user, boolean published, String title, String summary){
         this.user = user;
         this.published = published;
         this.title = title;
         this.summary = summary;
-	this.tags = tags;
+    }
+    
+    public void addTags(ArrayList<Tag> tags){
+    	this.tags = tags;
+    }
+    
+    public void addContributors(ArrayList<String> contributors){
+    	this.contributors = contributors;
     }
 	
 	public String getShortSummary() {

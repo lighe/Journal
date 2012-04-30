@@ -25,7 +25,6 @@ public class FileManagment {
 			// Create file output stream
 			String fileDestination = destinationPrefix + filename;
     		try{
-    			
     			FileOutputStream fos = new FileOutputStream(fileDestination);			
     			//write to the file output stream all the data contained in the upload parts
     			for(int x=0; uploads.size()>x; x++){
@@ -45,6 +44,27 @@ public class FileManagment {
     	} else {
     		return false;
     	} 
+    }
+    
+    public static boolean isPDF(String fileName){
+    	if(fileName.length()<=4){
+    		return false;
+    	} else if((fileName.substring(fileName.length()-4, fileName.length())).contentEquals(".pdf")){
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
+    
+    public static boolean isLaTEX(String fileName){
+    	if(fileName.length()<=4){
+    		return false;
+    	} else if((fileName.substring(fileName.length()-4, fileName.length())).contentEquals(".tex")){
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
     
     /**

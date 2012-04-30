@@ -13,7 +13,8 @@ public class Volume extends Model {
  
     public String name;   
     public Date date; 
-    
+
+    @Column(name="published_by_editor",length=1000) 
     public User published_by_editor;
 			
     public Volume(String name, Date date, User editor) {

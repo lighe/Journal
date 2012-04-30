@@ -14,7 +14,7 @@ public class ReviewComment extends Model {
 	
     public Date date;  
 	    
-    @ManyToOne
+    @Column(name="review",length=1000) 
     public Review review;
     
     public ReviewComment(Date date, String comment, Review review) {

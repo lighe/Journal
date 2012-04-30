@@ -19,9 +19,21 @@ public class Emailer  extends Model {
 		// embed content
 		String cid = email.embed(fileURL);
 		// set the html message
-		email.setHtmlMsg("<html>Zenexity logo - <img src=\"cid:"+cid+"\"></html>");
+		email.setHtmlMsg("Attached is a copy of our Newsletter");
 		// set the alternative message
-		email.setTextMsg("Your email client does not support HTML messages.");
+		email.setTextMsg("Attached is a copy og our Newsletter");
+		Mail.send(email); 
+	}
+	
+	public static void sendEmailTo(String emailAddressDestination, String emailAddressSource, String message, String title) throws EmailException{	
+		HtmlEmail email = new HtmlEmail();
+		email.addTo(emailAddressDestination);
+		email.setFrom(emailAddressSource);
+		email.setSubject(title);
+		// set the html message
+		email.setHtmlMsg(message);
+		// set the alternative message
+		email.setTextMsg(message);
 		Mail.send(email); 
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.*;
 import play.*;
+import play.data.Upload;
 import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -84,17 +85,63 @@ public class ControlPanelsController extends  Controller {
 	     }
     	 render("controlPanels/journalPanel.html", jc);	 
 	 }
-
-	 public static void updateUser(@Required Long user_id, String email, String password, boolean author, boolean editor, boolean reviewer){
-		       User user = User.findById(user_id);
-		       user.email = email;
-		       user.password = password;
-		       user.author = author;
-		       user.editor = editor;
-		       user.reviewer = reviewer;
-		       user.save();
-		 		 
+	 
+	 public static void listUsers(){
+		 List<User> users = User.find("editor", false).fetch();
+		 render("controlPanels/listUsers.html", users);
 	 }
+	 
+	 public static void promoteToEditor(@Required Long user_id){
+		       User user = User.findById(user_id);
+		       user.editor = true;
+		       user.save();
+		       flash.success(user.email + " premoted");
+		       listUsers();
+	 }
+	 
+	    /**
+	     * uploads the newsletter file and then lets the user know
+	     * @param file the newsletter to upload
+	     */
+	    public static void upload(@Required Upload file) {
+	    	//get the uploaded file parts
+			List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
+			if(uploads != null){
+	    		//save file
+				String fileName = uploads.get(0).getFileName();
+				
+				String destinationPrefix = "public/files/templates/";
+				if(FileManagment.isPDF(fileName)){
+					if(FileManagment.upload(uploads, destinationPrefix, "template.pdf")){
+						JournalConfiguration jc = JournalConfiguration.all().first();
+						jc.urlToPDFTemplate = destinationPrefix + "template.pdf";
+						 jc.save();
+					 } else {
+						 validation.addError(null, "There was an error uploading youre file");
+					 }
+				} else if (FileManagment.isLaTEX(fileName)){
+					if(FileManagment.upload(uploads, destinationPrefix, "template.tex")){
+						JournalConfiguration jc = JournalConfiguration.all().first();
+						jc.urlToLatexTemplate = destinationPrefix + "template.tex";
+						jc.save();
+					 } else {
+						 validation.addError(null, "There was an error uploading youre file");
+					 }
+				} else {
+					 validation.addError(null, "Please ensure the template is either a PDF (.pdf), or a Latex file (.tex)");
+				}
+	    	} else {
+				validation.addError(null, "Please ensure the template is either a PDF (.pdf), or a Latex file (.tex)");
+	    	} 
+			
+
+		     if(!validation.hasErrors()) {
+		    	 flash.success("Password Updated");
+		     }
+
+			 JournalConfiguration jc = JournalConfiguration.all().first();
+	    	 render("controlPanels/journalPanel.html", jc);	 
+	    }
 	 
 	 
 	

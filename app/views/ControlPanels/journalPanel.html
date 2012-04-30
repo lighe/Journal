@@ -22,6 +22,12 @@
 			<p>Journal Goals:<textarea name="goals"> ${jc.journalGoals} </textarea></p>
     		<input type="submit" value="Submit" />
     	#{/form}
+    	
+    	
+		#{form @ControlPanelsController.upload(), enctype:'multipart/form-data'}
+    		Templates upload (PDF or Tex)<input type="file" name="file"><br/>
+   		 	<input type="submit" value="Submit" />
+		#{/form}
 	</div>
 	#{/if}	
 	#{/if}	
