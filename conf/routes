@@ -18,7 +18,7 @@ GET     /controlPanel                           ControlPanelsController.index
 GET     /controlPanel/index                     ControlPanelsController.index
 GET     /controlPanel/controlPanel              ControlPanelsController.index
 GET     /controlPanel/journalPanel              ControlPanelsController.journalControlPanel
-GET     /controlPanel/listUsers              	ControlPanelsController.listUsers
+GET     /controlPanel/users		              	ControlPanelsController.listUsers
 
 # article pages
 GET     /article                             ArticleController.index

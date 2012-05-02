@@ -24,8 +24,6 @@ public class NewsletterController extends Controller {
         Security.setConnectedUser();
     }
 	
-	
-	
 	/**
 	 * renders the index page
 	 */
@@ -38,7 +36,7 @@ public class NewsletterController extends Controller {
      * uploads the newsletter file and then lets the user know
      * @param file the newsletter to upload
      */
-    public static void upload(@Required Upload file) {
+    public static void upload(File newsletter) {
     	//get the uploaded file parts
 		List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
 		if(uploads != null){
@@ -81,7 +79,7 @@ public class NewsletterController extends Controller {
     //Returns a list of all files uploaded to the newsletter directory (
     private static String[][] getAvailableNewsletters(){
     	//Directory path here
-    	String path = "\\public\\files\\newsletters\\";
+    	String path = "public\\files\\newsletters\\";
     	 
     	File folder = new File(path);
     	File[] listOfFiles = folder.listFiles();
@@ -113,8 +111,23 @@ public class NewsletterController extends Controller {
 		}
 		filesTable += "</table>\n</div>\n";
         } else {
-            filesTable = "<div id='fileTable' name='fileTable'>No newsletter found</div>";
+            filesTable = "<div id='fileTable' class='alert alert-info'><strong><i class='icon-info-sign'></i> No newsletter found</strong></div>";
         }
 	return filesTable; 	
     }
+	
+	public static void subscribe(String email, String name) {
+		
+		validation.required(email).message("Please give us an email address!");
+		validation.email(email).message("Please give us a valid email address!");
+				
+		if (validation.hasErrors()) {
+			params.flash(); // add http parameters to the flash scope
+			validation.keep();
+		}	
+		else {
+			flash.success("Thank you! You have been subscribed to our newsletter!");
+		}
+		ApplicationController.index();
+	}
 }

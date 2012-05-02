@@ -34,8 +34,5 @@ public class ApplicationController extends Controller {
 		List<Published> publishedArticles = selectedEdition.getPublished();
 
         render(volumes, editions, publishedArticles);
-    }
-    
-   
-      
+   }
 }

@@ -25,7 +25,7 @@
 				<li class="active"><a href="@{ApplicationController.index()}">Home</a></li>
 				<li><a href="@{BrowseController.index()}">Explore</a></li>
 				<li><a href="@{BrowseController.journalGoals()}">Journal Goals</a></li>
-				<li><a href="@{ArticleController.newArticleA()}">New Article</a></li>
+				<li><a href="@{ArticleController.newArticleA()}">Upload Article</a></li>
 			</ul>
 		</div>
 	  </div>
@@ -40,12 +40,14 @@
 				
 					#{if user.editor}				
 						<li><a href="@{ControlPanelsController.journalControlPanel()}">Journal Settings</a></li>
+						<li><a href="@{ControlPanelsController.listUsers()}">User Management</a></li>
+						<li><a href="@{NewsletterController.index()}">Newsletters</a></li>
 					#{/if}
 				#{/if}
 			</ul>
 			<ul class="nav pull-right">
 				#{if user}
-					<li><a href="@{ControlPanelsController.index()}">My account (${user.email})</a></li>
+					<li><a href="@{ControlPanelsController.index()}">My account</a></li>
 					<li><a href="@{Secure.logout()}">Log out</a></li>
 				#{/if}
 				#{if !user}
@@ -60,6 +62,21 @@
 	<div id="content">
 		#{doLayout /}
     </div>
+
+<div class="navbar" id="footer">
+  <div class="navbar-inner" id="menu">
+	<div class="container">
+		<ul class="nav pull-left">
+			<li>
+				<a href="@{ApplicationController.index()}" id="logo" class="brand">Journal CMS</a>
+			</li>
+		</ul>
+		<ul class="nav pull-right">
+			<li class="active"><a href="#">Copyright &copy;2012</a></li>
+		</ul>
+	</div>
+  </div>
+</div>
 	 
     </body>
 </html>

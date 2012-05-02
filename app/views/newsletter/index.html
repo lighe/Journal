@@ -1,61 +1,63 @@
 #{extends 'main.html' /}
 #{set title:'Newsletter' /}
 
-<u>Newsletters available:</u>
-
-&{filesTable}
-
-<script type="text/javascript">
-var selectedFile;
-
-function newSelection(evt){
-	console.log("Changed selection")
-	selectedFile = evt.value
-	document.forms["delete"]["newsletter"].value = selectedFile
-	
-}
-
-function getHttpRequest(){
-	var httpObj;
-	if (window.XMLHttpRequest){// code for all good browsers
-	  httpObj = new XMLHttpRequest()
-	}else{// code for IE
-	  httpObj = new ActiveXObject("Microsoft.XMLHTTP")
-	}
-	return httpObj
-}
-
-function emailAll(){
-	var httpObj = getHttpRequest();
-	httpObj.onreadystatechange=function(){
-		if (httpObj==4 && httpObj==200){
- 	   		alert("Emails sent")
- 		} else {
- 			alert("Sorry, youre request could not be compleated");
- 		}
-  	}
-  	if(selectedFile == null){
-  		alert("Please select a newsletter to send");
-  	} else {	
-		var target = "@{NewsletterController.sendEmail()}?newsletter=" + selectedFile
-		httpObj.open("GET", target,true)
-		httpObj.send()
-	}
-}
-</script>
-<form> 
-    <input type="button" value="Email all" onclick="emailAll()"/>
-</form>
-
-<form action="@{NewsletterController.delete()}" method="POST" name="delete" enctype="multipart/form-data"> 
-    <input type="hidden" name="newsletter"/>
-    <input type="submit" value="Delete newsletter""/>
-</form>
-
-<hr />
-<u>Upload a new newsletter:</u>
-
-#{form @NewsletterController.upload(), enctype:'multipart/form-data'}
-    <input type="file" name="file"><br/>
-    <input type="submit" value="Submit" />
-#{/form}
+<div class="container">
+	<div class="row">
+		<div class="span7">
+			<h2>Newsletters available:</h2>
+			
+			&{filesTable}
+			
+			<script type="text/javascript">
+			var selectedFile;
+			
+			function newSelection(evt){
+				console.log("Changed selection")
+				selectedFile = evt.value
+				document.forms["delete"]["newsletter"].value = selectedFile
+				
+			}
+			
+			function getHttpRequest(){
+				var httpObj;
+				if (window.XMLHttpRequest){// code for all good browsers
+				  httpObj = new XMLHttpRequest()
+				}else{// code for IE
+				  httpObj = new ActiveXObject("Microsoft.XMLHTTP")
+				}
+				return httpObj
+			}
+			
+			function emailAll(){
+				var httpObj = getHttpRequest();
+				httpObj.onreadystatechange=function(){
+					if (httpObj==4 && httpObj==200){
+						alert("Emails sent")
+					} else {
+						alert("Sorry, youre request could not be compleated");
+					}
+				}
+				if(selectedFile == null){
+					alert("Please select a newsletter to send");
+				} else {	
+					var target = "@{NewsletterController.sendEmail()}?newsletter=" + selectedFile
+					httpObj.open("GET", target,true)
+					httpObj.send()
+				}
+			}
+			</script>
+			<form> 
+				<button type="submit" onclick="emailAll()" class="btn btn-primary"><i class="icon-envelope icon-white"></i> Email all</button>
+			</form>
+			<form action="@{NewsletterController.delete()}" method="POST" name="delete" enctype="multipart/form-data"> 
+				<input type="hidden" name="newsletter"/>
+				<button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Delete newsletter</button>
+			</form>
+		</div>
+		<div class="span5">			
+			<h2>Upload a new newsletter</h2>
+			<form action="@{NewsletterController.upload()}" method="POST" enctype='multipart/form-data'>
+				<input type="file" name="newsletter" /><br/>
+				<button type="submit" class="btn btn-primary"><i class="icon-upload icon-white"></i> Submit</button>
+			</form>
+		</div>

@@ -92,11 +92,13 @@ public class ControlPanelsController extends  Controller {
 	 }
 	 
 	 public static void promoteToEditor(@Required Long user_id){
-		       User user = User.findById(user_id);
-		       user.editor = true;
-		       user.save();
-		       flash.success(user.email + " premoted");
-		       listUsers();
+		if(!validation.hasErrors()) {
+			User user = User.findById(user_id);
+			user.editor = true;
+			user.save();
+			flash.success(user.email + " promoted");
+		}
+		listUsers();
 	 }
 	 
 	    /**

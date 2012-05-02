@@ -112,7 +112,7 @@ public class ArticleController extends Controller {
     		if(Security.authenticate(email, password)){
     			user = Security.getConnectedUser();
     		} else {
-		    	validation.addError(null, "Youre login details were incorrect, please try again.");
+		    	validation.addError(null, "Your login details were incorrect, please try again.");
     		}
     	}
     	//If no errors so far, try and save the article and create article/revision
