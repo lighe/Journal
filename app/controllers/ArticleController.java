@@ -134,7 +134,9 @@ public class ArticleController extends Controller {
 			String[] tagsArray = tags.split(",");
 			
 	        ArrayList<Tag> tagsFinalArray = new ArrayList<Tag>();
-	        for(int x = 0; x < tagsArray.length; x++){
+			int size = 10;
+			if(size > tagsArray.length) size = tagsArray.length;
+	        for(int x = 0; x < size; x++){
 	        	Tag tag = new Tag(art, tagsArray[x]);
 				tag.save();
 	        	tagsFinalArray.add(tag);

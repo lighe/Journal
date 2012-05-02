@@ -45,7 +45,7 @@ public class ControlPanelsController extends  Controller {
 	 
 	 public static void resignEditor(String password){
 		 if(password.isEmpty()){
-			 validation.addError(null, "Please validate your resignation by typing in youre password.");
+			 validation.addError(null, "Please validate your resignation by typing in your password.");
 		 } else {
 			 User user = Security.getConnectedUser();
 			 if(password.contentEquals(user.password)){
@@ -57,11 +57,11 @@ public class ControlPanelsController extends  Controller {
 					 validation.addError(null, "You are the only editor at this time and therefore can not resign");
 				 }
 			 } else {
-				 validation.addError(null, "Youre password was incorrect.");
+				 validation.addError(null, "Your password was incorrect.");
 			 }
 		 }
 	     if(!validation.hasErrors()) {
-	    	 flash.success("Youre resignation has been accepted.");
+	    	 flash.success("Your resignation has been accepted.");
 	     }
     	 render("controlPanels/index.html");	 
 	 }
@@ -125,7 +125,7 @@ public class ControlPanelsController extends  Controller {
 						jc.urlToLatexTemplate = destinationPrefix + "template.tex";
 						jc.save();
 					 } else {
-						 validation.addError(null, "There was an error uploading youre file");
+						 validation.addError(null, "There was an error uploading your file");
 					 }
 				} else {
 					 validation.addError(null, "Please ensure the template is either a PDF (.pdf), or a Latex file (.tex)");
@@ -136,7 +136,7 @@ public class ControlPanelsController extends  Controller {
 			
 
 		     if(!validation.hasErrors()) {
-		    	 flash.success("Password Updated");
+		    	 flash.success("Template uploaded");
 		     }
 
 			 JournalConfiguration jc = JournalConfiguration.all().first();
