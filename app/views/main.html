@@ -25,12 +25,12 @@
 				<li class="active"><a href="@{ApplicationController.index()}">Home</a></li>
 				<li><a href="@{BrowseController.index()}">Explore</a></li>
 				<li><a href="@{BrowseController.journalGoals()}">Journal Goals</a></li>
-				<li><a href="@{ArticleController.newArticle()}>New Article</a></li>
+				<li><a href="@{ArticleController.newArticleA()}">New Article</a></li>
 			</ul>
 			<ul class="nav pull-right">
 				#{if user}	
 					<li class="divider-vertical"></li>
-					<li><a href="@{ArticleController.index()}">My Articles</a></li>
+					<li><a href="@{ArticleController.index()}">My Articles</li></a>
 					<li class="divider-vertical"></li>
 					<li><a href="@{ControlPanelsController.index()}">${user.email}</a></li>
 				
