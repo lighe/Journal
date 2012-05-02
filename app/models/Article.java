@@ -16,15 +16,18 @@ public class Article extends Model {
     @Lob
     public String summary;
 
-    @Column(name="user",length=1000) 
+	@ManyToOne
+    //@Column(name="user",length=1000) 
     public User user;
     
     //String as some may not have user accounts
     @Column(name="contributors",length=1000) 
     public ArrayList<String> contributors;
 
-    @Column(name="tags",length=1000) 
-    public ArrayList<Tag> tags;
+    //@Column(name="tags",length=1000) 
+    @ManyToMany
+	public List<Tag> tags;
+	//public ArrayList<Tag> tags;
  
     public Article (User user, String title, String summary) {
         this(user, false , title, summary);
@@ -37,7 +40,8 @@ public class Article extends Model {
         this.summary = summary;
     }
     
-    public void addTags(ArrayList<Tag> tags){
+    public void addTags(List<Tag> tags ){ //ArrayList<Tag> tags){
+		System.out.println(tags);
     	this.tags = tags;
     }
     
@@ -66,7 +70,7 @@ public class Article extends Model {
             return contributors;
         }
         */
-         public Revision getLatestRevision(Article article){
+	public Revision getLatestRevision(Article article){
 		List<Revision> revisions = Revision.find("article_ID", article).fetch();
 
 		int highestRevision = 0;

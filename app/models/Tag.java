@@ -10,13 +10,11 @@ public class Tag extends Model {
  
     public String title;
 
-    @Column(name="article",length=1000) 
-	public Article article;
-	
-	//public Author author;
-    
+	@ManyToMany(mappedBy="tags")
+    //@Column(name="article",length=1000) 
+	List<Article> articles = new ArrayList<Article>();
+	    
     public Tag(Article article, String title) {
-    	this.article = article;
 		this.title = title;
     }
  

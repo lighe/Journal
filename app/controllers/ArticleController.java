@@ -119,14 +119,6 @@ public class ArticleController extends Controller {
 	     if(!validation.hasErrors()) {
 	    	 
 	        Date date = new Date();
-
-	        //Brake down the tags into a list or no more than 10
-	        ArrayList<String> tagSArray = new ArrayList<String>();
-	        if(tags != null){
-	        	while((tags.contains(",")) && (tagSArray.size()<=10)){
-	        		tagSArray.add(tags.substring(0,tags.indexOf(",")));
-	        	}
-	        }
 	        
 	        //Brake down the additional authors into a list
 	        ArrayList<String> authorArray = new ArrayList<String>();
@@ -138,12 +130,17 @@ public class ArticleController extends Controller {
 
 	        Article art = new models.Article(user , false, title, discription); 
 	        art.addContributors(authorArray);
-	        ArrayList<Tag> tagArray = new ArrayList<Tag>();
-	        for(int x = 0; x < tagSArray.size(); x++){
-	        	Tag tag = new Tag(art, tagSArray.get(x));
-	        	tagArray.add(tag);
+			
+			String[] tagsArray = tags.split(",");
+			
+	        ArrayList<Tag> tagsFinalArray = new ArrayList<Tag>();
+	        for(int x = 0; x < tagsArray.length; x++){
+	        	Tag tag = new Tag(art, tagsArray[x]);
+				tag.save();
+	        	tagsFinalArray.add(tag);
 	        }
-	        art.addTags(tagArray);
+	        art.addTags(tagsFinalArray);
+			
 	        Revision rev = new Revision(art, date, 1, " ");   
 	        String urlPrefix = "public/files/articles/";
 	        String urlSufix = art.title.trim()+String.valueOf(rev.revision_number).trim()+".pdf";

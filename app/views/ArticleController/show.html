@@ -7,16 +7,10 @@
 			<p>${article.summary}</p>
 			
 			<ul class="tags">
-				<li>${article.tags.size() ?: 'No'} Tags</li>
+				<li>${article.tags.size() ?: 'No'} Tags:</li>
 			    #{list items:article.tags, as:'tag'}
 					<li><a href="#">${tag.title}</a></li>						
 				#{/list}
-				<li><a href="#">this</a></li>
-				<li><a href="#">is</a></li>
-				<li><a href="#">an</a></li>
-				<li><a href="#">example</a></li>
-				<li><a href="#">of</a></li>
-				<li><a href="#">tags</a></li>
 			</ul>
 		</div>
 		<div class="span4" id="article_sidebar">
@@ -26,7 +20,7 @@
 			</div>
 			<div class="group">
 				<h2>Contact author</h2>
-				<a href="#" class="btn"><i class="icon-envelope"></i> &nbsp;something@something.com</a>
+				<a href="mailto:${article.user.email}" class="btn"><i class="icon-envelope"></i> &nbsp;${article.user.email}</a>
 			</div>
 			<div class="group">
 				<h2>Discuss with editor</h2>
