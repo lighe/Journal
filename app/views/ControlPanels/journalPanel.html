@@ -11,14 +11,25 @@
 				<div class="span7">		
 					#{form @ControlPanelsController.updateJournal()}
 						#{ifErrors}
-							<div class='errors'>
-							#{errors}
-								<li>${error}</li>
-							#{/errors}
+							<div class="row">
+								<div class="span6">
+									<div class="alert alert-warning">
+										<strong>There are some errors:</strong> <br />
+										#{errors}
+										   <i class="icon-flag"></i> ${error} <br />
+										#{/errors}
+									</div>
+								</div>
 							</div>
 						#{/ifErrors}
 						#{if flash.success}
-							<div class="success">${flash.success}</div>
+							<div class="row">
+								<div class="span6">
+									<div class="alert alert-success">
+										<strong><i class="icon-ok"></i> ${flash.success}</strong>
+									</div>
+								</div>
+							</div>
 						#{/if}
 						
 						<div class="group">

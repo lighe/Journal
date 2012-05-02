@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 import org.apache.commons.mail.EmailException;
 
@@ -152,11 +154,11 @@ public class ArticleController extends Controller {
 			        //Save the article and the revision
 			        art.save();
 			        rev.save();
-				    flash.success("Article added.  Thanks for youre contribution.");
+				    flash.success("Article added.  Thanks for your contribution.");
 				    //if all is sucessfull, show the article
 				    render("articleController/new.html");
 		    	 } else {
-		    		 validation.addError(null, "There was an issue uploading youre article, please try again later.");
+		    		 validation.addError(null, "There was an issue uploading your article, please try again later.");
 		    	 }
 	        } else {
 	        	 validation.addError(null, "File was not a PDF.  Please make sure the file is a PDF");
@@ -234,5 +236,30 @@ public class ArticleController extends Controller {
     	}
     	
     }
+	
+	public static void download(@Required Long id, @Required int revisionNumber) {
+				
+		if (validation.hasErrors()) ErrorController.notFound(); 
+		
+		Article article = Article.findById(id);
+		if(article==null||!article.published) ErrorController.notFound(); //expand not published to allow download for reviewers, editors, etc
+		
+		List<Revision> revisions = Revision.find("article_ID", article).fetch();
+		if(revisions==null || revisions.isEmpty()) ErrorController.notFound();
+				
+		if(revisionNumber >= revisions.size()) ErrorController.notFound();
+		
+		Revision revision;
+		 
+		if(revisionNumber<0) revision = revisions.get(revisions.size()-1);
+		else revision = revisions.get(revisionNumber);
+		
+		if(revision==null) ErrorController.notFound();
+		
+		File f = new java.io.File(revision.pdf_url); 
+		renderBinary(f, article.title + ".pdf"); 
+	
+	}
+	
 }
  

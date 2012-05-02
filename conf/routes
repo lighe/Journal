@@ -27,6 +27,8 @@ GET     /article/show                        ArticleController.show
 GET     /article/new                         ArticleController.newArticleA
 GET     /article/new                         ArticleController.newarticlea
 GET     /article/delete                      ArticleController.delete
+GET     /article/download                    ArticleController.download
+
 GET     /unpublished/index                   PublishedController.unpublishedShow
 
 # browse pages

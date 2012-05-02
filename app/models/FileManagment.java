@@ -67,6 +67,44 @@ public class FileManagment {
     	}
     }
     
+	public static void download() {
+		  
+		  /*
+		HttpResponse res = WS.url("http://localhost:9000/public/files/articles/testing%20again1.pdf").get();
+		
+		res.setContentType("APPLICATION/OCTET-STREAM");
+		res.setContentLength((int)file.length());
+		res.setHeader("Content-Disposition", 
+						   "attachment; filename=\"Article.pdf\"");
+		 
+		FileInputStream is = res.getStream();
+						
+		ServletOutputStream out = res.getOutputStream();
+		 
+		int i;
+		while((i = is.read()) != -1)
+		{
+			out.write(i);
+		}
+		 
+		is.close();
+		out.close();
+		*/
+		
+		
+		
+		
+		 
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
     /**
      * Deletes files
      * @param path Path to the file to delete

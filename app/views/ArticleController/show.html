@@ -1,36 +1,5 @@
 #{extends 'main.html' /}
 #{set title:'Article' /}
-<!--
-<div id="vol-nav" class="navbar pull-up">
-	<div class="navbar-inner">
-		<div class="container">
-			<h2>Recent volumes:</h2>
-			<ul class="nav">
-				#{if volumes}				
-					#{list items:volumes, as:'volume'}
-						<li><a href="#">${volume.name}</a></li>						
-					#{/list}
-				#{/if}
-				<li><a href="#">Archive</a></li>
-			</ul>
-			<form class="navbar-search">
-				<input type="text" class="search-query" placeholder="Search">
-			</form>
-		</div>    
-	</div>
-</div>
-<div id="edition-nav" class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<ul class="nav">
-				#{list items:editions, as:'edition'}
-					<li><a href="#">${edition.name}</a></li>						
-				#{/list}
-			</ul>
-		</div>
-	</div>
-</div>
--->
 <div class="container">
 	<div class="row">
 		<div class="span8">
@@ -53,7 +22,7 @@
 		<div class="span4" id="article_sidebar">
 			<div class="group">
 				<h2>Download</h2>
-				<a href="#" class="btn btn-primary"><i class="icon-download icon-white"></i> &nbsp;Download article (PDF)</a>
+				<a href="@{ArticleController.download(article.id, -1)}" class="btn btn-primary"><i class="icon-download icon-white"></i> &nbsp;Download article (PDF)</a>
 			</div>
 			<div class="group">
 				<h2>Contact author</h2>
