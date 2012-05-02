@@ -67,6 +67,8 @@ public class ArticleController extends Controller {
      */
     public static void newArticle(String title, String tags, String authors, String discription, File article, String email, String password){
 
+		params.flash();
+		
     	//TODO - tags and authors, need to be able to parse them and split them up
     	List<Tag> tagsList = null;
     	//get the uploaded file parts and check a title is given
@@ -77,7 +79,7 @@ public class ArticleController extends Controller {
     	 * Force minimum of title, abstract and article
     	 */
     	if(title.isEmpty()||uploads == null||discription.isEmpty()){ //Force minimum amount of data to be filled in
-    		validation.addError(null, "Please fill in atleast the title and discription fields and select a PDF to upload");
+    		validation.addError(null, "Please fill in atleast the title and description fields and select a PDF to upload");
     	}
     	/*If no email given and no user connected,
 			then return error

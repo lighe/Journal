@@ -35,31 +35,31 @@
 				#{form @ArticleController.newArticle(), enctype:'multipart/form-data'}
 				<div class="group">
 				<label>Title:</label>
-				<input type="text" name="title" class="span6" />
+				<input type="text" name="title" class="span6" value="${flash.title}" />
 				</div>
 				<div class="group">
 				<label>Abstract:</label>
-				<textarea rows="8" cols="40" name="discription"  class="span6" ></textarea> 
+				<textarea rows="8" cols="40" name="discription"  class="span6">${flash.discription}</textarea> 
 				<p class="help-block">Please provide a short description of your article</p>
 				</div>
 				#{if !user}
 				<div class="group">
 					<label>Email address:</label>
-					<input type="text" name="email" class="span6"  />
+					<input type="text" name="email" class="span6" value="${flash.email}"  />
 				</div>
 				#{/if}
 				
 				<div class="group">
 				<label>Additional Authors email addresses (optional, please divide them with commas):</label>
-				<input type="text" name="authors" class="span6"  />
+				<input type="text" name="authors" class="span6"  value="${flash.authors}" />
 				</div>
 				<div class="group">				
 				<label>Keywords (optional, please divide them with commas and a maximum of 10):</label>
-				<input type="text" name="tags" class="span6"  />
+				<input type="text" name="tags" class="span6"  value="${flash.tags}" />
 				</div>
 				<div class="group">
 				<label>Upload Article:</label>
-				<input type="file" name="article" class="span6"  />
+				<input type="file" name="article" class="span6"  value="${flash.article}" />
 				</div>
 				#{if !user}
 				<div class="group">
