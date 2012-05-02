@@ -56,7 +56,7 @@
 			<tbody>
 				#{list items:reviews, as:'review'}
 					<tr>
-						<td><a href="@{ArticleController.show(review.article.id)}">${review.article.title}</a></td>
+						<td><a href="@{ArticleController.show(review.revision.article.id)}">${review.revision.article.title}</a></td>
 						<td>
 							#{if review.acceptedByEditor}
 								Your review was accepted.

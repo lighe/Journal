@@ -10,7 +10,8 @@ import play.db.jpa.*;
 @Entity
 public class SelectedArticle extends Model {
 	
-	@Column(name="article",length=1000) 
+	@OneToOne
+	//@Column(name="article",length=1000) 
 	public Article article;
 	
 	//0 selected, 1 downloaded, 2 submitted, 3 accepted
@@ -18,7 +19,8 @@ public class SelectedArticle extends Model {
 	
 	public Date date;
 	
-	@Column(name="user",length=1000) 
+	@OneToOne
+	//@Column(name="user",length=1000) 
     public User user;
 		 
 	public SelectedArticle(Article article, int status, Date date, User user) {

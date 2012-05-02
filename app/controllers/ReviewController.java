@@ -40,7 +40,7 @@ public class ReviewController extends Controller {
 		render(articleId);
 	}
 	
-	public static void save(Long articleId, int judgment, String smallErrors, int expertise, String criticism) {
+	public static void save(Long articleId, int judgment, String smallErrors, int expertise, List<String> criticism) {
 		
 		//if no articleId present redirect
 		if(validation.required(articleId).error != null) {
@@ -56,7 +56,7 @@ public class ReviewController extends Controller {
 		if (validation.hasErrors()) {
 			params.flash(); // add http parameters to the flash scope
           	//validation.keep();
-			render("ReviewController/add.html", articleId);
+			render("ReviewController/add.html", articleId, criticism);
 		}
 		
 		Revision rev = Revision.findById(articleId);
@@ -67,9 +67,11 @@ public class ReviewController extends Controller {
                 		
 		Review review = new Review(rev, todayString, judgment, smallErrors, expertise, Security.getConnectedUser());
 		review.save();
-		review.addComment(criticism);
+		//review.addComment(criticism);
 		flash.success("Review added successfully. You can edit it within 7 days.");
 		index();
+		
+		
 	}
 
 }

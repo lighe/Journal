@@ -12,8 +12,9 @@ public class Edition extends Model {
  
     public String name;   
     public Date date; //change this back to date
-		
-    @Column(name="volume",length=1000) 
+	
+	@ManyToOne	
+    //@Column(name="volume",length=1000) 
     public Volume volume;
 
     @Column(name="published_by_editor",length=1000) 

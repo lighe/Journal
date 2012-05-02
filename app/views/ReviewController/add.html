@@ -70,12 +70,11 @@
 					<div id="criticism-section">
 						<div class="alert alert-info"><i class="icon-info-sign"></i> <strong>One substantive criticism per box, please!</strong></div>
 						
-						#{if flash.criticism}
-							adsd ${flash.criticism.size}
-							#{list items:flash.criticism, as:'criticism'}
+						#{if criticism}
+							#{list items:criticism, as:'crit'}
 								<div class="criticism-textarea">
 									<label>Criticism:</label>
-									<textarea name="criticism[]" rows="3" cols="5" class="span4">${criticism}</textarea>
+									<textarea name="criticism[]" rows="3" cols="5" class="span4">${crit}</textarea>
 								</div>
 							#{/list}
 						#{/if}

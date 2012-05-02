@@ -148,8 +148,8 @@ SelectedArticle(sa3):
     date: 04/22/2012
     user: u1
 
-Review(rev1):
-    article: thirdArticle
+Review(review1):
+    revision: rev1
     date: 04/22/2012
     score: 1
     smallErrors: these are some small errors, like gramatical errors. they all go in one place.
@@ -157,8 +157,8 @@ Review(rev1):
     acceptedByEditor: true
     user: u1
 
-Review(rev2):
-    article: thirdArticle
+Review(review2):
+    revision: rev2
     date: 04/18/2012
     score: 2
     smallErrors: these are some small errors, like gramatical errors. they all go in one place.
