@@ -9,18 +9,26 @@
 				<h2>Upload your article</h2>
 				
 				#{ifErrors}
+					<div class="row">
+					<div class="span6">
 					<div class="alert alert-warning">
 						<strong>There are some errors:</strong> <br />
 						#{errors}
 						   <i class="icon-flag"></i> ${error} <br />
 						#{/errors}
 					</div>
+					</div>
+					</div>
 				#{/ifErrors}
 				
 				
 				#{if flash.success}
+					<div class="row">
+					<div class="span6">
 					<div class="alert alert-success">
 						<strong>${flash.success}</strong>
+					</div>
+					</div>
 					</div>
 				#{/if}
 				
