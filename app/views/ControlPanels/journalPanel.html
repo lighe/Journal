@@ -1,34 +1,50 @@
 #{extends 'main.html' /}
 #{set title:'Journal Control Panel' /}
 
-#{if user}	
-	#{if user.editor}	
-	#{if jc}				
-	<div class='controlpannel'>
-		<u>Journal control panel</u>
-		
-		#{form @ControlPanelsController.updateJournal()}
-			#{ifErrors}
-				<div class='errors'>
-        		#{errors}
-       				<li>${error}</li>
-   				#{/errors}
-   				</div>
-    		#{/ifErrors}
-    		#{if flash.success}
-    			<div class="success">${flash.success}</div>
-			#{/if}
-			<p>Journal Name:<input type="text" name="name" value='${jc.journalName}'></p>
-			<p>Journal Goals:<textarea name="goals"> ${jc.journalGoals} </textarea></p>
-    		<input type="submit" value="Submit" />
-    	#{/form}
-    	
-    	
-		#{form @ControlPanelsController.upload(), enctype:'multipart/form-data'}
-    		Templates upload (PDF or Tex)<input type="file" name="file"><br/>
-   		 	<input type="submit" value="Submit" />
-		#{/form}
+<div class="container">
+	<div class="row">
+		#{if user}	
+			#{if user.editor}	
+			#{if jc}		
+				<h2 class="span7">Journal control panel</h2>
+				
+				<div class="span7">		
+					#{form @ControlPanelsController.updateJournal()}
+						#{ifErrors}
+							<div class='errors'>
+							#{errors}
+								<li>${error}</li>
+							#{/errors}
+							</div>
+						#{/ifErrors}
+						#{if flash.success}
+							<div class="success">${flash.success}</div>
+						#{/if}
+						
+						<div class="group">
+							<label>Journal Name:</label>
+							<input type="text" name="name" value='${jc.journalName}' class="span6"/>
+						</div>
+						<div class="group">
+							<label>Journal Goals:</label>
+							<textarea name="goals" class="span6"> ${jc.journalGoals} </textarea>
+						</div>
+						
+						<button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Save configuration</button>
+					#{/form}
+				</div>
+				
+				<div class="span5">   	
+					#{form @ControlPanelsController.upload(), enctype:'multipart/form-data'}
+						<div class="group">
+							<label>Templates upload (PDF or Tex)</label>
+							<input type="file" name="file" />
+						</div>
+						<button type="submit" class="btn btn-primary"><i class="icon-upload icon-white"></i> Upload file</button>
+					#{/form}
+				</div>
+			#{/if}	
+			#{/if}	
+		#{/if}
 	</div>
-	#{/if}	
-	#{/if}	
-#{/if}
+</div>

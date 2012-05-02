@@ -93,6 +93,9 @@ Edition(fourthEdition):
 User(u1):
     email: alighe89@gmail.com
     password: tester
+    author: true
+    editor: true
+    reviewer: true
 
 User(u2):
     email: aca08im@sheffield.ac.uk
