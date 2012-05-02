@@ -7,17 +7,10 @@ import java.util.*;
 
 import models.*;
 
-@With(Secure.class)
+@With({Secure.class, ApplicationController.class})
 public class BrowseController extends Controller {
 	
-	public static Edition selectedEdition;
-	/*Requirments say that no need to log in the browse
-	@Before
-    static void setConnectedUser() {
-        Security.setConnectedUser();
-    }
-	*/
-	
+	public static Edition selectedEdition;	
 	
 	//might be best to move this in application controlelr
 	@Before

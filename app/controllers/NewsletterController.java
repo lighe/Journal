@@ -16,7 +16,7 @@ import play.data.Upload;
 import play.data.validation.Required;
 import play.mvc.*;
 
-@With(Secure.class)
+@With({Secure.class, ApplicationController.class})
 public class NewsletterController extends Controller {
 
     @Before

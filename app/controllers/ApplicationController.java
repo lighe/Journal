@@ -23,6 +23,12 @@ public class ApplicationController extends Controller {
 		selectedEdition = BrowseController.selectedEdition;
 	}
 	
+	@Before 
+	static void getJournalConfig() {
+		JournalConfiguration jc = JournalConfiguration.all().first();
+		renderArgs.put("jc", jc);	
+	}
+	
    public static void index() {
         List<Volume> volumes = Volume.find(
             "order by ID desc"

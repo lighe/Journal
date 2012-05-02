@@ -9,7 +9,7 @@ import java.text.*;
 
 import models.*;
 
-@With(Secure.class)
+@With({Secure.class, ApplicationController.class})
 public class ReviewController extends Controller {
 	
 	@Before

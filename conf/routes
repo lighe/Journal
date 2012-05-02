@@ -14,11 +14,11 @@ POST    /newsletter/upload                      NewsletterController.upload
 
 
 # controlPanel pages
-GET     /controlPanel                           ControlPanelsController.index
-GET     /controlPanel/index                     ControlPanelsController.index
-GET     /controlPanel/controlPanel              ControlPanelsController.index
-GET     /controlPanel/journalPanel              ControlPanelsController.journalControlPanel
-GET     /controlPanel/users		              	ControlPanelsController.listUsers
+GET     /controlPanel                           ControlPanelController.index
+GET     /controlPanel/index                     ControlPanelController.index
+GET     /controlPanel/controlPanel              ControlPanelController.index
+GET     /controlPanel/journalPanel              ControlPanelController.journalControlPanel
+GET     /controlPanel/users		              	ControlPanelController.listUsers
 
 # article pages
 GET     /article                             ArticleController.index

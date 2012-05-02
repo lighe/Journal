@@ -3,8 +3,22 @@
 		
 <div class="hero-unit">
 	<div class="container">
-		<h1>The Journal CMS</h1>
-		<p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+		<h1>
+			#{if jc.journalName}
+				${jc.journalName}
+			#{/if}
+			#{else}
+				No name set
+			#{/else}
+		</h1>
+		<p>
+			#{if jc.shortDescription}
+				${jc.shortDescription}
+			#{/if}
+			#{else}
+				No description set
+			#{/else}
+		</p>
 	</div>
 </div>
 

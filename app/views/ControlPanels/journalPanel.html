@@ -5,54 +5,61 @@
 	<div class="row">
 		#{if user}	
 			#{if user.editor}	
-			#{if jc}		
-				<h2 class="span7">Journal control panel</h2>
-				
-				<div class="span7">		
-					#{form @ControlPanelsController.updateJournal()}
-						#{ifErrors}
-							<div class="row">
-								<div class="span6">
-									<div class="alert alert-warning">
-										<strong>There are some errors:</strong> <br />
-										#{errors}
-										   <i class="icon-flag"></i> ${error} <br />
-										#{/errors}
-									</div>
-								</div>
-							</div>
-						#{/ifErrors}
-						#{if flash.success}
-							<div class="row">
-								<div class="span6">
-									<div class="alert alert-success">
-										<strong><i class="icon-ok"></i> ${flash.success}</strong>
-									</div>
-								</div>
-							</div>
-						#{/if}
+			#{if jc}
+			
+				<div class="span12">			
+					<div class="alert alert-info">
+						<strong><i class="icon-info-sign"></i> Please complete both sections separately.</strong>
+					</div>
+					#{ifErrors}
+						<div class="alert alert-warning">
+							<strong>There are some errors:</strong> <br />
+							#{errors}
+							   <i class="icon-flag"></i> ${error} <br />
+							#{/errors}
+						</div>
+					#{/ifErrors}
+					#{if flash.success}
+						<div class="alert alert-success">
+							<strong><i class="icon-ok"></i> ${flash.success}</strong>
+						</div>
+					#{/if}
+				</div>
+							
+				<div class="span7">	
+					<h2>Journal control panel</h2>	
+					#{form @ControlPanelController.updateJournal()}
 						
 						<div class="group">
 							<label>Journal Name:</label>
 							<input type="text" name="name" value='${jc.journalName}' class="span6"/>
 						</div>
 						<div class="group">
+							<label>Journal Short Description:</label>
+							<textarea name="shortDescription" class="span6" rows="5"> ${jc.shortDescription} </textarea>
+						</div>
+						<div class="group">
 							<label>Journal Goals:</label>
-							<textarea name="goals" class="span6"> ${jc.journalGoals} </textarea>
+							<textarea name="goals" class="span6" rows="10"> ${jc.journalGoals} </textarea>
 						</div>
 						
 						<button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Save configuration</button>
 					#{/form}
 				</div>
 				
-				<div class="span5">   	
-					#{form @ControlPanelsController.upload(), enctype:'multipart/form-data'}
+				<div class="span5">  
+					<h2>Submission guidelines</h2> 	
+					<form action="@{ControlPanelController.upload()}" enctype='multipart/form-data' method="POST">
+						<div class="group">
+							<label>Submission guidelines:</label>
+							<textarea name="guidelines" class="span5" rows="5"> ${jc.guidelines} </textarea>
+						</div>
 						<div class="group">
 							<label>Templates upload (PDF or Tex)</label>
 							<input type="file" name="file" />
 						</div>
-						<button type="submit" class="btn btn-primary"><i class="icon-upload icon-white"></i> Upload file</button>
-					#{/form}
+						<button type="submit" class="btn btn-primary"><i class="icon-upload icon-white"></i> Save journal goals and upload file</button>
+					</form>
 				</div>
 			#{/if}	
 			#{/if}	

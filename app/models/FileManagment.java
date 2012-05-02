@@ -56,6 +56,18 @@ public class FileManagment {
     	}
     }
     
+	public static boolean isDoc(String fileName) {
+		if(fileName.length()<=4){
+    		return false;
+    	} 
+		if((fileName.substring(fileName.length()-4, fileName.length())).contentEquals(".doc")){
+    		return true;
+    	} 
+		if((fileName.substring(fileName.length()-5, fileName.length())).contentEquals(".docx")){
+    		return true;
+    	} 
+		return false;
+	}
     
     public static boolean isLaTEX(String fileName){
     	if(fileName.length()<=4){
