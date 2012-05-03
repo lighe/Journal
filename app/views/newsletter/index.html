@@ -34,7 +34,7 @@
 				<tbody>
 					#{list items:filesTable, as:'file'}
 						<tr>
-							<td><a href='${file[1]}' target="_blank"> ${file[0]} </a>
+							<td><a href='${file[1]}' target="_blank"> ${file[0]} </a></td>
 							<td><label class='radio'><input type='radio' name=newsletter value="${file[1]}" onchange='newSelection(this);' /> Select newsletter</label></td>
 						</tr>
 					#{/list}
@@ -73,3 +73,5 @@
 				<button type="submit" class="btn btn-primary"><i class="icon-upload icon-white"></i> Submit</button>
 			</form>
 		</div>
+	</div>
+</div>
