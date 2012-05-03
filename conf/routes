@@ -41,6 +41,12 @@ GET     /browse/journalGoals                 BrowseController.journalGoals
 GET     /review	                     ReviewController.index
 GET     /review/index                ReviewController.index
 
+# reader comments
+GET     /ReaderCommentController                         ReaderCommentController.readerComments
+GET     /contactUs/index                                 ReaderCommentController.index
+
+
+
 #crud
 GET	/admin              module:crud
 
