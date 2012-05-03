@@ -1,0 +1,8 @@
+Listening for transport dt_socket at address: 8000
+02:16:06,476 INFO  ~ Starting D:\play\Journal
+02:16:06,479 WARN  ~ Declaring modules in application.conf is deprecated. Use dependencies.yml instead (module.secure)
+02:16:06,480 INFO  ~ Module secure is available (D:\play\modules\secure)
+02:16:06,480 INFO  ~ Module crud is available (D:\play\modules\crud)
+02:16:06,481 INFO  ~ Module elasticsearch is available (D:\play\Journal\modules\elasticsearch-0.0.6)
+02:16:07,304 WARN  ~ You're running Play! in DEV mode
+02:16:07,406 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
