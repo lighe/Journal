@@ -1,0 +1,31 @@
+#{extends 'main.html' /}
+#{set title:'New Article' /}
+
+<div class="container">
+	<div class="row">
+		<div class="span7">
+			<h2>${review.revision.article.title} Review | ${review.date}</h2>
+			<br />
+			<div class="well">
+				<p><strong>Score: </strong>${reviewScore}</p>
+				<p><strong>Author Expertise Level: </strong>${expertise}</p>
+				<p><strong>Summary: </strong> ${review.summary}</p>
+				<p><strong>Small errors: </strong>${review.smallErrors}</p>
+			</div>
+			
+			<div id="review-comments">
+				<h2>Criticism</h2>
+				<br />
+				#{list items:review.reviewComments, as:'comment'}
+					<p class="comment alert alert-wraning"><span class="badge badge-warning">${comment_index}</span>  ${comment.comment}</p>						
+				#{/list}
+			</div>
+			
+		</div>
+		<div class="span5">
+			<h2>Article Abstract</h2>
+			<br />
+			<p>${review.revision.article.summary}</p>
+		</div>		
+	</div>
+</div>

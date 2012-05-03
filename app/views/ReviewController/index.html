@@ -67,7 +67,7 @@
 						</td>
 						<td>
 							&nbsp;
-							<a href="#" class="btn"><i class="icon-file"></i> View review</a>
+							<a href="@{ReviewController.show(review.id)}" class="btn"><i class="icon-file"></i> View review</a>
 							&nbsp;
 							#{if review.isEditable()}
 								<a href="#" class="btn"><i class="icon-edit"></i> Edit review</a>

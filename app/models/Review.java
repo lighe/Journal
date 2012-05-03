@@ -24,10 +24,16 @@ public class Review extends Model {
 	
 	public boolean acceptedByEditor;
 	
+	@Lob
+	public String summary;
+	
 	@ManyToOne
     public User user;
+	
+	@OneToMany
+	public List<ReviewComment> reviewComments;
 		 
-	public Review(Revision revision, String date, int score, String smallErrors, int authorExpertiseLevel, User user) {
+	public Review(Revision revision, String date, int score, String smallErrors, int authorExpertiseLevel, User user, String summary) {
 		this.revision = revision;
 		this.date = date;
 		this.score = score;
@@ -35,6 +41,7 @@ public class Review extends Model {
 		this.authorExpertiseLevel = authorExpertiseLevel;	
 		this.user = user;
 		this.acceptedByEditor = false;
+		this.summary = summary;
 	}
   
   	public static List<Review> getReviews(User user) {
@@ -54,7 +61,26 @@ public class Review extends Model {
 		reviewComment.save();	
 		
 	}
+	
+	public static String scoreToHuman(int i) {
+		if(i==1) return "Detractor - I strongly condemn the paper as badly flawed or worthless";
+		if(i==2) return "Indifferent - I would not care if the paper were rejected";
+		if(i==3) return "Favourable - I would not object if the paper were published";
+		if(i==4) return "Champion - I strongly advocate this paper";	
+		return "";
+	}
+	
+	public static String expertiseToHuman(int i) {
+		if(i==1) return "Expert";
+		if(i==2) return "Knowledgeable";
+		if(i==3) return "Outsider";
+		return "";	
+	}
 
+
+	public List<ReviewComment> getReviewComments() {
+		return ReviewComment.find("byReview", this).fetch();		
+    }
     
 	/* I'm not sure we need this
     @ManyToOne
