@@ -1,0 +1,21 @@
+# This file defines all module routes (Higher priority routes first)
+#
+# import these routes in the main app as :
+# *     /                       module:elasticsearch
+#
+# ~~~~
+
+GET     /?                      Module.index
+
+#{elasticsearch.types}
+GET			/?											${type.controllerClass.name.substring(12).replace('$','')}.index
+GET			/${type.controllerName}/search				${type.controllerClass.name.substring(12).replace('$','')}.search
+POST		/${type.controllerName}/search				${type.controllerClass.name.substring(12).replace('$','')}.search
+#{/elasticsearch.types}
+
+
+GET     /es-admin               						ElasticSearchAdmin.index
+GET     /es-admin/               						ElasticSearchAdmin.index
+GET     /elasticsearch_public               			staticDir:elasticsearch_public
+
+*       /{controller}/{action}                  		{controller}.{action}
