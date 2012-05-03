@@ -3,6 +3,9 @@
 
 <div class="container">
 	<div class="row">
+		<h2>Select articles for review</h2>
+		<br />
+		<p>To select articles for review, go to our <a href="@{PublishedController.unpublishedShow()}" class="btn btn-primary"><i class="icon-th-list icon-white"></i> Unpublished List</a> and pick up to three articles.</p>
 		<h2>Selected articles for review</h2>
 		<table class="table table-bordered table-striped">
 			<thead>
@@ -25,7 +28,7 @@
 								&nbsp;
 								<i>- or -</i> 
 								&nbsp;
-								<a href="@{ReviewController.remove(selection.id)}" class="btn"><i class="icon-trash"></i> Remove selection</a>
+								<a href="@{ReviewController.removeSelected(selection.id)}" class="btn"><i class="icon-trash"></i> Remove selection</a>
 							#{/if}	
 							#{if selection.status == 1}
 								&nbsp;
@@ -67,7 +70,7 @@
 						</td>
 						<td>
 							&nbsp;
-							<a href="#" class="btn"><i class="icon-file"></i> View review</a>
+							<a href="@{ReviewController.show(review.id)}" class="btn"><i class="icon-file"></i> View review</a>
 							&nbsp;
 							#{if review.isEditable()}
 								<a href="#" class="btn"><i class="icon-edit"></i> Edit review</a>

@@ -7,7 +7,7 @@
 			<p>${article.summary}</p>
 			
 			<ul class="tags">
-				<li>${article.tags.size() ?: 'No'} Tags:</li>
+				<li>${article.tags.size() ?: 'No'} Tags</li>
 			    #{list items:article.tags, as:'tag'}
 					<li><a href="#">${tag.title}</a></li>						
 				#{/list}

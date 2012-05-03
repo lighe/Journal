@@ -12,12 +12,6 @@ public class ApplicationController extends Controller {
 	
 	private static Edition selectedEdition; //this is populated in getBrowseData()
 	
-	@Before
-	static void getBrowseData() {
-		BrowseController.getBrowseData();
-		selectedEdition = BrowseController.selectedEdition;
-	}
-	
 	@Before 
 	static void getJournalConfig() {
 		JournalConfiguration jc = JournalConfiguration.all().first();
@@ -31,7 +25,7 @@ public class ApplicationController extends Controller {
 		String user = Security.connected();
 		Volume selectedVolume = volumes.get(0);
 		List<Edition> editions = selectedVolume.getEditions();
-		Edition selectedEdition = editions.get(0);
+		Edition selectedEdition = editions.get(editions.size()-1);
 		List<Published> publishedArticles = selectedEdition.getPublished();
 
         render(volumes, editions, publishedArticles);

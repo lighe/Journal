@@ -68,11 +68,15 @@ textarea, input, file {
 	a {
 		color: @blueDark;
 		text-shadow: none;
+	
+		&:hover {
+			color: darken(@blueDark, 20%);
+		}
 	}
 	
 	li { margin-right: 10px; }
 	
-	li.selected a {
+	li.active a {
 		.btn();
 		margin-top: 6px;
 	}

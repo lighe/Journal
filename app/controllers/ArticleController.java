@@ -104,7 +104,7 @@ public class ArticleController extends Controller {
 				//once everything is successful, save the user
 				user.save();
 			} catch (EmailException e) {
-		    	validation.addError(null, "There was an issue emailing youre email account, are you sure it is correct?");
+		    	validation.addError(null, "There was an issue emailing your email account, are you sure it is correct?");
 			}
     	}
     	/*If email given and password,

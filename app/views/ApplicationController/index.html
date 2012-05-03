@@ -29,7 +29,7 @@
 			<ul class="nav">
 				#{if volumes}				
 					#{list items:volumes, as:'volume'}
-						<li><a href="@{BrowseController.index(volume.id)}">${volume.name}</a></li>					
+						<li #{if volume_isFirst} class="active" #{/if}><a href="@{BrowseController.index(volume.id)}">${volume.name}</a></li>					
 					#{/list}
 				#{/if}
 				<li><a href="@{BrowseController.index()}">Archive</a></li>
@@ -42,7 +42,7 @@
 		<div class="container">
 			<ul class="nav">
 				#{list items:editions, as:'edition'}
-					<li><a href="#">${edition.name}</a></li>						
+					<li #{if edition_isLast} class="active" #{/if}><a href="@{BrowseController.index(edition.volume.id, edition.id)}">${edition.name}</a></li>						
 				#{/list}
 			</ul>
 		</div>
@@ -64,33 +64,34 @@
 				#{/if}					
 			#{/list}
 	</div>
-</div>
 
-<div id="newsletter" class="well">
-	#{ifErrors}
-	<div class="alert alert-warning">
-		<strong>There are some errors:</strong> <br />
-		#{errors}
-		   <i class="icon-flag"></i> ${error} <br />
-		#{/errors}
+
+	<div id="newsletter" class="well">
+		#{ifErrors}
+		<div class="alert alert-warning">
+			<strong>There are some errors:</strong> <br />
+			#{errors}
+			   <i class="icon-flag"></i> ${error} <br />
+			#{/errors}
+		</div>
+		#{/ifErrors}
+		
+		#{if flash.success}
+		<div class="alert alert-success">
+			<strong><i class="icon-ok"></i> You have been subscribed successfully!</strong>
+		</div>
+		#{/if}
+		
+		<form action="@{NewsletterController.subscribe()}" method="POST" class="form-inline">
+			<label><strong>Subscribe to our newsletter and stay up to date:</strong></label>
+			&nbsp; &nbsp;
+			<label>Email:</label>
+			<input type="text" class="input-medium" name="email">
+			&nbsp;
+			<label>Name:</label>
+			<input type="name" class="input-medium">
+			&nbsp;
+			<button type="submit" class="btn"><i class="icon-ok"></i> Sign up</button>
+		</form>
 	</div>
-	#{/ifErrors}
-	
-	#{if flash.success}
-	<div class="alert alert-success">
-		<strong><i class="icon-ok"></i> You have been subscribed successfully!</strong>
-	</div>
-	#{/if}
-	
-	<form action="@{NewsletterController.subscribe()}" method="POST" class="form-inline">
-		<label><strong>Subscribe to our newsletter and stay up to date:</strong></label>
-		&nbsp; &nbsp;
-		<label>Email:</label>
-		<input type="text" class="input-medium" name="email">
-		&nbsp;
-		<label>Name:</label>
-		<input type="name" class="input-medium">
-		&nbsp;
-		<button type="submit" class="btn"><i class="icon-ok"></i> Sign in</button>
-	</form>
 </div>

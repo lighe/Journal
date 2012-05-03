@@ -1,14 +1,24 @@
 #initial data
 JournalConfiguration(jc1):
 
-# Test data
+User(u1):
+    email: alighe89@gmail.com
+    password: tester
+    author: true
+    editor: true
+    reviewer: true
+
+User(u2):
+    email: aca08im@sheffield.ac.uk
+    password: test
+    author: true
+    editor: true
+    reviewer: true
 
 #Tag(t1):
-#    articles: firstArticle
 #    title: Tag1
 
 #Tag(t2):
-#    articles: firstArticle
 #    title: Tag2
 
 Article(firstArticle):
@@ -16,22 +26,26 @@ Article(firstArticle):
     summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
  #   tags: t1, t2
     published: true
+    user: u2
     
 Article(secondArticle):
     title: Test title 2
     summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
   #  tags: t1, t2
     published: false
+    user: u1
 
 Article(thirdArticle):
     title: Test title 3
     summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
     published: true
+    user: u2
 
 Article(fourthArticle):
     title: Test title 4
     summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
     published: false
+    user: u1
 
 Revision(rev1):
   article:          firstArticle
@@ -91,40 +105,19 @@ Edition(fourthEdition):
     date: some date
     volume: secondVolume
 
-User(u1):
-    email: alighe89@gmail.com
-    password: tester
-    author: true
-    editor: true
-    reviewer: true
-
-User(u2):
-    email: aca08im@sheffield.ac.uk
-    password: test
-    author: true
-    editor: true
-    reviewer: true
-    
-User(u2):
-    email: aca08iam@sheffield.ac.uk
-    password: tester
-    author: true
-    editor: true
-    reviewer: true    
-
 Published(firstPublished):
     revision: rev1
-    edition: firstEdition
+    edition: fourthEdition
     published_by_editor: u2
 
 Published(secondPublished):
     revision: rev2
-    edition: firstEdition
+    edition: fourthEdition
     published_by_editor: u2
 
 Published(thirdPublished):
     revision: rev3
-    edition: firstEdition
+    edition: fourthEdition
     published_by_editor: u1
 
 Role(r1):
@@ -169,5 +162,3 @@ Review(review2):
     authorExpertiseLevel: 2
     acceptedByEditor: true
     user: u1
-
-  
