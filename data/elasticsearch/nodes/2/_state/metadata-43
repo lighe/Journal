@@ -1,0 +1,36 @@
+{
+  "state" : {
+    "version" : 43,
+    "meta-data" : {
+      "templates" : {
+      },
+      "indices" : {
+        "models_article" : {
+          "state" : "open",
+          "settings" : {
+            "index.number_of_shards" : "5",
+            "index.number_of_replicas" : "1"
+          },
+          "mappings" : [ {
+            "models_article" : {
+              "properties" : {
+                "summary" : {
+                  "type" : "string"
+                },
+                "id" : {
+                  "type" : "long"
+                },
+                "title" : {
+                  "type" : "string"
+                },
+                "published" : {
+                  "type" : "boolean"
+                }
+              }
+            }
+          } ]
+        }
+      }
+    }
+  }
+}
