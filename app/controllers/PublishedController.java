@@ -8,24 +8,8 @@ import play.mvc.With;
 
 @With({Secure.class, Security.class, ApplicationController.class})
 public class PublishedController extends Controller {
-
-    @Before
-    static void setConnectedUser() {
-        Security.setConnectedUser();
-    }
     
-    /*public static void unpublishedShow(Long id){
-        User user = Security.getConnectedUser();
-        
-        if (Security.isReviewer()){
-            List<Article> unpublished = Article.find("published", false).fetch();                 
-                render("unpublished/index.html", unpublished);
-                    }
-                        
-                    }
-                } 
-                */
-    public static void unpublishedShow(Long id){
+    public static void unpublishedShow(){
        
         User user = Security.getConnectedUser();
         if (Security.isReviewer()){
@@ -48,18 +32,12 @@ public class PublishedController extends Controller {
             if(forceUnpublished != null){
                 unpublished = forceUnpublished;
             }                  
-            render("unpublished/index.html", unpublished);
-                    }
-                        
-                    }
-            }
+			
+			long allowed = 3- SelectedArticle.count("user = ?", Security.getConnectedUser());
+            render("unpublished/index.html", unpublished, allowed);
+		}
+			
+	}
+}
     
 
-  /*  public static void unpublishedreviewedShow(){
-        /*Shows a list of possible unpublished articles that could be published 
-         * seen only by editor
-         * Needs author to review at three articles first 
-         * As well as the article recieving at least three reviews, with their score shown.
-         * A button that says publish that adds the article into the next journal.
-         */ 
-    

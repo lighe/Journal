@@ -27,9 +27,24 @@ public class ReviewController extends Controller {
         render(selectedArticles, reviews);
     } 
 	
-	public static void remove(Long selectedArticleId ) {
+	public static void removeSelected(Long selectedArticleId ) {
 		SelectedArticle.remove(selectedArticleId);
 		index();	
+	}
+	
+	public static void addSelected(Long selectedArticleId) {
+		Article article = Article.findById(selectedArticleId);
+		if(SelectedArticle.count("user = ?", Security.getConnectedUser()) <3) {
+			SelectedArticle selected = new SelectedArticle(article, new Date(), Security.getConnectedUser());
+			selected.save();
+			flash.success("Added successfully");
+			PublishedController.unpublishedShow();	
+		}
+		else {
+			validation.addError(null, "You have already selected 3 articles for review. Please review these before selecting more.");
+			validation.keep();
+			PublishedController.unpublishedShow();	
+		}
 	}
 	
 	public static void add(Long articleId) {
