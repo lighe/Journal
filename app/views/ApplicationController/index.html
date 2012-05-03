@@ -29,7 +29,7 @@
 			<ul class="nav">
 				#{if volumes}				
 					#{list items:volumes, as:'volume'}
-						<li><a href="@{BrowseController.index(volume.id)}">${volume.name}</a></li>					
+						<li #{if volume_isFirst} class="active" #{/if}><a href="@{BrowseController.index(volume.id)}">${volume.name}</a></li>					
 					#{/list}
 				#{/if}
 				<li><a href="@{BrowseController.index()}">Archive</a></li>
@@ -42,7 +42,7 @@
 		<div class="container">
 			<ul class="nav">
 				#{list items:editions, as:'edition'}
-					<li><a href="#">${edition.name}</a></li>						
+					<li><a href="@{BrowseController.index(edition.volume.id, edition.id)}">${edition.name}</a></li>						
 				#{/list}
 			</ul>
 		</div>
@@ -91,6 +91,6 @@
 		<label>Name:</label>
 		<input type="name" class="input-medium">
 		&nbsp;
-		<button type="submit" class="btn"><i class="icon-ok"></i> Sign in</button>
+		<button type="submit" class="btn"><i class="icon-ok"></i> Sign up</button>
 	</form>
 </div>
