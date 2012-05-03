@@ -12,21 +12,6 @@ public class BrowseController extends Controller {
 	
 	public static Edition selectedEdition;	
 	
-	//might be best to move this in application controlelr
-	@Before
-	static void getBrowseData() {
-		List<Volume> volumes = Volume.find("order by ID desc").fetch(5); //this repeats db values if not enough entries in db. Solutions?
-		Volume selectedVolume = volumes.get(0);
-		List<Edition> editions = selectedVolume.getEditions();
-		Edition selectedEd = editions.get(0);
-		
-		renderArgs.put("volumes", volumes);
-		renderArgs.put("editions", editions);
-		
-		selectedEdition = selectedEd;
-	}
-	
-	
     public static void index(Long selectedVolumeID, Long selectedEditionID) {
 				
 		//check for case when no volumes or no editions

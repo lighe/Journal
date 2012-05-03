@@ -107,17 +107,17 @@ Edition(fourthEdition):
 
 Published(firstPublished):
     revision: rev1
-    edition: firstEdition
+    edition: fourthEdition
     published_by_editor: u2
 
 Published(secondPublished):
     revision: rev2
-    edition: firstEdition
+    edition: fourthEdition
     published_by_editor: u2
 
 Published(thirdPublished):
     revision: rev3
-    edition: firstEdition
+    edition: fourthEdition
     published_by_editor: u1
 
 Role(r1):
