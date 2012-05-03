@@ -8,9 +8,7 @@ import java.util.List;
 
 import org.apache.commons.mail.EmailException;
 
-import models.Emailer;
-import models.FileManagment;
-import models.User;
+import models.*;
 import play.*;
 import play.data.Upload;
 import play.data.validation.Required;
@@ -28,7 +26,7 @@ public class NewsletterController extends Controller {
 	 * renders the index page
 	 */
     public static void index() {
-    	String filesTable = buildTable();
+    	String[][] filesTable = getAvailableNewsletters();
     	render("newsletter/index.html", filesTable);
     }
     
@@ -62,9 +60,34 @@ public class NewsletterController extends Controller {
      * Email all users a specified file
      * @param newsletter represents the file path of the newsletter to email to all users
      */
-    public static void sendEmail(@Required String newsletter){
-    	String fileDestination = newsletter;
-		File newFile = new File(fileDestination);
+    public static void sendEmail(String newsletter){
+		
+		validation.required(newsletter).message("Please select a newsletter to send");
+		if(!validation.hasErrors()) {
+			String fileDestination = newsletter;
+			File newFile = new File(fileDestination);
+			
+			List<NewsletterSubscription> subscriptions = NewsletterSubscription.all().fetch();
+			System.out.println(NewsletterSubscription.count());
+			for(int i = 0; i < subscriptions.size(); i++) {
+				//emails will be marked as sent as from current logged in user
+				User current = Security.getConnectedUser();
+				try {
+					Emailer.sendNewsletterTo(subscriptions.get(i).email, current.email, newFile);
+				} catch (EmailException e) {
+					e.printStackTrace();
+				}	
+			}
+			
+			flash.success("Your newsletter has been sent");		
+		}
+		else {
+			validation.keep();
+		}
+		
+		index();
+		
+		/*
 		for(long x = 1; x < User.count(); x++){
 			User user = User.findById(x);
 			User current = Security.getConnectedUser();
@@ -74,6 +97,7 @@ public class NewsletterController extends Controller {
 				e.printStackTrace();
 			}
 		}
+		*/
     }
     
     //Returns a list of all files uploaded to the newsletter directory (
@@ -86,7 +110,7 @@ public class NewsletterController extends Controller {
         System.out.println(folder.listFiles());
         String[][] files = null;
         if(listOfFiles != null){
-            files = new String[listOfFiles.length+1][2];
+            files = new String[listOfFiles.length][2];
     	
             for (int i = 0; i < listOfFiles.length; i++){
                 if (listOfFiles[i].isFile()){
@@ -100,13 +124,14 @@ public class NewsletterController extends Controller {
     }    
     
     //Returns a String that contains a html table that neatly presents the files available for use as newsletters
+	/*
     private static String buildTable(){
     	String files[][] = getAvailableNewsletters();
         String filesTable = "";
         if(files != null){
 		filesTable = "<div id='fileTable' name='fileTable'> \n<Table>\n";
 		for(int x = 0; x < files.length-1; x++ ){
-			filesTable += "<tr><td width=20px><center><input type='radio' name="+files[x][0]+" value="+files[x][1]+" onchange='newSelection(this);' /></center></td><td><a href='" + files[x][1] + "'> " + files[x][0] + "</a></td>\n";
+			filesTable += "<tr><td><label class='radio'><input type='radio' name=newsletter value="+files[x][1]+" onchange='newSelection(this);' />" + files[x][0] + "</label></td><td><a href='" + files[x][1] + "'> View </a></td>\n";
 			filesTable += "</tr>\n";
 		}
 		filesTable += "</table>\n</div>\n";
@@ -115,6 +140,7 @@ public class NewsletterController extends Controller {
         }
 	return filesTable; 	
     }
+	*/
 	
 	public static void subscribe(String email, String name) {
 		
@@ -126,6 +152,8 @@ public class NewsletterController extends Controller {
 			validation.keep();
 		}	
 		else {
+			NewsletterSubscription subscriber = new NewsletterSubscription(email, name);
+			subscriber.save();
 			flash.success("Thank you! You have been subscribed to our newsletter!");
 		}
 		ApplicationController.index();

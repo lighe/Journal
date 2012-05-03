@@ -6,7 +6,43 @@
 		<div class="span7">
 			<h2>Newsletters available:</h2>
 			
-			&{filesTable}
+			#{ifErrors}
+				<div class="alert alert-warning">
+					<strong>There are some errors:</strong> <br />
+					#{errors}
+					   <i class="icon-flag"></i> ${error} <br />
+					#{/errors}
+				</div>
+			#{/ifErrors}
+			#{if flash.success}
+				<div class="alert alert-success">
+					<strong><i class="icon-ok"></i> ${flash.success}</strong>
+				</div>
+			#{/if}
+			
+			#{if filesTable}
+			<form action="@{NewsletterCOntroller.sendEmail()}" method="POST"> 
+			
+		
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<td>Newsletter</td>
+						<td>Action</td>
+					</tr>
+				</thead>
+				<tbody>
+					#{list items:filesTable, as:'file'}
+						<tr>
+							<td><a href='${file[1]}' target="_blank"> ${file[0]} </a>
+							<td><label class='radio'><input type='radio' name=newsletter value="${file[1]}" onchange='newSelection(this);' /> Select newsletter</label></td>
+						</tr>
+					#{/list}
+				</tbody>
+			</table>			
+			
+			
+			
 			
 			<script type="text/javascript">
 			var selectedFile;
@@ -17,42 +53,18 @@
 				document.forms["delete"]["newsletter"].value = selectedFile
 				
 			}
-			
-			function getHttpRequest(){
-				var httpObj;
-				if (window.XMLHttpRequest){// code for all good browsers
-				  httpObj = new XMLHttpRequest()
-				}else{// code for IE
-				  httpObj = new ActiveXObject("Microsoft.XMLHTTP")
-				}
-				return httpObj
-			}
-			
-			function emailAll(){
-				var httpObj = getHttpRequest();
-				httpObj.onreadystatechange=function(){
-					if (httpObj==4 && httpObj==200){
-						alert("Emails sent")
-					} else {
-						alert("Sorry, youre request could not be compleated");
-					}
-				}
-				if(selectedFile == null){
-					alert("Please select a newsletter to send");
-				} else {	
-					var target = "@{NewsletterController.sendEmail()}?newsletter=" + selectedFile
-					httpObj.open("GET", target,true)
-					httpObj.send()
-				}
-			}
 			</script>
-			<form> 
-				<button type="submit" onclick="emailAll()" class="btn btn-primary"><i class="icon-envelope icon-white"></i> Email all</button>
+			
+				<button type="submit" onclick="emailAll()" class="btn btn-primary"><i class="icon-envelope icon-white"></i> Email all users</button>
 			</form>
 			<form action="@{NewsletterController.delete()}" method="POST" name="delete" enctype="multipart/form-data"> 
 				<input type="hidden" name="newsletter"/>
 				<button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i> Delete newsletter</button>
 			</form>
+			#{/if}
+			#{else}
+				<div class='alert alert-info'><strong><i class='icon-info-sign'></i> No newsletter found</strong></div>
+			#{/else}
 		</div>
 		<div class="span5">			
 			<h2>Upload a new newsletter</h2>

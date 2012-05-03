@@ -11,4 +11,5 @@ import play.modules.elasticsearch.annotations.*;
 @ElasticSearchController.For(models.Article.class)
 public class SearchArticleController extends ElasticSearchController {
 
+	
 }
