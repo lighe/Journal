@@ -1,0 +1,64 @@
+#{extends 'main.html' /}
+#{set title:'Control Panel' /}
+
+<div class="container">
+	<div class="row">
+		#{if user}	
+			<div class="span12">
+				<h2>User control panel</h2>
+				<p>${user.email}</p>
+				<br />
+				#{ifErrors}
+					<div class="row">
+						<div class="span6">
+							<div class="alert alert-warning">
+								<strong>There are some errors:</strong> <br />
+								#{errors}
+								   <i class="icon-flag"></i> ${error} <br />
+								#{/errors}
+							</div>
+						</div>
+					</div>
+				#{/ifErrors}
+				#{if flash.success}
+					<div class="row">
+						<div class="span6">
+							<div class="alert alert-success">
+								<strong><i class="icon-ok"></i> ${flash.success}</strong>
+							</div>
+						</div>
+					</div>
+				#{/if}
+			</div>
+			<div class="span4">	
+				<h3>Change Password</h3>
+				#{form @ControlPanelController.changePassword()}
+					<div class="group">
+						<label>New password:</label>
+						<input type="text" name="password1" />
+					</div>
+					<div class="group">
+						<label>Retype password:</label>
+						<input type="text" name="password2" />
+					</div>
+					
+					<button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Change password</button>
+				#{/form}
+			</div>
+			
+			#{if user.editor}
+				<div class="span4">	
+					<h3>Resign as editor</h3>
+					#{form @ControlPanelController.resignEditor()}
+						<div class="group">
+							<label>Password:</label>
+							<input type="password" name="password" />
+						</div>
+						
+						<button type="submit" class="btn btn-danger"><i class="icon-off icon-white"></i> Resign</button>
+					#{/form}
+				</div>
+			#{/if}
+		#{/if}
+	</div>
+</div>

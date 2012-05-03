@@ -1,0 +1,98 @@
+#{extends 'main.html' /}
+#{set title:'New Article' /}
+
+<div class="container">
+	<div class="row">
+		#{form @ReviewController.save(articleId)}
+		
+			#{ifErrors}
+				<div class="span12">
+					<div class="alert alert-warning">
+						<strong>There are some errors:</strong> <br />
+						#{errors}
+						   <i class="icon-flag"></i> ${error} <br />
+						#{/errors}
+					</div>
+				</div>
+			#{/ifErrors}
+
+			<div class="span7">
+					<h2>General review</h2>
+					<div class="well">
+						<label>Overall judgment:</label>
+						<label class="radio">
+							<input type="radio" name="judgment" value="4" #{if flash.judgment.equals("4")} checked="checked" #{/if} />
+							&nbsp; Champion - I strongly advocate this paper
+						</label>
+						<label class="radio">
+							<input type="radio" name="judgment" value="3" #{if flash.judgment.equals("3")} checked="checked" #{/if} />
+							&nbsp; Favourable - I would not object if the paper were published
+						</label>
+						<label class="radio">
+							<input type="radio" name="judgment" value="2" #{if flash.judgment.equals("2")} checked="checked" #{/if}/>
+							&nbsp; Indifferent - I would not care if the paper were rejected
+						</label>
+						<label class="radio">
+							<input type="radio" name="judgment" value="1" #{if flash.judgment.equals("1")} checked="checked" #{/if}/>
+							&nbsp; Detractor - I strongly condemn the paper as badly flawed or worthless
+						</label>
+					</div>
+					<div class="well">
+						<label>Your expertise level:</label>
+						<label class="radio">
+							<input type="radio" name="expertise" value="3" #{if flash.expertise.equals("3")} checked="checked" #{/if}/>
+							 &nbsp; Expert
+						</label>
+						<label class="radio">
+							<input type="radio" name="expertise" value="2" #{if flash.expertise.equals("2")} checked="checked" #{/if}/>
+							 &nbsp; Knowledgeable
+						</label>
+						<label class="radio">
+							<input type="radio" name="expertise" value="1" #{if flash.expertise.equals("1")} checked="checked" #{/if}/>
+							 &nbsp; Outsider
+						</label>
+					</div>
+					<div class="well">
+						<label>Summary:</label>
+						<textarea name="summary" rows="5" cols="8" class="span6">${flash.summary}</textarea>
+						<p class="help-block">Summary of the content and novel contribution of the article</p>
+					</div>
+					<div class="well">
+						<label>Any small errors?</label>
+						<textarea name="smallErrors" rows="5" cols="5" class="span6">${flash.smallErrors}</textarea>
+						<p class="help-block">Typographical, grammatical mistakes, etc.</p>
+					</div>
+			</div>
+			
+			<div class="span5">
+				<h2>Criticism</h2>
+				<div class="well">
+					<div id="criticism-section">
+						<div class="alert alert-info"><i class="icon-info-sign"></i> <strong>One substantive criticism per box, please!</strong></div>
+						
+						#{if criticism}
+							#{list items:criticism, as:'crit'}
+								<div class="criticism-textarea">
+									<label>Criticism:</label>
+									<textarea name="criticism[]" rows="3" cols="5" class="span4">${crit}</textarea>
+								</div>
+							#{/list}
+						#{/if}
+						#{else}
+							<div class="criticism-textarea">
+								<label>Criticism:</label>
+								<textarea name="criticism[]" rows="3" cols="5" class="span4"></textarea>
+							</div>
+						#{/else}
+					</div>
+					<a href="#" class="btn" id="add-criticism-button"><i class="icon-plus-sign"></i> Add more</a>
+				</div>
+			</div>
+			
+			<div class="well span12" style="text-align: right;">
+				<p class="pull-left">Your review will be checked by an editor before approval.</p>
+				<button type="submit" class="btn btn-primary">Submit review</button>
+			</div>
+		#{/form}
+	</div>
+</div>

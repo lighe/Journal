@@ -1,0 +1,87 @@
+#{extends 'main.html' /}
+#{set title:'Reviews panel' /}
+
+<div class="container">
+	<div class="row">
+		<h2>Select articles for review</h2>
+		<br />
+		<p>To select articles for review, go to our <a href="@{PublishedController.unpublishedShow()}" class="btn btn-primary"><i class="icon-th-list icon-white"></i> Unpublished List</a> and pick up to three articles.</p>
+		<h2>Selected articles for review</h2>
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Article Title</th>
+					<th>Selection Status</th>
+					<th>Actions</th>
+					<th>Download link</th>
+				</tr>
+			</thead>
+			<tbody>
+				#{list items:selectedArticles, as:'selection'}
+					<tr>
+						<td><a href="@{ArticleController.show(selection.article.id)}">${selection.article.title}</a></td>
+						<td>${selection.getReadableStatus()}</td>
+						<td class="actions">
+							#{if selection.status == 0}
+								&nbsp;
+								<a href="@{ReviewController.add(selection.article.id)}" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Start Review</a> 
+								&nbsp;
+								<i>- or -</i> 
+								&nbsp;
+								<a href="@{ReviewController.removeSelected(selection.id)}" class="btn"><i class="icon-trash"></i> Remove selection</a>
+							#{/if}	
+							#{if selection.status == 1}
+								&nbsp;
+								<a href="@{ReviewController.add(selection.article.id)}" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Start Review</a> 
+								&nbsp;
+								<i>You are committed to this review.</i>
+							#{/if}
+							#{if selection.status == 2}
+								&nbsp;
+								<i>An editor will review your contribution shortly.</i>
+							#{/if}
+						</td>
+						<td class="option"><a href="#" class="btn btn-primary"><i class="icon-download icon-white"></i> &nbsp; Download PDF</a></td>
+					</tr>
+				#{/list}
+			</tbody>
+		</table>
+		
+		<h2>Your Reviews</h2>
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Article Title</th>
+					<th>Review Status</th>
+					<th>Review options</th>
+				</tr>
+			</thead>
+			<tbody>
+				#{list items:reviews, as:'review'}
+					<tr>
+						<td><a href="@{ArticleController.show(review.revision.article.id)}">${review.revision.article.title}</a></td>
+						<td>
+							#{if review.acceptedByEditor}
+								Your review was accepted.
+							#{/if}
+							#{else}
+								Your review was rejected.
+							#{/else}
+						</td>
+						<td>
+							&nbsp;
+							<a href="@{ReviewController.show(review.id)}" class="btn"><i class="icon-file"></i> View review</a>
+							&nbsp;
+							#{if review.isEditable()}
+								<a href="#" class="btn"><i class="icon-edit"></i> Edit review</a>
+							#{/if}
+							#{else}
+								<a href="#" class="btn disabled"><i class="icon-edit"></i> Review too old, cannot edit</a>
+							#{/else}
+						</td>
+					</tr>
+				#{/list}
+			</tbody>
+		</table>
+	</div>
+</div>
