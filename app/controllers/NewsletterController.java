@@ -14,13 +14,8 @@ import play.data.Upload;
 import play.data.validation.Required;
 import play.mvc.*;
 
-@With({Secure.class, ApplicationController.class})
+@With({Secure.class, Security.class, ApplicationController.class})
 public class NewsletterController extends Controller {
-
-    @Before
-    static void setConnectedUser() {
-        Security.setConnectedUser();
-    }
 	
 	/**
 	 * renders the index page

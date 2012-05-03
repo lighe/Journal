@@ -7,7 +7,7 @@ import java.util.*;
 
 import models.*;
 
-@With({Secure.class, ApplicationController.class})
+@With({ApplicationController.class, Security.class})
 public class BrowseController extends Controller {
 	
 	public static Edition selectedEdition;	

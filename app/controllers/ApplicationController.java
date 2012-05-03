@@ -7,15 +7,10 @@ import java.util.*;
 
 import models.*;
 
-
+@With({Security.class})
 public class ApplicationController extends Controller {
 	
 	private static Edition selectedEdition; //this is populated in getBrowseData()
-       
-	//@Before
-    //    static void setConnectedUser() {
-    //        Security.setConnectedUser();
-    //   }
 	
 	@Before
 	static void getBrowseData() {

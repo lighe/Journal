@@ -18,7 +18,7 @@ import play.data.validation.Required;
 import play.db.jpa.GenericModel.JPAQuery;
 import play.mvc.*;
 
-@With(ApplicationController.class)
+@With({ApplicationController.class, Security.class})
 public class ArticleController extends Controller {
 
 	//Removed to allow readers to submit articles without the need to login

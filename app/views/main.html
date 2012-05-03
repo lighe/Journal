@@ -34,6 +34,11 @@
 				<li><a href="@{BrowseController.journalGoals()}">Journal Goals</a></li>
 				<li><a href="@{ArticleController.newArticleA()}">Upload Article</a></li>
 			</ul>
+			<form action="@{SearchArticleController.search()}" class="navbar-search pull-right" id="home-search">
+				<input type="text" class="search-query" placeholder="Search articles" name="search" />
+				<button type="submit" class="btn btn-primary">Search</button>
+				<a href="#" id="advanced">Advanced</a>
+			</form>
 		</div>
 	  </div>
 	</div>

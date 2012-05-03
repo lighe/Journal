@@ -6,7 +6,7 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
-@With({Secure.class, ApplicationController.class})
+@With({Secure.class, Security.class, ApplicationController.class})
 public class PublishedController extends Controller {
 
     @Before
