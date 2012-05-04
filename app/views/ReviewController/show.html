@@ -3,9 +3,16 @@
 
 <div class="container">
 	<div class="row">
+	
 		<div class="span7">
-			<h2>${review.revision.article.title} Review | ${review.date}</h2>
+		#{list items:reviews, as:'review'}
+		<div class="group">
+			<h2>${review.revision.article.title} Review ${review_index}</h2>
 			<br />
+			%{ 
+				reviewScore = models.Review.scoreToHuman(review.score); 
+				expertise = models.Review.expertiseToHuman(review.authorExpertiseLevel);
+			%}
 			<div class="well">
 				<p><strong>Score: </strong>${reviewScore}</p>
 				<p><strong>Author Expertise Level: </strong>${expertise}</p>
@@ -20,7 +27,9 @@
 					<p class="comment alert alert-wraning"><span class="badge badge-warning">${comment_index}</span>  ${comment.comment}</p>						
 				#{/list}
 			</div>
-			
+		</div>
+		<hr />
+		#{/list}
 		</div>
 		<div class="span5">
 			<h2>Article Abstract</h2>

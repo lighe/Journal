@@ -34,11 +34,21 @@ public class ReviewController extends Controller {
 	
 	public static void addSelected(Long selectedArticleId) {
 		Article article = Article.findById(selectedArticleId);
+		//maximum 3 selections
 		if(SelectedArticle.count("user = ?", Security.getConnectedUser()) <3) {
-			SelectedArticle selected = new SelectedArticle(article, new Date(), Security.getConnectedUser());
-			selected.save();
-			flash.success("Added successfully");
-			PublishedController.unpublishedShow();	
+			//check if this article is already selected
+			List<SelectedArticle> sameArticleSelectedList = SelectedArticle.find("byUserAndArticle", Security.getConnectedUser(), article).fetch();
+			if(sameArticleSelectedList.size() == 0) {
+				SelectedArticle selected = new SelectedArticle(article, new Date(), Security.getConnectedUser());
+				selected.save();
+				flash.success("Added successfully");
+				PublishedController.unpublishedShow();
+			}
+			else {
+				validation.addError(null, "You have already selected this article.");
+				validation.keep();
+				PublishedController.unpublishedShow();	
+			}
 		}
 		else {
 			validation.addError(null, "You have already selected 3 articles for review. Please review these before selecting more.");
@@ -84,7 +94,8 @@ public class ReviewController extends Controller {
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		String todayString = df.format(today);
           
-		//if edit or add      		
+		//if edit or add      
+		//check not to add multiple reviews for same article		
 		Review review = new Review(rev, todayString, judgment, smallErrors, expertise, Security.getConnectedUser(), summary);
 		
 		//save review
@@ -100,6 +111,10 @@ public class ReviewController extends Controller {
 			comment.save();	
 		}
 		
+		SelectedArticle selectedArticleEntry = SelectedArticle.find("byUserAndArticle", Security.getConnectedUser(), article).first();
+		selectedArticleEntry.status = 2;
+		selectedArticleEntry.save();
+		
 		//review.addComment(criticism);
 		flash.success("Review added successfully. You can edit it within 7 days.");
 		
@@ -110,8 +125,14 @@ public class ReviewController extends Controller {
 
 	public static void show(Long reviewId) {
 		Review review = Review.findById(reviewId);
-		String reviewScore = Review.scoreToHuman(review.score);
-		String expertise = Review.expertiseToHuman(review.authorExpertiseLevel);
-		render(review, reviewScore, expertise);
+		ArrayList<Review> reviews = new ArrayList<Review>();
+		reviews.add(review);  
+		render(reviews);
+	}
+	
+	public static void showRevisionReviews(Long revisionId) {
+		Revision revision = Revision.findById(revisionId);
+		List<Review> reviews = Review.find("byRevision", revision).fetch(); 
+		render("ReviewController/show.html", reviews);	
 	}
 }
