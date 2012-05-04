@@ -9,7 +9,7 @@ import play.mvc.Before;
 import play.mvc.Controller;
 public class DiscussionController extends Controller {
     
-    @Before
+/*    @Before
     static void setConnectedUser() {
         Security.setConnectedUser();
     }
@@ -49,4 +49,5 @@ public class DiscussionController extends Controller {
             render("/home.html"); //TODO change to error page
         }
     }
+	*/
 }
