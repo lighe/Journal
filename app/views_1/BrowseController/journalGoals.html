@@ -1,0 +1,16 @@
+#{extends 'main.html' /}
+#{set title:'Journal Goals' /}
+
+<div class="container">
+	<div class="row">
+		<div class="span7">
+			<h2>Journal Goals</h2>
+			<br />
+			${jc.journalGoals}
+		</div>
+		<div class="span5">
+			<h2>Uploading articles</h2>
+			<p>You will be able to see more details about uploading an article and download helpful templates on our <br /> <a href="@{ArticleController.newArticleA()}" class="btn btn-primary"><i class="icon-upload icon-white"></i> Article upload page</a></p>
+		</div>
+	</div>
+</div>

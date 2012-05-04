@@ -1,0 +1,27 @@
+#{extends 'main.html' /}
+#{set title:'Register' /}
+	<div class='controlpannel'>
+		<u>Register</u>
+		<br><br>
+			#{ifErrors}
+				<div class='errors'>
+        		#{errors}
+       				<li>${error}</li>
+   				#{/errors}
+   				</div>
+   				<br><br>
+    		#{/ifErrors}
+    		#{if flash.success}
+    			<div class="success">${flash.success}</div>
+    			<br><br>
+			#{/if}
+		
+		
+		<u>Register new user</u>
+		#{form @Security.submitRegister()}
+			<p>Email Address:<input type="text" name="email"></p>
+			<p>New password:<input type="password" name="password1"></p>
+			<p>Retype password:<input type="password" name="password2"></p>
+    		<input type="submit" value="Submit" />
+    	#{/form}
+	</div>	

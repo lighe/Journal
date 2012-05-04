@@ -1,0 +1,109 @@
+
+#{extends 'main.html' /}
+#{set title:'New Article' /}
+
+<div class="container">
+	<div class="row">
+	
+		<div class="span7">
+				<h2>Upload your article</h2>
+				
+				#{ifErrors}
+					<div class="row">
+					<div class="span6">
+					<div class="alert alert-warning">
+						<strong>There are some errors:</strong> <br />
+						#{errors}
+						   <i class="icon-flag"></i> ${error} <br />
+						#{/errors}
+					</div>
+					</div>
+					</div>
+				#{/ifErrors}
+				
+				
+				#{if flash.success}
+					<div class="row">
+					<div class="span6">
+					<div class="alert alert-success">
+						<strong><i class="icon-ok"></i> ${flash.success}</strong>
+					</div>
+					</div>
+					</div>
+				#{/if}
+				
+				#{form @ArticleController.newArticle(), enctype:'multipart/form-data'}
+				<div class="group">
+				<label>Title:</label>
+				<input type="text" name="title" class="span6" value="${flash.title}" />
+				</div>
+				<div class="group">
+				<label>Abstract:</label>
+				<textarea rows="8" cols="40" name="discription"  class="span6">${flash.discription}</textarea> 
+				<p class="help-block">Please provide a short description of your article</p>
+				</div>
+				#{if !user}
+				<div class="group">
+					<label>Email address:</label>
+					<input type="text" name="email" class="span6" value="${flash.email}"  />
+				</div>
+				#{/if}
+				
+				<div class="group">
+				<label>Additional Authors email addresses (optional, please divide them with commas):</label>
+				<input type="text" name="authors" class="span6"  value="${flash.authors}" />
+				</div>
+				<div class="group">				
+				<label>Keywords (optional, please divide them with commas and a maximum of 10):</label>
+				<input type="text" name="tags" class="span6"  value="${flash.tags}" />
+				</div>
+				<div class="group">
+				<label>Upload Article:</label>
+				<input type="file" name="article" class="span6"  value="${flash.article}" />
+				</div>
+				#{if !user}
+				<div class="group">
+					<label>Already have an account?  Please provide your password here:</label>
+					<input type="password" name="password" class="span6"  />
+					<p class="help-block">Email address must correspond with the registered email address</p>
+				</div>
+				#{/if}
+				
+				<div class="well span6" style="text-align: right; margin:0;">
+					<button type="submit" class="btn btn-primary"><i class="icon-upload icon-white"></i> Upload article</button>
+				</div>
+			#{/form}
+		</div>
+	
+		<div class="span5">
+			<h2>Article Uploading Information</h2>
+			
+			<div class="alert alert-info">
+				<i class="icon-info-sign"></i> 
+				<strong>
+					Before uploading an article please see our &nbsp;<a href="@{BrowseController.templates()}" class="btn btn-primary"><i class="icon-list-alt icon-white"></i> detailed guidelines and templates page</a>
+				</strong>
+			</div>
+			
+			<div class="alert alert-info">
+				<i class="icon-info-sign"></i> 
+				<strong>
+					#{if !user}
+						Please fill in the form provided to submit your article. <br />
+						Once submitted you will be issued with a password and you will be able to follow your article's progress.<br />				
+					#{/if}
+					#{if user}
+						Welcome ${user.email}, please fill in the form provided to submit you're article. <br> 		
+					#{/if}
+				</strong>
+			</div>
+			<div class="alert alert-info">
+				<i class="icon-info-sign"></i> 
+				<strong>
+					Your article will undergo a reviewing process and you will be given feedback and a score from a number of reviewers. Then it will either be published or you will be given an opportunity to revise it.<br />You will need to review at leats 3 articles for your submission to be published.
+				</strong>
+			</div>
+			
+			
+	</div>
+</div>

@@ -1,0 +1,30 @@
+#{extends 'main.html' /}
+#{set title:'Article' /}
+<div class="container">
+	<div class="row">
+		<div class="span8">
+			<h1>${article.title}</h1>
+			<p>${article.summary}</p>
+			
+			<ul class="tags">
+				<li>${article.tags.size() ?: 'No'} Tags</li>
+			    #{list items:article.tags, as:'tag'}
+					<li><a href="#">${tag.title}</a></li>						
+				#{/list}
+			</ul>
+		</div>
+		<div class="span4" id="article_sidebar">
+			<div class="group">
+				<h2>Download</h2>
+				<a href="@{ArticleController.download(article.id, -1)}" class="btn btn-primary"><i class="icon-download icon-white"></i> &nbsp;Download article (PDF)</a>
+			</div>
+			<div class="group">
+				<h2>Contact author</h2>
+				<a href="mailto:${article.user.email}" class="btn"><i class="icon-envelope"></i> &nbsp;${article.user.email}</a>
+			</div>
+			<div class="group">
+				<h2>Discuss with editor</h2>
+			</div>
+		</div>
+	</div>
+</div>
