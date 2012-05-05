@@ -144,8 +144,9 @@ public class ControlPanelController extends  Controller {
 	    }
 
 	public static void activity() {
-		List<Review> reviews = Review.find("rejectedByEditor = false").fetch();
-		render("ControlPanels/activity.html", reviews);	
+		List<Review> reviews = Review.find("rejectedByEditor is ? order by id desc", false).fetch();
+		List<SelectedArticle> selectedArticles = SelectedArticle.find("status != ? and status !=? order by status desc", -1, 100).fetch();
+		render("ControlPanels/activity.html", reviews, selectedArticles);	
 	} 
 	
 }

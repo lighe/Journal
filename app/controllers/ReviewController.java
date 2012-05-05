@@ -146,6 +146,23 @@ public class ReviewController extends Controller {
 				validation.addError(null, "Email failed to send, please try again later");
 			} 
 			
+			flash.success("Review Rejected.");
+			ControlPanelController.activity();	
+		}
+	}
+	
+	public static void editorRejectArticleSelection(Long selectedArticleId){
+		if (Security.isEditor()){ 
+			SelectedArticle selectedArticle = SelectedArticle.findById(selectedArticleId);
+			selectedArticle.setAsRejected();	
+			
+			try {
+				Emailer.sendEmailTo(selectedArticle.user.email, Security.getConnectedUser().email, "You have been stopped from reviewing this article", "Stopped a review");
+			} catch (EmailException ex) {
+				validation.addError(null, "Email failed to send, please try again later");
+			} 
+			
+			flash.success("Article Selection Rejected.");
 			ControlPanelController.activity();	
 		}
 	}

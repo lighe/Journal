@@ -3,7 +3,7 @@
     "version" : 43,
     "shards" : [ {
       "index" : "models_article",
-      "id" : 2,
+      "id" : 1,
       "version" : 43
     } ]
   }
