@@ -6,8 +6,10 @@ import play.data.validation.*;
 
 import java.util.*;
 import java.text.*;
+import java.util.logging.Level;
 
 import models.*;
+import org.apache.commons.mail.EmailException;
 
 @With({Secure.class, Security.class, ApplicationController.class})
 public class ReviewController extends Controller {
@@ -135,4 +137,22 @@ public class ReviewController extends Controller {
 		List<Review> reviews = Review.find("byRevision", revision).fetch(); 
 		render("ReviewController/show.html", reviews);	
 	}
+        
+        public static void editorRejectReview(Long reviewId){
+            if (Security.isEditor()){
+                Review rejectReview = Review.findById(reviewId);
+                
+                SelectedArticle.delete(null, rejectReview);
+            try {
+                Emailer.sendEmailTo(rejectReview.user.email, Security.getConnectedUser().email, "You have been stopped from reviewing this article", "Stopped a review");
+            } catch (EmailException ex) {
+                validation.addError(null, "Email failed to send, please try again later");
+                render("Alex put page here :-) ");
+            }
+                
+
+                
+               
+            }
+        }
 }

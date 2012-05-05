@@ -43,7 +43,13 @@ GET     /review/index                ReviewController.index
 
 # reader comments
 GET     /ReaderCommentController                         ReaderCommentController.readerComments
-GET     /contactUs/index                                 ReaderCommentController.index
+GET     /ReaderCommentController/index                   ReaderCommentController.index
+POST    /ReaderCommentController                         ReaderCommentController.readerComments   
+
+#discussion
+GET     /DiscussionController/show                       DiscussionController.showDiscussion
+GET     /DiscussionController/addcomment                 DiscussionController.addDiscussion
+
 
 
 
