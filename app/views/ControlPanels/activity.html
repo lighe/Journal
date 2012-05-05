@@ -5,10 +5,7 @@
 	#{if user.editor}	
 	<div class='container'>
 		<div class="row">
-		<div class="span12">
-			<h2>Latest Reviews </h2>
-			
-
+			<div class="span12">
 				#{ifErrors}
 					<div class="alert alert-warning">
 						<strong>There are some errors:</strong> <br />
@@ -23,34 +20,89 @@
 					</div>
 				#{/if}
 				
-				#{if reviews}
-					<table class="table table-bordered table-striped">
-						<thead>
-							<tr>
-								<th>Article</th>
-								<th>Review date</th>
-								<th>Reviewer</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							#{list items:reviews, as:'review'}
-							<tr>
-								<td><a href="@{ArticleController.show(review.revision.article.id)}">${review.revision.article.title}</a></td>
-								<td>${review.date}</td>
-								<td>${review.user.email}</td>
-								<td style="width:260px"><a href="@{ReviewController.show(review.id)}" class="btn"><i class="icon-eye-open"></i> View review</a> &nbsp; <a href="@{ReviewController.editorRejectReview(review.id)}" class="btn btn-danger"><i class="icon-trash icon-white"></i> Reject review</a></td>		
-							#{/list}
-						</tbody>
-					</table>
-				#{/if}
-				#{else}
-					<div class="alert alert-info">
-						<strong><i class="icon-info-sign"></i> There are no reviews.</strong>
-					</div>
-				#{/else}
-			</td>
+				<ul class="nav nav-tabs" id="myTab">
+				  <li class="active"><a href="#reviews">Article Reviews</a></li>
+				  <li><a href="#selections">Article Selections</a></li>
+				  <li><a href="#revisions">Article Revisions</a></li>
+				</ul>
+		 
+				<div class="tab-content">
+				  <div class="tab-pane active" id="reviews">
+						<h2>Article Reviews </h2>
+						<div class="alert alert-info">
+						<strong><i class="icon-info-sign"></i> Reviews are approved by default. If you want to reject them use the buttons below.</strong>
+						</div>
+						
+						#{if reviews}
+							<table class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>Article</th>
+										<th>Reviewer</th>
+										<th>Review date</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									#{list items:reviews, as:'review'}
+									<tr>
+										<td><a href="@{ArticleController.show(review.revision.article.id)}">${review.revision.article.title}</a></td>
+										<td>${review.user.email}</td>
+										<td>${review.date}</td>
+										<td style="width:260px"><a href="@{ReviewController.show(review.id)}" class="btn"><i class="icon-eye-open"></i> View review</a> &nbsp; <a href="@{ReviewController.editorRejectReview(review.id)}" class="btn btn-danger"><i class="icon-trash icon-white"></i> Reject review</a></td>		
+									#{/list}
+								</tbody>
+							</table>
+						#{/if}
+						#{else}
+							<div class="alert alert-info">
+								<strong><i class="icon-info-sign"></i> There are no reviews.</strong>
+							</div>
+						#{/else}		  
+				  </div>
+				  <div class="tab-pane" id="selections">
+						<h2>Article Selections</h2>
+						<div class="alert alert-info">
+							<strong><i class="icon-info-sign"></i> Article selections are approved by default. If you want to reject them use the buttons below.</strong>
+						</div>
+						#{if reviews}
+							<table class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>Article Title</th>
+										<th>User</th>
+										<th>Selection Status</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									#{list items:selectedArticles, as:'selection'}
+										<tr>
+											<td><a href="@{ArticleController.show(selection.article.id)}">${selection.article.title}</a></td>
+											<td>${selection.user.email}</td>
+											<td>${selection.getReadableStatus()}</td>
+											<td class="actions" style="width: 290px">							
+												<a href="@{ReviewController.editorRejectArticleSelection(selection.id)}" class="btn btn-danger"><i class="icon-trash icon-white"></i> Reject selection</a>
+												#{if selection.status == 2}
+													&nbsp; <a href="@{ReviewController.editorRejectReview(review.id)}" class="btn btn-danger"><i class="icon-trash icon-white"></i> Reject review</a>
+												#{/if}
+											</td>
+										</tr>
+									#{/list}
+								</tbody>
+							</table>
+						#{/if}
+						#{else}
+							<div class="alert alert-info">
+								<strong><i class="icon-info-sign"></i> There are no article selections.</strong>
+							</div>
+						#{/else}
+				  
+				  </div>
+				  <div class="tab-pane" id="revisions">...</div>
+				</div>
 		</div>
 	</div>
+</div>
 	#{/if}	
 #{/if}

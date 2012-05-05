@@ -49,12 +49,13 @@
 			<ul class="nav pull-left">
 				#{if user}	
 					<li><a href="@{ArticleController.index()}">My Articles</a></li>
-				
+					<li><a href="@{ReviewController.index()}">Review center</a></li>
+					
 					#{if user.editor}	
-						<li><a href="@{ControlPanelController.activity()}">Journal Activity</a></li>			
-						<li><a href="@{ControlPanelController.journalControlPanel()}">Journal Settings</a></li>
-						<li><a href="@{ControlPanelController.listUsers()}">User Management</a></li>
+						<li><a href="@{ControlPanelController.activity()}">Activity</a></li>			
+						<li><a href="@{ControlPanelController.listUsers()}">Users</a></li>
 						<li><a href="@{NewsletterController.index()}">Newsletters</a></li>
+						<li><a href="@{ControlPanelController.journalControlPanel()}">Settings</a></li>
 					#{/if}
 				#{/if}
 			</ul>

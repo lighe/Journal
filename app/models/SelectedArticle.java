@@ -14,7 +14,7 @@ public class SelectedArticle extends Model {
 	//@Column(name="article",length=1000) 
 	public Article article;
 	
-	//0 selected, 1 downloaded, 2 submitted
+	//0 selected, 1 downloaded, 2 submitted, -1 rejected, 100 finished
 	public int status;
 	
 	public Date date;
@@ -42,7 +42,7 @@ public class SelectedArticle extends Model {
 			case 0: return "Article Selected";	
 			case 1: return "Article Downloaded";
 			case 2: return "Review Submitted";
-			case 3: return "Review Accepted";
+			case -1: return "Article selection rejected by editors";
 			default: return "Error";
 		}
 	}
@@ -58,6 +58,12 @@ public class SelectedArticle extends Model {
 	
 	public void setAsDownloaded() {
 		this.status = 1;	
+		this.save();
+	}
+	
+	public void setAsRejected() {
+		this.status = -1;
+		this.save();	
 	}
 }
 
