@@ -26,14 +26,24 @@
 					<table class="table table-bordered table-striped">
 						<thead>
 							<tr>
+								<th>Names</th>
 								<th>Email address</th>
+								<th>Affiliations</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
 						<tbody>
 							#{list items:users, as:'tempUser'}
 							<tr>
+								<td>${tempUser.name}</td>
 								<td>${tempUser.email}</td>
+								<td>
+									#{if tempUser.affiliationList}
+										#{list items:tempUser.affiliationList, as:'aff'}
+											${aff}
+										#{/list}
+									#{/if}
+								</td>
 								<td><label class="radio"><input type="radio" name="user_id" value="${user.id}" /> &nbsp;Promote</label>		
 							#{/list}
 						</tbody>

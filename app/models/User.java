@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
  
 import java.util.*;
 import javax.persistence.*;
@@ -50,6 +51,5 @@ public class User extends Model {
         this.editor = false;
         this.reviewer = true;
     }
- 
- 
+    
 }

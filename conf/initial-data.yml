@@ -14,6 +14,20 @@ User(u2):
     author: true
     editor: true
     reviewer: true
+    
+User(u3):
+    email: aca08imA@sheffield.ac.uk
+    password: test
+    author: false
+    editor: flase
+    reviewer: true
+
+User(u4):
+    email: aca08imB@sheffield.ac.uk
+    password: test
+    author: false
+    editor: false
+    reviewer: true        
 
 #Tag(t1):
 #    title: Tag1

@@ -164,7 +164,6 @@ public class ArticleController extends Controller {
 	        		authorArray.add(authors[x]);
 	        	}
 	        }
-
 	        Article art = new models.Article(user , false, title, discription); 
 	        art.addContributors(conList);
 			
@@ -187,11 +186,13 @@ public class ArticleController extends Controller {
 		   			Affiliation aff = new Affiliation(affiliation.substring(0,affiliation.indexOf(",")));
 		   			System.out.println("Auther Affiliation: "+aff.affiliation_name);
 		   			aff.save();
+//HELP			        //user.addAffiliation(aff);
 		   			authAffilationsList.add(aff);
 		   			affiliation = affiliation.substring(affiliation.indexOf(",")+1, affiliation.length());
 	        	}
 		   		Affiliation aff = new Affiliation(affiliation);
 		   		aff.save();
+//HELP		        //user.addAffiliation(aff);
 		   		authAffilationsList.add(aff);
 	   		}
 	        art.addAffiliations(authAffilationsList);
