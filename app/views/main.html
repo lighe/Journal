@@ -20,12 +20,14 @@
 		<div class="container">
 			<h1>
 				<a href="@{ApplicationController.index()}" id="logo" class="brand">
-					#{if jc.journalName}
-						${jc.journalName}
+					#{if jc}
+						#{if jc.journalName}
+							${jc.journalName}
+						#{/if}
+						#{else}
+							No name set
+						#{/else}
 					#{/if}
-					#{else}
-						No name set
-					#{/else}
 				</a>
 			</h1>
 			<ul class="nav">
@@ -83,12 +85,14 @@
 		<ul class="nav pull-left">
 			<li>
 				<a href="@{ApplicationController.index()}" id="logo" class="brand">
-					#{if jc.journalName}
-						${jc.journalName}
-					#{/if}
-					#{else}
-						No name set
-					#{/else}</a>
+					#{if jc}
+						#{if jc.journalName}
+							${jc.journalName}
+						#{/if}
+						#{else}
+							No name set
+						#{/else}
+					#{/if}</a>
 			</li>
 		</ul>
 		<ul class="nav pull-right">

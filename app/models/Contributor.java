@@ -12,10 +12,11 @@ import play.db.jpa.Model;
 public class Contributor extends Model  {
 
 	String email; 
+	String name;
     @ManyToMany
 	List<Affiliation> affiliationList;
 	
-	public Contributor(String email, ArrayList<Affiliation> affiliationList) {
+	public Contributor(String email, String name, ArrayList<Affiliation> affiliationList) {
 		this.email = email;
 		this.affiliationList = affiliationList;
 	}
