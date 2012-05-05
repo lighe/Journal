@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'Users Control Panel' /}
+#{set title:'User generated content activity' /}
 
 #{if user}	
 	#{if user.editor}	
@@ -21,6 +21,7 @@
 				#{/if}
 				
 				<ul class="nav nav-tabs" id="myTab">
+				  <li><a href="#">Ready for publishing</a></li>
 				  <li class="active"><a href="#reviews">Article Reviews</a></li>
 				  <li><a href="#selections">Article Selections</a></li>
 				  <li><a href="#revisions">Article Revisions</a></li>
