@@ -6,7 +6,6 @@ import java.util.*;
 import javax.persistence.*;
  
 import play.db.jpa.*;
-import play.modules.elasticsearch.annotations.*;
 
 //@ElasticSearchable 
 @Entity
@@ -21,10 +20,14 @@ public class Article extends Model {
 	@ManyToOne
     //@Column(name="user",length=1000) 
     public User user;
+
+    //String as some may not have user accounts
+    @OneToMany
+    public List<Affiliation> affiliations;
     
     //String as some may not have user accounts
     @Column(name="contributors",length=1000) 
-    public ArrayList<String> contributors;
+    public ArrayList<Contributor> contributors;
 
     //@Column(name="tags",length=1000) 
     @ManyToMany
@@ -47,8 +50,11 @@ public class Article extends Model {
     	this.tags = tags;
     }
     
-    public void addContributors(ArrayList<String> contributors){
+    public void addContributors(ArrayList<Contributor> contributors){
     	this.contributors = contributors;
+    }
+    public void addAffiliations(ArrayList<Affiliation> affiliations){
+    	this.affiliations = affiliations;
     }
 	
 	public String getShortSummary() {
@@ -58,20 +64,7 @@ public class Article extends Model {
 		}
  		return summary;
 	}
-        /*
-        //Untested
-        public void addContributor(User contributor){
-            this.contributors.add(contributor);
-        }
-        //Untested
-        public void removeContributor(User contributor){
-            this.contributors.remove(contributor);
-        }
-        //Untested
-        public List<User> getContributor(){
-            return contributors;
-        }
-        */
+    
 	public Revision getLatestRevision(Article article){
 		List<Revision> revisions = Revision.find("article_ID", article).fetch();
 
