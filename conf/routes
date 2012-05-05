@@ -42,7 +42,7 @@ GET     /review	                     ReviewController.index
 GET     /review/index                ReviewController.index
 
 # reader comments
-GET     /ReaderCommentController                         ReaderCommentController.readerComments
+GET     /ReaderCommentController                         ReaderCommentController.index
 GET     /ReaderCommentController/index                   ReaderCommentController.index
 POST    /ReaderCommentController                         ReaderCommentController.readerComments   
 

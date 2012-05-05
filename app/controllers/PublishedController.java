@@ -34,7 +34,7 @@ public class PublishedController extends Controller {
             }                  
 			
 			long allowed = 3- SelectedArticle.count("user = ?", Security.getConnectedUser());
-            render("unpublished/index.html", unpublished, allowed);
+            render("unpublished/index.html", unpublished, forceUnpublished, allowed);
 		}
 			
 	}

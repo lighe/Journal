@@ -23,7 +23,18 @@
 				<a href="mailto:${article.user.email}" class="btn"><i class="icon-envelope"></i> &nbsp;${article.user.email}</a>
 			</div>
 			<div class="group">
-				<h2>Discuss with editor</h2>
+				<h2>Discuss with our editors</h2>
+				<a href="#" class="btn" id="editor-email"><i class="icon-envelope"></i> Send message</a>
+				<div class="group editor-email">		
+					<form action="@{ReaderCommentController.readerComments()}" method="POST">
+						<label>Email:</label>
+						<input type="text" class="span4" name="emailAddress">
+						<label>Message:</label>
+						<textarea rows="8" cols="40" name="message"  class="span4">${flash.discription}</textarea> 
+						<div id="feedback"></div>
+						<button type="submit" class="btn btn-primary"><i class="icon-envelope icon-white"></i> Send your comment</button>
+					</form>
+				</div>				
 			</div>
 		</div>
 	</div>

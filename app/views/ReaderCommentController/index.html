@@ -1,38 +1,15 @@
-#{extends 'main.html' /}
-#{set title:'Comments' /}
-
 #{ifErrors}
-        <div class="row">
-        <div class="span6">
         <div class="alert alert-warning">
                 <strong>There are some errors:</strong> <br />
                 #{errors}
                     <i class="icon-flag"></i> ${error} <br />
                 #{/errors}
         </div>
-        </div>
-        </div>
 #{/ifErrors}
 
 
 #{if flash.success}
-        <div class="row">
-        <div class="span6">
         <div class="alert alert-success">
                 <strong><i class="icon-ok"></i> ${flash.success}</strong>
         </div>
-        </div>
-        </div>
 #{/if}
-
-<form action="@{ReaderCommentController.readerComments()}" method="POST" class="form-inline">
-    <label><strong>Send an email to our editors about an article</strong></label>
-    &nbsp; &nbsp;
-    <label>Email:</label>
-    <input type="text" class="input-medium" name="email">
-    &nbsp;
-    <label>Message:</label>
-    <textarea rows="8" cols="40" name="message"  class="span6">${flash.discription}</textarea> 
-    &nbsp;
-    <button type="submit" class="btn"><i class="icon-ok"></i> Submit email</button>
-</form>

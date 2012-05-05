@@ -22,7 +22,7 @@ public class Review extends Model {
 	
 	public int authorExpertiseLevel; 
 	
-	public boolean acceptedByEditor;
+	public boolean rejectedByEditor;
 	
 	@Lob
 	public String summary;
@@ -40,7 +40,7 @@ public class Review extends Model {
 		this.smallErrors = smallErrors;
 		this.authorExpertiseLevel = authorExpertiseLevel;	
 		this.user = user;
-		this.acceptedByEditor = false;
+		this.rejectedByEditor = false;
 		this.summary = summary;
 	}
   
@@ -82,19 +82,10 @@ public class Review extends Model {
 		return ReviewComment.find("byReview", this).fetch();		
     }
     
-	/* I'm not sure we need this
-    @ManyToOne
-    public Revisions revision_ID;
-	*/
-    
-	/*
-    public Reviews(int review_ID, String score, Users user_ID, Revisions revision_ID) {
-        this.reviews_ID = review_ID;
-        this.score = score;
-        this.user_ID = user_ID;
-        this.revision_ID = revision_ID;
-        
-    }*/
+	public void reject() {
+		this.rejectedByEditor = true;	
+		this.save();
+	}
  
 }
 

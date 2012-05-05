@@ -142,7 +142,10 @@ public class ControlPanelController extends  Controller {
 			 jc.save();
 	    	 render("controlPanels/journalPanel.html", jc);	 
 	    }
-	 
-	 
+
+	public static void activity() {
+		List<Review> reviews = Review.find("rejectedByEditor = false").fetch();
+		render("ControlPanels/activity.html", reviews);	
+	} 
 	
 }
