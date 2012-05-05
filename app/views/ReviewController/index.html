@@ -40,8 +40,11 @@
 								&nbsp;
 								<i>An editor will review your contribution shortly.</i>
 							#{/if}
+							#{if selection.status == -1}
+								&nbsp; <a href="@{PublishedController.unpublishedShow()}" class="btn"><i class="icon-th-list"></i> Select another article</a>
+							#{/if}
 						</td>
-						<td class="option"><a href="#" class="btn btn-primary"><i class="icon-download icon-white"></i> &nbsp; Download PDF</a></td>
+						<td class="option">#{if selection.status != -1}<a href="#" class="btn btn-primary"><i class="icon-download icon-white"></i> &nbsp; Download PDF</a>#{/if}</td>
 					</tr>
 				#{/list}
 			</tbody>

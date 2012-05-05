@@ -141,7 +141,7 @@ public class ReviewController extends Controller {
 			selectedArticle.setAsDownloaded();	
 			
 			try {
-				Emailer.sendEmailTo(rejectReview.user.email, Security.getConnectedUser().email, "You have been stopped from reviewing this article", "Stopped a review");
+				Emailer.sendEmailTo(rejectReview.user.email, Security.getConnectedUser().email, "Your review has been rejected. Please submit again.", "Review rejected");
 			} catch (EmailException ex) {
 				validation.addError(null, "Email failed to send, please try again later");
 			} 
@@ -157,7 +157,7 @@ public class ReviewController extends Controller {
 			selectedArticle.setAsRejected();	
 			
 			try {
-				Emailer.sendEmailTo(selectedArticle.user.email, Security.getConnectedUser().email, "You have been stopped from reviewing this article", "Stopped a review");
+				Emailer.sendEmailTo(selectedArticle.user.email, Security.getConnectedUser().email, "You have been stopped from reviewing this article. Please select another article.", "Stopped a review");
 			} catch (EmailException ex) {
 				validation.addError(null, "Email failed to send, please try again later");
 			} 
