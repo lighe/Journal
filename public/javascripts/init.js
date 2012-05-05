@@ -31,4 +31,29 @@ $(document).ready(function () {
 		criticismTextarea.clone().appendTo("#criticism-section");
 	});
 	
+	$("#editor-email").click(function(e) {
+		e.preventDefault();
+		$(".editor-email").slideDown();
+	});
+	
+	$(".editor-email button").live("click", function(e) {
+		e.preventDefault();
+		var form = $(".editor-email form");
+		var dataString = form.serialize();
+		$.ajax({
+		  type: "POST",
+		  url: form.attr("action"),
+		  data: dataString,
+		  success: function(data) {
+			$("#feedback").hide().html(data).slideDown();
+		  }
+		});
+	});
+	
+	$(".btn-danger").live("click", function(e) {
+		e.preventDefault();
+		if (confirm("Are you sure ?")){
+			window.location.href = $(this).attr("href");	
+		}
+	});
 });

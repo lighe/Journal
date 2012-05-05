@@ -6,9 +6,9 @@
 	<div class='container'>
 		<div class="row">
 		<div class="span12">
-			<h2>Promote Users </h2>
+			<h2>Latest Reviews </h2>
 			
-			#{form @ControlPanelController.promoteToEditor()}
+
 				#{ifErrors}
 					<div class="alert alert-warning">
 						<strong>There are some errors:</strong> <br />
@@ -22,30 +22,33 @@
 						<strong><i class="icon-ok"></i> ${flash.success}</strong>
 					</div>
 				#{/if}
-				#{if users}
+				
+				#{if reviews}
 					<table class="table table-bordered table-striped">
 						<thead>
 							<tr>
-								<th>Email address</th>
+								<th>Article</th>
+								<th>Review date</th>
+								<th>Reviewer</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
 						<tbody>
-							#{list items:users, as:'tempUser'}
+							#{list items:reviews, as:'review'}
 							<tr>
-								<td>${tempUser.email}</td>
-								<td><label class="radio"><input type="radio" name="user_id" value="${user.id}" /> &nbsp;Promote</label>		
+								<td><a href="@{ArticleController.show(review.revision.article.id)}">${review.revision.article.title}</a></td>
+								<td>${review.date}</td>
+								<td>${review.user.email}</td>
+								<td style="width:260px"><a href="@{ReviewController.show(review.id)}" class="btn"><i class="icon-eye-open"></i> View review</a> &nbsp; <a href="@{ReviewController.editorRejectReview(review.id)}" class="btn btn-danger"><i class="icon-trash icon-white"></i> Reject review</a></td>		
 							#{/list}
 						</tbody>
 					</table>
 				#{/if}
 				#{else}
 					<div class="alert alert-info">
-						<strong><i class="icon-info-sign"></i> There are no users that can be promoted.</strong>
+						<strong><i class="icon-info-sign"></i> There are no reviews.</strong>
 					</div>
 				#{/else}
-				<button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Promote users</button>
-			#{/form}
 			</td>
 		</div>
 	</div>

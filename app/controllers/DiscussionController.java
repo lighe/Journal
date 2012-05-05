@@ -1,15 +1,14 @@
 package controllers;
 
-import java.util.List;
 import models.*;
-import play.mvc.Before;
-import play.mvc.Controller;
+
+import play.*;
+import play.mvc.*;
+
+import java.util.*;
+
+@With({ApplicationController.class, Security.class})
 public class DiscussionController extends Controller {
-    
-    @Before
-    static void setConnectedUser() {
-        Security.setConnectedUser();
-    }
     
     public static void showDiscussion (Long id){
         JournalConfiguration jc = JournalConfiguration.all().first();
@@ -21,14 +20,14 @@ public class DiscussionController extends Controller {
                 List<Discussion> comments = Discussion.find("revision", rev).fetch();
 
                 if (users.contains(user)){
-                    render("DiscussionController/show.html", comments, jc);
+                    render(comments, jc);
                 }
                 else{
-                    render("/home.html" , jc); //TODO change to error page
+                   // render("/home.html" , jc); //TODO change to error page
                 }
             }
             else{
-                render("/home.html", jc); //TODO change to error page
+               // render("/home.html", jc); //TODO change to error page
             }
         }
         else{

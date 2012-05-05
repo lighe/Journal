@@ -55,5 +55,9 @@ public class SelectedArticle extends Model {
 		SelectedArticle selectedArticle = SelectedArticle.findById(selectedArticleId);
 		selectedArticle.delete();
 	}
+	
+	public void setAsDownloaded() {
+		this.status = 1;	
+	}
 }
 

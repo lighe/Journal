@@ -14,11 +14,6 @@ import org.apache.commons.mail.EmailException;
 @With({Secure.class, Security.class, ApplicationController.class})
 public class ReviewController extends Controller {
 	
-	@Before
-    static void setConnectedUser() {
-        Security.setConnectedUser();
-    }
-
     public static void index() {
     
 		User user = Security.getConnectedUser();
@@ -138,21 +133,20 @@ public class ReviewController extends Controller {
 		render("ReviewController/show.html", reviews);	
 	}
         
-        public static void editorRejectReview(Long reviewId){
-            if (Security.isEditor()){
-                Review rejectReview = Review.findById(reviewId);
-                
-                SelectedArticle.delete(null, rejectReview);
-            try {
-                Emailer.sendEmailTo(rejectReview.user.email, Security.getConnectedUser().email, "You have been stopped from reviewing this article", "Stopped a review");
-            } catch (EmailException ex) {
-                validation.addError(null, "Email failed to send, please try again later");
-                render("Alex put page here :-) ");
-            }
-                
-
-                
-               
-            }
-        }
+	public static void editorRejectReview(Long reviewId){
+		if (Security.isEditor()){ 
+			Review rejectReview = Review.findById(reviewId);
+			rejectReview.reject();
+			SelectedArticle selectedArticle = SelectedArticle.find("byArticleAndUser", rejectReview.revision.article, rejectReview.user).first();
+			selectedArticle.setAsDownloaded();	
+			
+			try {
+				Emailer.sendEmailTo(rejectReview.user.email, Security.getConnectedUser().email, "You have been stopped from reviewing this article", "Stopped a review");
+			} catch (EmailException ex) {
+				validation.addError(null, "Email failed to send, please try again later");
+			} 
+			
+			ControlPanelController.activity();	
+		}
+	}
 }

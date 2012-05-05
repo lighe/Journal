@@ -61,11 +61,11 @@
 					<tr>
 						<td><a href="@{ArticleController.show(review.revision.article.id)}">${review.revision.article.title}</a></td>
 						<td>
-							#{if review.acceptedByEditor}
-								Your review was accepted.
+							#{if review.rejectedByEditor}
+								Your review was rejected by and editor. <a href="@{ReviewController.add(review.revision.article.id)}" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Review article again.</a>
 							#{/if}
 							#{else}
-								Your review is pending.
+								Your review was submitted.
 							#{/else}
 						</td>
 						<td>
