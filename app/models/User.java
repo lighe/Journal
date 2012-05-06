@@ -19,6 +19,8 @@ public class User extends Model {
     public boolean author;
     public boolean editor;
     public boolean reviewer;
+    @ManyToMany
+	List<Affiliation> affiliationList;
     
    //Empty constructor
     public User(){  
@@ -50,6 +52,16 @@ public class User extends Model {
         this.author = true;
         this.editor = false;
         this.reviewer = true;
+    }
+    
+    public void addAffiliation(Affiliation affiliation){
+    	if(affiliationList == null){
+    		ArrayList<Affiliation> affArray = new ArrayList<Affiliation>();
+    		affArray.add(affiliation);
+    		this.affiliationList =  affArray;
+    	} else {
+    		affiliationList.add(affiliation);
+    	}
     }
     
 }

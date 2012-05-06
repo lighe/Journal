@@ -40,7 +40,7 @@
 								<td>
 									#{if tempUser.affiliationList}
 										#{list items:tempUser.affiliationList, as:'aff'}
-											${aff}
+											<li> ${aff.affiliation_name} </li>
 										#{/list}
 									#{/if}
 								</td>
