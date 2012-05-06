@@ -92,7 +92,7 @@ $(document).ready(function () {
 		$("#additionalauthors").append(addition);
 	});
 	
-	$('.datePicker').datepicker();
+	$('.datePicker1, .datePicker2').datepicker();
 });
 
 /* ========================================================
