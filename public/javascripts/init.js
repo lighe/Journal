@@ -61,6 +61,19 @@ $(document).ready(function () {
 	  e.preventDefault();
 	  $(this).tab('show');
 	})
+	
+	$(".disabled").live("click", function(e) {
+		e.preventDefault();	
+	});
+	
+	$("td.options input[type=checkbox]").change(function() { 
+		if($(this).is(':checked')) { 
+			$(this).parents("td").find(".btn").removeClass("disabled").addClass("disabled-foo");
+		}
+		else {
+			$(this).parents("td").find(".btn").removeClass("disabled-foo").addClass("disabled");
+		}
+	});
 });
 
 /* ========================================================
