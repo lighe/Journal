@@ -1,0 +1,68 @@
+#{extends 'main.html' /}
+#{set title:'Review' /}
+<div class="container"> #{form @RevisionController.save(), enctype:'multipart/form-data'}
+	<div class="row">
+		<div class="span7">
+			<h2>Add a new revision for article.title</h2>
+			<br />
+			#{ifErrors}
+			<div class="alert alert-warning"> <strong>There are some errors:</strong> <br />
+				#{errors} <i class="icon-flag"></i> ${error} <br />
+				#{/errors} </div>
+			#{/ifErrors}
+			
+			#{if flash.success}
+			<div class="alert alert-success"> <strong><i class="icon-ok"></i> ${flash.success}</strong> </div>
+			#{/if}
+			<ul class="nav nav-tabs" id="myTab">
+				#{list items:reviews, as:'review'}
+				<li #{if review_index==1} class="active" #{/if}><a href="#review-${review_index}">Review ${review_index}</a></li>
+				#{/list}
+			</ul>
+			<div class="tab-content"> #{list items:reviews, as:'review'}
+				<div class="tab-pane #{if review_index ==1 } active #{/if}" id="review-${review_index}">
+					<h2>${review.revision.article.title} Review ${review_index}</h2>
+					<br />
+					%{ 
+					reviewScore = models.Review.scoreToHuman(review.score); 
+					expertise = models.Review.expertiseToHuman(review.authorExpertiseLevel);
+					%}
+					<div class="well">
+						<p><strong>Score: </strong>${reviewScore}</p>
+						<p><strong>Author Expertise Level: </strong>${expertise}</p>
+						<p><strong>Summary: </strong> ${review.summary}</p>
+						<p><strong>Small errors: </strong>${review.smallErrors}</p>
+					</div>
+					<div id="review-comments">
+						<h2>Criticism</h2>
+						<br />
+						#{list items:review.reviewComments, as:'comment'}
+						<p class="comment alert alert-wraning"><span class="badge badge-warning">${comment_index}</span> ${comment.comment}</p>
+						<input type="hidden" value="${comment.id}" name="reviewCommentIds[]" />
+						<label>How did you correct this criticism?</label>
+						<textarea class="span7" name="revisionComments[]"></textarea>
+						<hr />
+						#{/list} </div>
+				</div>
+				#{/list} </div>
+		</div>
+		<div class="span5">
+			<h2>Upload PDF</h2>
+			<br />
+			<div class="alert alert-info"> <strong><i class="icon-info-sign"></i> Please upload your revised PDF file and then respond to every criticism for every review available</strong> </div>
+			<div class="group">
+				<label>Upload Article:</label>
+				<input type="file" name="article" class="span6"  value="${flash.article}" />
+				<input type="hidden" name="articleId" value="${article.id}" />
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span12">
+			<div class="well">
+				<button type="submit" class="btn btn-primary pull-right"><i class="icon-ok icon-white"></i> Submit revision</button>
+			</div>
+		</div>
+	</div>
+	#{/form} 
+</div>
