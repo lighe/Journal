@@ -7,7 +7,6 @@ import javax.persistence.*;
  
 import play.db.jpa.*;
 
-//@ElasticSearchable 
 @Entity
 public class Article extends Model {
 

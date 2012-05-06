@@ -127,9 +127,8 @@ textarea, input, file {
 	}
 }
 
-#home-search {
-	position:relative;
-	
+.home-search {
+	position:relative;	
 	button {
 		display: none;
 		position: absolute;
@@ -167,6 +166,22 @@ textarea, input, file {
 	&.selected #advanced {
 		display: inline;
 	}
+}
+
+.search-info {
+	position:relative;
+}
+
+.alert .home-search {
+	position:absolute;
+	top:-3px;
+	right:3px;
+	button { top:2px; }
+	input[type=text] {
+		background: lighten(@textColor,20%);	
+		border-color: lighten(@textColor, 10%);
+	}
+	&.selected input[type=text] { background: white; }
 }
 
 /* Search page

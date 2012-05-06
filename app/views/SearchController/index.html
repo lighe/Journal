@@ -12,19 +12,6 @@
    				</div>
    				<br><br>
     		#{/ifErrors}
-	
-			#{if results}
-				#{list items:results, as:'rev'}
-		 			<li>${rev.article.title}</li>
-		 		#{/list}
-			#{/if}
-			#{else}
-				<h2>Search Results</h2>
-				No results found
-			#{/else}
-		
-			<h2>Advanced Search</h2>
-			<p>Search articles by specific data such as authors, keywords, title, etc.</p>
 		</div>
 		<div class="span6 search-forms">
 			<div class="group form-group">

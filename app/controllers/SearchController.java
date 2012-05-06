@@ -76,7 +76,7 @@ public class SearchController extends Controller {
 		//make elements unique and get latest rev
 		ArrayList<Revision> results = formatArrayAndMakeUnique(releventArticleList);
 		
-		render("/searchController/index.html", results);		
+		render("searchController/results.html", results);		
 	}
 	
 	public static void searchByAuthors(String names){
@@ -110,7 +110,7 @@ public class SearchController extends Controller {
 		//make elements unique and get latest rev
 		ArrayList<Revision> results = formatArrayAndMakeUnique(releventArticleList);
 		
-		render("/searchController/index.html", results);		
+		render("searchController/results.html", results);		
 	}
 	
 	public static void searchByTitles(String titles){
@@ -136,7 +136,7 @@ public class SearchController extends Controller {
 		//make elements unique and get latest rev
 		ArrayList<Revision> results = formatArrayAndMakeUnique(releventArticleList);
 		
-		render("/searchController/index.html", results);		
+		render("searchController/results.html", results);		
 		
 	}
 	
@@ -165,12 +165,12 @@ public class SearchController extends Controller {
 		//make elements unique and get latest rev
 		ArrayList<Revision> results = formatArrayAndMakeUnique(releventArticleList);
 		
-		render("/searchController/index.html", results);	
+		render("searchController/results.html", results);	
 	}
 	
 	public static void searchByDate(String fromMonth, String fromYear, String toMonth, String toYear){
 
-		render("/searchController/index.html");	
+		render("searchController/results.html");
 		
 	}
 	

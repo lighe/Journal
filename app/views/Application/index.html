@@ -41,14 +41,12 @@
 <div class="container">
 	<div id="articles" class="row">
 		<div class="span6">
-		<table>
 			#{list items:publishedArticles, as:'published'}
 				<div class="article">
-					<h3><a href="@{Article.show(published.article.id)}">${published.article.title}</a></h3>
+					<h3><a href="@{ArticleController.show(published.article.id)}">${published.article.title}</a></h3>
 					<p>	${published.article.summary}</p>
 				</div>					
 			#{/list}
-			
 		</div>		
 	</div>
 </div>

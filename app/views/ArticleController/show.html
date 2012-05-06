@@ -14,10 +14,12 @@
 			</ul>
 		</div>
 		<div class="span4" id="article_sidebar">
+			#{if article.published == true}
 			<div class="group">
 				<h2>Download</h2>
 				<a href="@{ArticleController.download(article.id, -1)}" class="btn btn-primary"><i class="icon-download icon-white"></i> &nbsp;Download article (PDF)</a>
 			</div>
+			#{/if}
 			<div class="group">
 				<h2>Contact author</h2>
 				<a href="mailto:${article.user.email}" class="btn"><i class="icon-envelope"></i> &nbsp;${article.user.email}</a>

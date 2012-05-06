@@ -1,0 +1,39 @@
+#{extends 'main.html' /}
+#{set title:'Advanced Search' /}
+		
+<div class="container" id="advanced_search">
+	<div class="row">
+		<div class="span12">
+		
+			<h2>Search results</h2>
+			<br /> 
+			#{ifErrors}
+				<div class="alert alert-warning">
+					<strong>There are some errors:</strong> <br />
+					#{errors}
+					   <i class="icon-flag"></i> ${error} <br />
+					#{/errors}
+				</div>
+			#{/ifErrors}
+			
+			<div class="alert alert-info search-info">
+				<strong><i class="icon-info-sign"></i> ${results.size() ?: 'No'} Results Found</strong>
+				<form action="@{SearchController.search()}" class="navbar-search pull-right home-search">
+					<input type="text" class="search-query" placeholder="Search articles" name="search" />
+					<button type="submit" class="btn btn-primary">Search</button>
+					<a href="@{SearchController.index()}" id="advanced">Advanced</a>
+				</form>
+			</div>
+			
+			<div id="articles">
+				#{list items:results, as:'published'}
+					<div class="article">
+						<h3><a href="@{ArticleController.show(published.article.id)}">${published.article.title}</a></h3>
+						<p>	${published.article.summary}</p>
+					</div>					
+				#{/list}
+			</div>
+			
+		</div>
+	</div>
+</div>
