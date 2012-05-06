@@ -57,15 +57,6 @@
 				<input type="text" name="affiliation" class="span6" />
 				</div>
 				
-				<script type="text/javascript">
-				var x=1;
-					function addAuthor(){	
-						x++;
-						var addition = "<label>Additional Author "+x+"'s email addresses:</label>\n<input type='text' name='authors' class='span6' />\n<label>Additional Author "+x+"'s name:</label>\n<input type='text' name='authorNames' class='span6' />\n<label>Author "+x+"'s affiliation(optional, please divide them with commas):</label>\n<input type='text' name='authorsAffiliation' class='span6' />";
-						document.getElementById("additionalauthors").innerHTML = document.getElementById("additionalauthors").innerHTML + addition ;
-					}
-				</script>
-				
 				<div class="group" id="additionalauthors">
 				<label>Please select the number of addtional authors by clicking the add author button, then fill in the boxes:</label>
 				<label>Additional Author 1's email addresses:</label>
@@ -77,11 +68,11 @@
 				<label>Author 1's affiliation(optional, please divide them with commas):</label>
 				<input type="text" name="authorsAffiliation" class="span6" />
 				</div>
-				<button onclick="addAuthor();return false;">Add Author</button>
+				<button onclick="addAuthor();return false;" id="addAuthor" class="btn"><i class="icon-plus"></i> Add Author</button>
 				
 				<div class="group">				
 				<label>Keywords (optional, please divide them with commas and a maximum of 10):</label>
-				<input type="text" name="tags" class="span6"  value="${flash.tags}" />
+				<input type="text" name="tags" class="span6"  value="${flash.tags}" id="tags_input"/>
 				</div>
 				<div class="group">
 				<label>Upload Article:</label>
@@ -119,7 +110,7 @@
 						Once submitted you will be issued with a password and you will be able to follow your article's progress.<br />				
 					#{/if}
 					#{if user}
-						Welcome ${user.email}, please fill in the form provided to submit you're article. <br> 		
+						Welcome ${user.email}, please fill in the form provided to submit your article. <br> 		
 					#{/if}
 				</strong>
 			</div>

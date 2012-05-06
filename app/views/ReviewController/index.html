@@ -2,11 +2,13 @@
 #{set title:'Reviews panel' /}
 
 <div class="container">
-	<div class="row">
-		<h2>Select articles for review</h2>
+	<div class="row">	
+		<h2>Selected articles for review</h2>
 		<br />
 		<p>To select articles for review, go to our <a href="@{PublishedController.unpublishedShow()}" class="btn btn-primary"><i class="icon-th-list icon-white"></i> Unpublished List</a> and pick up to three articles.</p>
-		<h2>Selected articles for review</h2>
+		<div class="alert alert-info">
+			<strong><i class="icon-info-sign"></i> Once you download a PDF you are committed to reviewing it. All articles are confidential, please do not disclose any information about it before it is published.</strong>
+		</div>
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
@@ -44,13 +46,22 @@
 								&nbsp; <a href="@{PublishedController.unpublishedShow()}" class="btn"><i class="icon-th-list"></i> Select another article</a>
 							#{/if}
 						</td>
-						<td class="option">#{if selection.status != -1}<a href="@{ArticleController.download(selection.article.id, -1)}" class="btn btn-primary"><i class="icon-download icon-white"></i> &nbsp;Download PDF</a>#{/if}</td>
+						<td style="width:180px" class="options">
+							#{if selection.status != -1}
+								#{if selection.status == 0}
+									<form><label class="checkbox"><input type="checkbox" name="select" /> &nbsp;I'm committed to article</label></form>
+								#{/if}
+								<a href="@{ArticleController.download(selection.article.id, -1)}" class="btn btn-primary #{if selection.status == 0} disabled #{/if}"><i class="icon-download icon-white"></i> &nbsp;Download</a>
+							#{/if}
+						</td>
 					</tr>
 				#{/list}
 			</tbody>
 		</table>
 
+		<br />
 		<h2>Your Reviews</h2>
+		<br />
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
@@ -71,7 +82,7 @@
 								Your review was submitted.
 							#{/else}
 						</td>
-						<td>
+						<td style="width:370px">
 							&nbsp;
 							<a href="@{ReviewController.show(review.id)}" class="btn"><i class="icon-file"></i> View review</a>
 							&nbsp;
