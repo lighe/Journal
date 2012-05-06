@@ -14,8 +14,8 @@
     		#{/ifErrors}
 	
 			#{if results}
-				#{list items:results, as:'res'}
-		 			<li>${res.title}</li>
+				#{list items:results, as:'rev'}
+		 			<li>${rev.article.title}</li>
 		 		#{/list}
 			#{/if}
 			#{else}
@@ -31,7 +31,7 @@
 				#{form @SearchController.searchByTitles()}
 					<h3>Search by titles</h3>
 					<label>Title: &nbsp;</label>
-					<input type="text" name="title" /> &nbsp;
+					<input type="text" name="titles" /> &nbsp;
 					<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
 					
 				#{/form}
@@ -40,7 +40,7 @@
 				#{form @SearchController.searchByTags()}
 					<h3>Search by keywords</h3>
 					<label>Keyword: &nbsp;</label>
-					<input type="text" name="keyword" /> &nbsp;
+					<input type="text" name="tags" /> &nbsp;
 					<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
 					
 				#{/form}
@@ -51,7 +51,7 @@
 				#{form @SearchController.searchByAuthors()}
 					<h3>Search by authors</h3>
 					<label>Author: &nbsp;</label>
-					<input type="text" name="author" /> &nbsp;
+					<input type="text" name="names" /> &nbsp;
 					<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
 					
 				#{/form}

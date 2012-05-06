@@ -1,0 +1,14 @@
+{
+  "state" : {
+    "version" : 25,
+    "shards" : [ {
+      "index" : "models_article",
+      "id" : 4,
+      "version" : 25
+    }, {
+      "index" : "models_article",
+      "id" : 1,
+      "version" : 25
+    } ]
+  }
+}
