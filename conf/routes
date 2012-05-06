@@ -50,6 +50,15 @@ POST    /ReaderCommentController                         ReaderCommentController
 GET     /DiscussionController/show                       DiscussionController.showDiscussion
 GET     /DiscussionController/addcomment                 DiscussionController.addDiscussion
 
+#Search routs
+GET     /search                     						SearchController.index
+GET     /search/advanced                     				SearchController.index
+GET     /search/index                     					SearchController.index
+GET     /search/byAuthors                     				SearchController.searchByAuthors
+GET     /search/byTitles                     				SearchController.searchByTitles
+GET     /search/byTags                     					SearchController.searchByTags
+GET     /search/byDate                     					SearchController.searchByDate
+
 
 
 
