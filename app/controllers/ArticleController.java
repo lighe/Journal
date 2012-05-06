@@ -296,24 +296,43 @@ public class ArticleController extends Controller {
 				
 		if (validation.hasErrors()) ErrorController.notFound(); 
 		
+		//Get the article in question
 		Article article = Article.findById(id);
-		if(article==null||!article.published) ErrorController.notFound(); //expand not published to allow download for reviewers, editors, etc
 		
-		List<Revision> revisions = Revision.find("article_ID", article).fetch();
-		if(revisions==null || revisions.isEmpty()) ErrorController.notFound();
+		//If article doesn't exist show error
+		if(article==null) {		
+			ErrorController.notFound(); //expand not published to allow download for reviewers, editors, etc
+		}
+		else {
+			//If the user is authorised
+			User user = Security.getConnectedUser();
+			if(user.editor || user.author || user.reviewer) {
+				//All users except editors have to be committed to article after download
+			
+				List<SelectedArticle> selectedArticles = SelectedArticle.find("byArticleAndUser", article, user).fetch();
+				if((selectedArticles==null||selectedArticles.size() == 0)&&!user.editor) ReviewController.notFound(); //more specific
+				else selectedArticles.get(0).setAsDownloaded();	
+			
 				
-		if(revisionNumber >= revisions.size()) ErrorController.notFound();
-		
-		Revision revision;
-		 
-		if(revisionNumber<0) revision = revisions.get(revisions.size()-1);
-		else revision = revisions.get(revisionNumber);
-		
-		if(revision==null) ErrorController.notFound();
-		
-		File f = new java.io.File(revision.pdf_url); 
-		renderBinary(f, article.title + ".pdf"); 
-	
+				//Get article revisions
+				List<Revision> revisions = Revision.find("article_ID", article).fetch();
+				if(revisions==null || revisions.isEmpty()) ErrorController.notFound();
+				
+				//Check if revision number is valid		
+				if(revisionNumber >= revisions.size()) ErrorController.notFound();
+				
+				
+				Revision revision;
+				//If revision < 0 get last revision else get required revision 
+				if(revisionNumber<0) revision = revisions.get(revisions.size()-1);
+				else revision = revisions.get(revisionNumber);
+				
+				//Render file to browser				
+				File f = new java.io.File(revision.pdf_url); 
+				renderBinary(f, article.title + ".pdf"); 
+				
+			}
+		}	
 	}
 	
 }

@@ -44,7 +44,7 @@
 								&nbsp; <a href="@{PublishedController.unpublishedShow()}" class="btn"><i class="icon-th-list"></i> Select another article</a>
 							#{/if}
 						</td>
-						<td class="option">#{if selection.status != -1}<a href="#" class="btn btn-primary"><i class="icon-download icon-white"></i> &nbsp; Download PDF</a>#{/if}</td>
+						<td class="option">#{if selection.status != -1}<a href="@{ArticleController.download(selection.article.id, -1)}" class="btn btn-primary"><i class="icon-download icon-white"></i> &nbsp;Download PDF</a>#{/if}</td>
 					</tr>
 				#{/list}
 			</tbody>
