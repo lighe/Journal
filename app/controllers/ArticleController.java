@@ -66,10 +66,10 @@ public class ArticleController extends Controller {
      * @param discription Article abstract
      * @param article the file containing the article
      */
-    public static void newArticle(String title, String tags, String authors, String discription, File article, String email, String password){
+    public static void newArticle(String title, String tags, String[] authors, String[] authorsAffiliation, String discription, File article, String email, String affiliation, String password){
 
 		params.flash();
-		
+
     	//TODO - tags and authors, need to be able to parse them and split them up
     	List<Tag> tagsList = null;
     	//get the uploaded file parts and check a title is given
@@ -82,6 +82,12 @@ public class ArticleController extends Controller {
     	if(title.isEmpty()||uploads == null||discription.isEmpty()){ //Force minimum amount of data to be filled in
     		validation.addError(null, "Please fill in atleast the title and description fields and select a PDF to upload");
     	}
+    	/*
+    	 * If user connected, set that as the user
+    	 */
+    	else if(Security.isConnected()){
+    		user = Security.getConnectedUser();
+    	}
     	/*If no email given and no user connected,
 			then return error
 		 */ 
@@ -93,19 +99,24 @@ public class ArticleController extends Controller {
 			else create user and email password to account    	
     	 */
     	else if((!email.isEmpty()) && password.isEmpty()) {
-    		String pass = generatePassword();
-    		user = new User(email, pass);
-    		JournalConfiguration jc  = JournalConfiguration.all().first();
-    		String message = "Welcome to " + jc.journalName + ".  Your account has been created and is ready for you to use, youre password is '"+pass+"' (Without quotes).  You may change it from youre user control panel once you have loged on.";
-    		try {
-    			//Get current primary editor
-    			User sender = User.find("editor", true).first();
-				Emailer.sendEmailTo(email, sender.email, message, "Account created");
-				//once everything is successful, save the user
-				user.save();
-			} catch (EmailException e) {
-		    	validation.addError(null, "There was an issue emailing your email account, are you sure it is correct?");
-			}
+    		List<User> userList = User.find("email", email).fetch();
+    		if(userList.isEmpty()){
+	    		String pass = generatePassword();
+	    		user = new User(email, pass);
+	    		JournalConfiguration jc  = JournalConfiguration.all().first();
+	    		String message = "Welcome to " + jc.journalName + ".  Your account has been created and is ready for you to use, youre password is '"+pass+"' (Without quotes).  You may change it from youre user control panel once you have loged on.";
+	    		try {
+	    			//Get current primary editor
+	    			User sender = User.find("editor", true).first();
+					Emailer.sendEmailTo(email, sender.email, message, "Account created");
+					//once everything is successful, save the user
+					user.save();
+				} catch (EmailException e) {
+			    	validation.addError(null, "There was an issue emailing your email account, are you sure it is correct?");
+				}
+    		} else {
+		    	validation.addError(null, "Email address taken");
+    		}
     	}
     	/*If email given and password,
 			then validate - return error if not valid
@@ -113,7 +124,7 @@ public class ArticleController extends Controller {
     	 */
     	else if ((!email.isEmpty()) && (!password.isEmpty())){
     		if(Security.authenticate(email, password)){
-    			user = Security.getConnectedUser();
+    			user = User.find("email", Security.connected()).first();
     		} else {
 		    	validation.addError(null, "Your login details were incorrect, please try again.");
     		}
@@ -122,17 +133,40 @@ public class ArticleController extends Controller {
 	     if(!validation.hasErrors()) {
 	    	 
 	        Date date = new Date();
-	        
+
+	   		ArrayList<Contributor> conList = new ArrayList<Contributor>();
 	        //Brake down the additional authors into a list
+	        if(authors != null){
+			   	for(int x=0;x<authors.length;x++){
+			   		ArrayList<Affiliation> affiliations = new ArrayList<Affiliation>();
+			   		if(authorsAffiliation[x] != null){
+				   		String authAffiliation = authorsAffiliation[x];
+				   		while(authAffiliation.contains(",")){
+				   			Affiliation aff = new Affiliation(authAffiliation.substring(0,authAffiliation.indexOf(",")));
+				   			System.out.println(authors[x] + " Affiliation: " + aff.affiliation_name);
+				   			aff.save();
+				   			affiliations.add(aff);
+				   			authAffiliation = authAffiliation.substring(authAffiliation.indexOf(",")+1, authAffiliation.length());
+			        	}
+				   		Affiliation aff = new Affiliation(authAffiliation);
+				   		aff.save();
+				   		affiliations.add(aff);
+			   		}
+			   		Contributor con = new Contributor(authors[x], affiliations);
+			   		con.save();
+			   		conList.add(con);
+			   	}
+	        }
+	        
 	        ArrayList<String> authorArray = new ArrayList<String>();
 	        if(authors != null){
-	        	while(authors.contains(",")){
-	        		authorArray.add(authors.substring(0,authors.indexOf(",")));
+	        	for(int x = 0; x<authors.length; x++){
+	        		authorArray.add(authors[x]);
 	        	}
 	        }
 
 	        Article art = new models.Article(user , false, title, discription); 
-	        art.addContributors(authorArray);
+	        art.addContributors(conList);
 			
 			String[] tagsArray = tags.split(",");
 			
@@ -145,6 +179,22 @@ public class ArticleController extends Controller {
 	        	tagsFinalArray.add(tag);
 	        }
 	        art.addTags(tagsFinalArray);
+	        
+	        //Author affiliations
+	        ArrayList<Affiliation> authAffilationsList = new ArrayList<Affiliation>();
+	        if(affiliation != null){
+		   		while(affiliation.contains(",")){
+		   			Affiliation aff = new Affiliation(affiliation.substring(0,affiliation.indexOf(",")));
+		   			System.out.println("Auther Affiliation: "+aff.affiliation_name);
+		   			aff.save();
+		   			authAffilationsList.add(aff);
+		   			affiliation = affiliation.substring(affiliation.indexOf(",")+1, affiliation.length());
+	        	}
+		   		Affiliation aff = new Affiliation(affiliation);
+		   		aff.save();
+		   		authAffilationsList.add(aff);
+	   		}
+	        art.addAffiliations(authAffilationsList);
 			
 	        Revision rev = new Revision(art, date, 1, " ");   
 	        String urlPrefix = "public/files/articles/";
