@@ -3,6 +3,7 @@ JournalConfiguration(jc1):
 
 User(u1):
     email: alighe89@gmail.com
+    name: alex
     password: tester
     author: true
     editor: true
@@ -10,28 +11,43 @@ User(u1):
 
 User(u2):
     email: aca08im@sheffield.ac.uk
+    name: ian
     password: test
     author: true
     editor: true
     reviewer: true
+    
+User(u3):
+    email: aca08imA@sheffield.ac.uk
+    password: test
+    author: false
+    editor: flase
+    reviewer: true
 
-#Tag(t1):
-#    title: Tag1
+User(u4):
+    email: aca08imB@sheffield.ac.uk
+    password: test
+    author: false
+    editor: false
+    reviewer: true        
 
-#Tag(t2):
-#    title: Tag2
+Tag(t1):
+    title: Tag1
+
+Tag(t2):
+    title: Tag2
 
 Article(firstArticle):
     title: Test title 1
     summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
- #   tags: t1, t2
+   # tags: t1, t2
     published: true
     user: u2
     
 Article(secondArticle):
     title: Test title 2
     summary: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-  #  tags: t1, t2
+   # tags: t1, t2
     published: false
     user: u1
 

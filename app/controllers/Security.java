@@ -18,13 +18,13 @@ public class Security extends Secure.Security {
 		render("register.html");
 	}
 	
-	public static void submitRegister(String email, String password1, String password2){
+	public static void submitRegister(String email, String password1, String password2, String name){
 		
-		 if(password1.isEmpty()||password2.isEmpty()||email.isEmpty()){
+		 if(password1.isEmpty()||password2.isEmpty()||email.isEmpty()||name.isEmpty()){
 			 validation.addError(null, "Please fill in all fields");
 		 } else {
 			 if(password1.contentEquals(password2)){
-				 User user = new User(email, password1);
+				 User user = new User(email, name, password1);
 				 user.save();
 		     } else {
 			     validation.addError(null, "Passwords did not match");
@@ -33,6 +33,7 @@ public class Security extends Secure.Security {
 	     if(!validation.hasErrors()) {
 	    	 flash.success("User Created successfully.");
 	     }
+	    
 		render("register.html");
 	}
 	

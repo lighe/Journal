@@ -66,7 +66,7 @@ public class ArticleController extends Controller {
      * @param discription Article abstract
      * @param article the file containing the article
      */
-    public static void newArticle(String title, String tags, String[] authors, String[] authorsAffiliation, String discription, File article, String email, String affiliation, String password){
+    public static void newArticle(String title, String name, String tags, String[] authors, String[] authorsAffiliation, String[] authorNames, String discription, File article, String email, String affiliation, String password){
 
 		params.flash();
 
@@ -88,21 +88,21 @@ public class ArticleController extends Controller {
     	else if(Security.isConnected()){
     		user = Security.getConnectedUser();
     	}
-    	/*If no email given and no user connected,
+    	/*If no email given, no name given and no user connected,
 			then return error
 		 */ 
-    	else if(!Security.isConnected() && email.isEmpty()){
-    		validation.addError(null, "You must provide an email address");
+    	else if(!Security.isConnected() && (email.isEmpty() || name.isEmpty())){
+    		validation.addError(null, "You must provide an email address and youre name");
     	}
-    	/*If email given but no password,
+    	/*If email and name given but no password,
 			then check if user is already registered - if so return error
 			else create user and email password to account    	
     	 */
-    	else if((!email.isEmpty()) && password.isEmpty()) {
+    	else if((!email.isEmpty()) && (!name.isEmpty()) && password.isEmpty()) {
     		List<User> userList = User.find("email", email).fetch();
     		if(userList.isEmpty()){
 	    		String pass = generatePassword();
-	    		user = new User(email, pass);
+	    		user = new User(email, name, pass);
 	    		JournalConfiguration jc  = JournalConfiguration.all().first();
 	    		String message = "Welcome to " + jc.journalName + ".  Your account has been created and is ready for you to use, youre password is '"+pass+"' (Without quotes).  You may change it from youre user control panel once you have loged on.";
 	    		try {
@@ -152,7 +152,7 @@ public class ArticleController extends Controller {
 				   		aff.save();
 				   		affiliations.add(aff);
 			   		}
-			   		Contributor con = new Contributor(authors[x], affiliations);
+			   		Contributor con = new Contributor(authors[x], authorNames[x], affiliations);
 			   		con.save();
 			   		conList.add(con);
 			   	}
@@ -164,7 +164,6 @@ public class ArticleController extends Controller {
 	        		authorArray.add(authors[x]);
 	        	}
 	        }
-
 	        Article art = new models.Article(user , false, title, discription); 
 	        art.addContributors(conList);
 			
@@ -187,11 +186,15 @@ public class ArticleController extends Controller {
 		   			Affiliation aff = new Affiliation(affiliation.substring(0,affiliation.indexOf(",")));
 		   			System.out.println("Auther Affiliation: "+aff.affiliation_name);
 		   			aff.save();
+			        user.addAffiliation(aff);
+			        user.save();
 		   			authAffilationsList.add(aff);
 		   			affiliation = affiliation.substring(affiliation.indexOf(",")+1, affiliation.length());
 	        	}
 		   		Affiliation aff = new Affiliation(affiliation);
 		   		aff.save();
+		        user.addAffiliation(aff);
+		        user.save();
 		   		authAffilationsList.add(aff);
 	   		}
 	        art.addAffiliations(authAffilationsList);

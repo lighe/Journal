@@ -4,47 +4,66 @@
 <div class="container" id="advanced_search">
 	<div class="row">
 		<div class="span12">
+			#{ifErrors}
+				<div class='errors'>
+        			#{errors}
+       					<li>${error}</li>
+   					#{/errors}
+   				</div>
+   				<br><br>
+    		#{/ifErrors}
+	
+			#{if results}
+				#{list items:results, as:'res'}
+		 			<li>${res.title}</li>
+		 		#{/list}
+			#{/if}
+			#{else}
+				<h2>Search Results</h2>
+				No results found
+			#{/else}
+		
 			<h2>Advanced Search</h2>
 			<p>Search articles by specific data such as authors, keywords, title, etc.</p>
 		</div>
 		<div class="span6">
 			<div class="group form-group">
-				<form class="form-inline">
-					<h3>Search by title</h3>
+				#{form @SearchController.searchByTitles()}
+					<h3>Search by titles</h3>
 					<label>Title: &nbsp;</label>
 					<input type="text" name="title" /> &nbsp;
 					<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
 					
-				</form>
+				#{/form}
 			</div>
 			<div class="group form-group">
-				<form class="form-inline">
-					<h3>Search by keyword</h3>
+				#{form @SearchController.searchByTags()}
+					<h3>Search by keywords</h3>
 					<label>Keyword: &nbsp;</label>
 					<input type="text" name="keyword" /> &nbsp;
 					<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
 					
-				</form>
+				#{/form}
 			</div>
 		</div>
 		<div class="span6">
 			<div class="group form-group">
-				<form class="form-inline">
-					<h3>Search by author</h3>
+				#{form @SearchController.searchByAuthors()}
+					<h3>Search by authors</h3>
 					<label>Author: &nbsp;</label>
 					<input type="text" name="author" /> &nbsp;
 					<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
 					
-				</form>
+				#{/form}
 			</div>
 			<div class="group form-group">
-				<form class="form-inline">
+				#{form @SearchController.searchByDate()}
 					<h3>Search by date</h3>
 					<label>Date: &nbsp;</label>
 					<input type="text" name="date" /> &nbsp;
 					<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
 					
-				</form>
+				#{/form}
 			</div>
 		</div>
 	</div>

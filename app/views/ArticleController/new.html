@@ -47,6 +47,10 @@
 					<label>Email address:</label>
 					<input type="text" name="email" class="span6" value="${flash.email}"  />
 				</div>
+				<div class="group">
+					<label>Name:</label>
+					<input type="text" name="name" class="span6" value="${flash.name}"  />
+				</div>
 				#{/if}
 				<div class="group">
 				<label>Your affiliations(please divide them with commas):</label>
@@ -57,7 +61,7 @@
 				var x=1;
 					function addAuthor(){	
 						x++;
-						var addition = "<label>Additional Author "+x+"'s email addresses:</label>\n<input type='text' name='authors' class='span6' />\n<label>Author "+x+"'s affiliation(optional, please divide them with commas):</label>\n<input type='text' name='authorsAffiliation' class='span6' />";
+						var addition = "<label>Additional Author "+x+"'s email addresses:</label>\n<input type='text' name='authors' class='span6' />\n<label>Additional Author "+x+"'s name:</label>\n<input type='text' name='authorNames' class='span6' />\n<label>Author "+x+"'s affiliation(optional, please divide them with commas):</label>\n<input type='text' name='authorsAffiliation' class='span6' />";
 						document.getElementById("additionalauthors").innerHTML = document.getElementById("additionalauthors").innerHTML + addition ;
 					}
 				</script>
@@ -66,6 +70,9 @@
 				<label>Please select the number of addtional authors by clicking the add author button, then fill in the boxes:</label>
 				<label>Additional Author 1's email addresses:</label>
 				<input type="text" name="authors" class="span6" />
+				
+				<label>Additional Author 1's name:</label>
+				<input type="text" name="authorNames" class="span6" />
 				
 				<label>Author 1's affiliation(optional, please divide them with commas):</label>
 				<input type="text" name="authorsAffiliation" class="span6" />

@@ -25,7 +25,7 @@ public class Published extends Model {
     
     public Published(Revision revision, Edition edition, User editor){
         this.revision = revision;
-	this.edition = edition;
+        this.edition = edition;
         this.publish_by_editor = editor;
     }
    
