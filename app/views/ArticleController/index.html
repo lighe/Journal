@@ -1,8 +1,40 @@
 #{extends 'main.html' /}
 #{set title:'Article index' /}
 
-#{if articles}				
-	#{list items:articles, as:'article'}
-		<li><a href="@{ArticleController.show(article.id)}">${article.title}</a></li>						
-	#{/list}
-#{/if}
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<h2>Articles you have submitted</h2>
+			#{if articles}
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Article title</th>
+							<th>Reviews</th>
+							<th>Revisions</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						#{list items:articles, as:'article'}
+						<tr>
+							<td>${article.title}</td> 
+							<td>
+								[tbd]
+							</td>
+							<td>[tbd] //links here</td>	
+							<td>[tbd]</td>
+						</tr>	
+						#{/list}
+					</tbody>
+				</table>
+			#{/if}
+			#{else}
+				<div class="alert alert-info">
+					<strong><i class="icon-info-sign"></i> You haven't submitted any articles yet. Want to <a href="@{ArticleController.new()}" class="btn"><i class="icon-upload"></i> upload</a> one now?</strong>
+				</div>
+			#{/else}
+		</div>
+	</div>
+</div>
+	
