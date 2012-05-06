@@ -26,7 +26,7 @@
 			<h2>Advanced Search</h2>
 			<p>Search articles by specific data such as authors, keywords, title, etc.</p>
 		</div>
-		<div class="span6">
+		<div class="span6 search-forms">
 			<div class="group form-group">
 				#{form @SearchController.searchByTitles()}
 					<h3>Search by titles</h3>
@@ -46,23 +46,23 @@
 				#{/form}
 			</div>
 		</div>
-		<div class="span6">
+		<div class="span6 search-forms">
 			<div class="group form-group">
 				#{form @SearchController.searchByAuthors()}
 					<h3>Search by authors</h3>
 					<label>Author: &nbsp;</label>
 					<input type="text" name="names" /> &nbsp;
 					<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
-					
 				#{/form}
 			</div>
 			<div class="group form-group">
 				#{form @SearchController.searchByDate()}
-					<h3>Search by date</h3>
-					<label>Date: &nbsp;</label>
-					<input type="text" name="date" /> &nbsp;
+					<h3>Search by date</h3>				
+					<label style="width: auto">From: &nbsp;</label>
+					<input style="width: 93px" class="datePicker" type="text" name="date" data-date-format="mm/dd/yy" value="06/05/2012" /> &nbsp;
+					<label style="width:auto">To: &nbsp;</label>
+					<input style="width: 93px" class="datePicker" type="text" name="date2" data-date-format="mm/dd/yy" value="06/05/2012" /> &nbsp;
 					<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
-					
 				#{/form}
 			</div>
 		</div>
