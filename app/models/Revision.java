@@ -13,7 +13,8 @@ public class Revision extends Model {
     public Date date;
     public int revision_number;
     public String pdf_url; 
-    
+    public boolean rejectedByEditor = false;
+	
 	@ManyToOne
     //@Column(name="article",length=1000) 
     public Article article;
@@ -27,5 +28,9 @@ public class Revision extends Model {
 	
 	public List<Review> getReviews() {
 		return Review.find("byRevision", this).fetch();
+	}
+	
+	public void setAsRejected() {
+		this.rejectedByEditor = true;	
 	}
 }

@@ -109,4 +109,20 @@ public class RevisionController extends Controller {
 		
 		render(revision);
 	}
+	
+	public static void editorRejectRevision(Long revisionId){
+		if (Security.isEditor()){ 
+			Revision revision = Revision.findById(revisionId);
+			revision.setAsRejected();	
+			
+			try {
+				Emailer.sendEmailTo(revision.article.user.email, Security.getConnectedUser().email, "Your revision has been rejected.", "Revision rejected");
+			} catch (EmailException ex) {
+				validation.addError(null, "Email failed to send, please try again later");
+			} 
+			
+			flash.success("Revision Rejected.");
+			ControlPanelController.activity();	
+		}
+	}
 }

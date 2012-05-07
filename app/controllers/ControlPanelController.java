@@ -97,56 +97,57 @@ public class ControlPanelController extends  Controller {
 		listUsers();
 	 }
 	 
-	    /**
-	     * uploads the newsletter file and then lets the user know
-	     * @param file the newsletter to upload
-	     */
-	    public static void upload(Upload file, String guidelines) {
-			
-			JournalConfiguration jc = JournalConfiguration.all().first();
-						
-			jc.guidelines = guidelines;
+	/**
+	 * uploads the newsletter file and then lets the user know
+	 * @param file the newsletter to upload
+	 */
+	public static void upload(Upload file, String guidelines) {
+		
+		JournalConfiguration jc = JournalConfiguration.all().first();
 					
-	    	//get the uploaded file parts
-			List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
-			if(uploads != null){
-	    		//save file
-				String fileName = uploads.get(0).getFileName();
+		jc.guidelines = guidelines;
 				
-				String destinationPrefix = "public/files/templates/";
-				if(FileManagment.isDoc(fileName)){
-  					String ext=fileName.substring(fileName.lastIndexOf(".")+1,fileName.length());
-					System.out.println(ext);
-					if(FileManagment.upload(uploads, destinationPrefix, "template."+ext)){
-						jc.urlToDocTemplate = destinationPrefix + "template."+ext;
-					 } else {
-						 validation.addError(null, "There was an error uploading youre file");
-					 }
-				} else if (FileManagment.isLaTEX(fileName)){
-					if(FileManagment.upload(uploads, destinationPrefix, "template.tex")){
-						jc.urlToLatexTemplate = destinationPrefix + "template.tex";
-					 } else {
-						 validation.addError(null, "There was an error uploading your file");
-					 }
-				} else {
-					 validation.addError(null, "Please ensure the template is either a Doc (.doc or .docx), or a Latex file (.tex)");
-				}
-	    	} else {
-				validation.addError(null, "Please ensure the template is either a Doc (.doc or .docx), or a Latex file (.tex)");
-	    	} 
-
-		     if(!validation.hasErrors()) {
-		    	 flash.success("Template uploaded");
-		     }
+		//get the uploaded file parts
+		List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
+		if(uploads != null){
+			//save file
+			String fileName = uploads.get(0).getFileName();
 			
-			 jc.save();
-	    	 render("controlPanels/journalPanel.html", jc);	 
-	    }
+			String destinationPrefix = "public/files/templates/";
+			if(FileManagment.isDoc(fileName)){
+				String ext=fileName.substring(fileName.lastIndexOf(".")+1,fileName.length());
+				System.out.println(ext);
+				if(FileManagment.upload(uploads, destinationPrefix, "template."+ext)){
+					jc.urlToDocTemplate = destinationPrefix + "template."+ext;
+				 } else {
+					 validation.addError(null, "There was an error uploading youre file");
+				 }
+			} else if (FileManagment.isLaTEX(fileName)){
+				if(FileManagment.upload(uploads, destinationPrefix, "template.tex")){
+					jc.urlToLatexTemplate = destinationPrefix + "template.tex";
+				 } else {
+					 validation.addError(null, "There was an error uploading your file");
+				 }
+			} else {
+				 validation.addError(null, "Please ensure the template is either a Doc (.doc or .docx), or a Latex file (.tex)");
+			}
+		} else {
+			validation.addError(null, "Please ensure the template is either a Doc (.doc or .docx), or a Latex file (.tex)");
+		} 
+
+		 if(!validation.hasErrors()) {
+			 flash.success("Template uploaded");
+		 }
+		
+		 jc.save();
+		 render("controlPanels/journalPanel.html", jc);	 
+	}
 
 	public static void activity() {
 		List<Review> reviews = Review.find("rejectedByEditor is ? order by id desc", false).fetch();
 		List<SelectedArticle> selectedArticles = SelectedArticle.find("status != ? and status !=? order by status desc", -1, 100).fetch();
-		render("ControlPanels/activity.html", reviews, selectedArticles);	
+		List<Revision> revisions = Revision.find("rejectedByEditor is ? order by id desc", false).fetch();
+		render("ControlPanels/activity.html", reviews, selectedArticles, revisions);	
 	} 
 	
 }
