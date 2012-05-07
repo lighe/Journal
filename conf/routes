@@ -50,7 +50,7 @@ POST    /ReaderCommentController                         ReaderCommentController
 GET     /DiscussionController/show                       DiscussionController.showDiscussion
 GET     /DiscussionController/addcomment                 DiscussionController.addDiscussion
 
-#Search routs
+# Search routes
 GET     /search                     						SearchController.index
 GET     /search/advanced                     				SearchController.index
 GET     /search/index                     					SearchController.index
@@ -59,8 +59,12 @@ GET     /search/byTitles                     				SearchController.searchByTitles
 GET     /search/byTags                     					SearchController.searchByTags
 GET     /search/byDate                     					SearchController.searchByDate
 
-
-
+# volume pages
+GET		/volumes							VolumeController.index
+GET		/volumes/index						VolumeController.index
+GET		/volumes/new 						VolumeController.new
+GET		/volumes/delete						VolumeController.delete
+GET		/volumes/edit						VolumeController.edit
 
 #crud
 GET	/admin              module:crud

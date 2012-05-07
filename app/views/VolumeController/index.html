@@ -1,0 +1,70 @@
+#{extends 'main.html' /}
+#{set title:'Volume index' /}
+
+#{if user}	
+	#{if user.editor}	
+	<div class='container'>
+		<div class="row">
+			<div class="span12">
+				#{ifErrors}
+					<div class="alert alert-warning">
+						<strong>There are some errors:</strong> <br />
+						#{errors}
+						   <i class="icon-flag"></i> ${error} <br />
+						#{/errors}
+					</div>
+				#{/ifErrors}
+				#{if flash.success}
+					<div class="alert alert-success">
+						<strong><i class="icon-ok"></i> ${flash.success}</strong>
+					</div>
+				#{/if}
+
+					<h2>Volumes</h2>
+					<br />
+
+					#{if volumes}
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>Volume Name</th>
+								<th>Editions</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							#{list items:volumes, as:'volume'}
+								<tr>
+									<td><a href="@{VolumeController.show(volume.id)}">${volume.name}</a></td>
+									<td>
+										<!-- TODO: list them down vertically -->
+										&nbsp;
+										#{list items:editions, as:'edition'}				
+										<a href="@{VolumeController.show(volume.editions.id)}">${edition.name}</a>
+											<a href="@{VolumeController.delete(editions.id)}" class="btn"><i class="icon-trash"></i></a>
+										#{/list}
+									</td>
+									<td class="actions">
+										&nbsp;
+										<a href="@{VolumeController.edit(volume.id, edition.id)}" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Edit</a> 
+										&nbsp;
+										<i>- or -</i>
+										&nbsp;
+										<a href="@{VolumeController.delete(volume.id)}" class="btn"><i class="icon-trash"></i> Delete Volume</a>
+									</td>
+								</tr>
+							#{/list}
+						</tbody>
+					</table>
+					#{/if}
+					#{else}
+						<div class="alert alert-info">
+							<strong><i class="icon-info-sign"></i> There are no volumes.</strong>
+						</div>
+						<br />
+						<a href="@{VolumeController.add(volume.id)}" class="btn btn-primary"><i class="icon-pencil icon-white"></i> New Volume </a>
+					#{/else}
+	</div>
+</div>
+	#{/if}	
+#{/if}
