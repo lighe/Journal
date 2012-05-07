@@ -9,7 +9,7 @@ import java.util.*;
 
 @With({ApplicationController.class, Security.class})
 public class DiscussionController extends Controller {
-    
+    /*
     public static void showDiscussion (Long id){
         JournalConfiguration jc = JournalConfiguration.all().first();
         if  (Security.isConnected()){
@@ -50,5 +50,5 @@ public class DiscussionController extends Controller {
             }
 		}
 	
-    }
+    }*/
 }

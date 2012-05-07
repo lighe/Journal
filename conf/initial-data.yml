@@ -129,11 +129,6 @@ Published(secondPublished):
     edition: fourthEdition
     published_by_editor: u2
 
-Published(thirdPublished):
-    revision: rev3
-    edition: fourthEdition
-    published_by_editor: u1
-
 Role(r1):
     role: "auditor" 
     

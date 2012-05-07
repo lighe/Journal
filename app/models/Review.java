@@ -24,6 +24,7 @@ public class Review extends Model {
 	public int authorExpertiseLevel; 
 	
 	public boolean rejectedByEditor;
+	public boolean visible = false;
 	
 	@Lob
 	public String summary;
