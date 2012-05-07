@@ -16,6 +16,7 @@
 				</div>
 			#{/ifErrors}
 			
+			#{if results}
 			<div class="alert alert-info search-info">
 				<strong><i class="icon-info-sign"></i> ${results.size() ?: 'No'} Results Found</strong>
 				<form action="@{SearchController.search()}" class="navbar-search pull-right home-search">
@@ -24,7 +25,6 @@
 					<a href="@{SearchController.index()}" id="advanced">Advanced</a>
 				</form>
 			</div>
-			
 			<div id="articles">
 				#{list items:results, as:'published'}
 					<div class="article">
@@ -33,6 +33,10 @@
 					</div>					
 				#{/list}
 			</div>
+			#{/if}
+			#{else}
+        No Results Found
+      #{/else}
 			
 		</div>
 	</div>
