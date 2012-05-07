@@ -39,23 +39,16 @@ public class DiscussionController extends Controller {
     
     public static void addDiscussion (Long id, String comment){
         JournalConfiguration jc = JournalConfiguration.all().first();
+				
         if  (Security.isConnected()){
             User user = Security.getConnectedUser();
-            if (Security.isReviewer()){
+            if (Security.isReviewer() || Security.isAuthor()){
                 Revision rev = Revision.findById(id);
-                List<User> users = Discussion.getUserList(rev);
-                List<Discussion> comments = Discussion.find("revision", rev).fetch();
+                //List<Discussion> comments = Discussion.find("revision", rev).fetch();
                 Discussion addcomment = new Discussion(rev, comment, user);
                 addcomment.save();
-                render("DiscussionController/addcomment.html", addcomment, jc);
             }
-            else{
-                render("/home.html", jc); //TODO change to error page
-            }
-        }
-        else{
-            render("/main.html", jc);
-        }
+		}
 	
     }
 }

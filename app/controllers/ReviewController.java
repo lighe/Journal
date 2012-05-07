@@ -66,7 +66,7 @@ public class ReviewController extends Controller {
 		
 	}
 	
-	public static void save(Long articleId, int judgment, String smallErrors, int expertise, List<String> criticism, String summary) {
+	public static void save(Long articleId, int judgment, String smallErrors, int expertise, List<String> criticism, String summary, String discussion) {
 		
 		//if no articleId present redirect
 		if(validation.required(articleId).error != null) {
@@ -99,6 +99,12 @@ public class ReviewController extends Controller {
 			
 			//save review
 			review.save();
+			
+			//add discusion
+			if(discussion!=null&&discussion!="") {
+				Discussion addcomment = new Discussion(review, discussion, Security.getConnectedUser());
+				addcomment.save();
+			}
 			
 			//if edit delete all reviewComments:
 			/*for(ReviewComment r : ReviewComment.<ReviewComment>find("byReview", review).fetch()) {

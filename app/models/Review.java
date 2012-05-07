@@ -6,6 +6,8 @@ import java.util.*;
 import javax.persistence.*;
  
 import play.db.jpa.*;
+
+import controllers.*;
  
 @Entity
 public class Review extends Model {
@@ -83,6 +85,12 @@ public class Review extends Model {
 	public void reject() {
 		this.rejectedByEditor = true;	
 		this.save();
+	}
+	
+	public Discussion getDiscussion() {
+		Discussion discussion = null;
+		if(Security.isEditor()) discussion = Discussion.find("byReview", this).first();
+		return discussion;	
 	}
  
 }

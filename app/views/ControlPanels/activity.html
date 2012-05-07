@@ -50,7 +50,19 @@
 										<td><a href="@{ArticleController.show(review.revision.article.id)}">${review.revision.article.title}</a></td>
 										<td>${review.user.email}</td>
 										<td>${review.date}</td>
-										<td style="width:260px"><a href="@{ReviewController.show(review.id)}" class="btn"><i class="icon-eye-open"></i> View review</a> &nbsp; <a href="@{ReviewController.editorRejectReview(review.id)}" class="btn btn-danger"><i class="icon-trash icon-white"></i> Reject review</a></td>		
+										<td style="width:260px">
+											<a href="@{ReviewController.editorRejectReview(review.id)}" class="btn btn-danger">
+												<i class="icon-trash icon-white"></i> Reject review
+											</a> &nbsp;
+											<a href="@{ReviewController.show(review.id)}" class="btn btn-primary">
+												<i class="icon-eye-open icon-white"></i> 
+												#{if review.discussion} 
+													<i class="icon-lock icon-white" title="Has secret comment"></i>
+												#{/if}
+												View review
+											</a> 
+											
+										</td>		
 									#{/list}
 								</tbody>
 							</table>
