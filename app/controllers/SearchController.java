@@ -3,6 +3,9 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import models.*;
@@ -11,7 +14,8 @@ import models.*;
 public class SearchController extends Controller {
 
 	public static void index() {
-		render();
+		String date = getDateString();
+		render(date);
 	}
 	
 	public static void search(String search){
@@ -168,9 +172,36 @@ public class SearchController extends Controller {
 		render("searchController/results.html", results);	
 	}
 	
-	public static void searchByDate(String fromMonth, String fromYear, String toMonth, String toYear){
+	public static void searchByDate(String to, String from){
 
-		render("searchController/results.html");
+		Date toDate;
+		Date fromDate;
+		ArrayList<Revision> results = new ArrayList<Revision>();
+		try {
+			toDate = new SimpleDateFormat("dd/MM/yy").parse(to);
+			fromDate = new SimpleDateFormat("dd/MM/yy").parse(from);
+			
+			/*
+			 * get all published articles, then get their latest revisions, 
+			 * then compare their dates to see if they fall between the specified dates.  
+			 * If the revision falls betweent he dates then add it to the found list
+			 */
+			List<Article> articleList = Article.find("published", true).fetch();
+			for(int x = 0; x < articleList.size();x++){
+				Article art = articleList.get(x);
+				Revision rev = art.getLatestRevision(art);
+				if(rev.date.after(fromDate) && rev.date.before(toDate)){
+					results.add(rev);
+				}
+			}
+			
+			
+			render("searchController/results.html", results);
+		} catch (ParseException e) {
+			index();
+		}
+		
+		
 		
 	}
 	
@@ -201,5 +232,11 @@ public class SearchController extends Controller {
 		return list;
 	}
 	
+	private static String getDateString(){
+		Date dateToday = new Date();
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+		String date = formatter.format(dateToday);
+		return date;
+	}
 	
 }

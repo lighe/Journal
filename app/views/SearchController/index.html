@@ -46,9 +46,16 @@
 				#{form @SearchController.searchByDate()}
 					<h3>Search by date</h3>				
 					<label style="width: auto">From: &nbsp;</label>
-					<input style="width: 93px" class="datePicker1" type="text" name="date1" data-date-format="mm/dd/yy" value="06/04/2012" /> &nbsp;
-					<label style="width:auto">To: &nbsp;</label>
-					<input style="width: 93px" class="datePicker2" type="text" name="date2" data-date-format="mm/dd/yy" value="06/05/2012" /> &nbsp;
+					#{if date}
+						<input style="width: 93px" class="datePicker1" type="text" name="from" data-date-format="mm/dd/yy" value="${date}" /> &nbsp;
+						<label style="width:auto">To: &nbsp;</label>
+						<input style="width: 93px" class="datePicker2" type="text" name="to" data-date-format="mm/dd/yy" value="${date}" /> &nbsp;
+						#{/if}
+					#{else}
+						<input style="width: 93px" class="datePicker1" type="text" name="from" data-date-format="mm/dd/yy" value="06/04/2012" /> &nbsp;
+						<label style="width:auto">To: &nbsp;</label>
+						<input style="width: 93px" class="datePicker2" type="text" name="to" data-date-format="mm/dd/yy" value="06/05/2012" /> &nbsp;	
+					#{/else}
 					<button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
 				#{/form}
 			</div>
