@@ -21,11 +21,18 @@
 			</div>
 			
 			<div id="review-comments">
-				<h2>Criticism</h2>
-				<br />
-				#{list items:review.reviewComments, as:'comment'}
-					<p class="comment alert alert-wraning"><span class="badge badge-warning">${comment_index}</span>  ${comment.comment}</p>						
-				#{/list}
+				#{if review.reviewComments.size() > 0}
+					<h2>Criticism</h2>
+					<br />
+					#{list items:review.reviewComments, as:'comment'}
+						<p class="comment alert alert-wraning"><span class="badge badge-warning">${comment_index}</span>  ${comment.comment}</p>						
+					#{/list}
+				#{/if}
+				#{else}
+					<div class="alert alert-info">
+						<strong><i class="icon-info-sign"></i> Phew! No Criticism!</strong>
+					</div>
+				#{/else}
 			</div>
 		</div>
 		<hr />
