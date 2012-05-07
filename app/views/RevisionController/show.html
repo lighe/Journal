@@ -33,6 +33,12 @@
 						<p><strong>Summary: </strong> ${review.summary}</p>
 						<p><strong>Small errors: </strong>${review.smallErrors}</p>
 					</div>
+					
+					#{if review.discussion}
+						<h2>Secret comment</h2>
+						<div class="well"><p>${review.discussion.comment}</p></div>
+					#{/if}
+					
 					<div id="review-comments">
 						<h2>Criticism</h2>
 						<br />

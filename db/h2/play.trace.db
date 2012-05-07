@@ -76,3 +76,9 @@ org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic c
 05-07 08:08:12 jdbc[2]: exception
 org.h2.jdbc.JdbcSQLException: Value too long for column "REVIEWCOMMENT BINARY(255)": "X'aced0005737200146d6f64656c732e526576696577436f6d6d656e74e8890e642d667c9c0200034c0007636f6d6d656e747400124c6a6176612f6c616e672f... (2252)"; SQL statement:
 insert into RevisionComment (id, comment, date, reviewComment, revision_id) values (null, ?, ?, ?, ?) [90005-149]
+05-07 10:12:07 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "REVISION BINARY(255)": "X'aced00057372000f6d6f64656c732e5265766973696f6ef48fe7b0741fa76702000449000f7265766973696f6e5f6e756d6265724c000761727469636c6574... (1652)"; SQL statement:
+insert into Discussion (id, comment, commentDate, revision, user) values (null, ?, ?, ?, ?) [90005-149]
+05-07 10:13:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "USER BINARY(255)": "X'aced00057372000b6d6f64656c732e55736572431c6b2a956bfd4f0200075a0006617574686f725a0006656469746f725a000872657669657765724c000f61... (715)"; SQL statement:
+insert into Discussion (id, comment, commentDate, revision_id, user) values (null, ?, ?, ?, ?) [90005-149]

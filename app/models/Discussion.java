@@ -1,19 +1,24 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import play.db.jpa.Model;
+ 
+import java.util.*;
+import javax.persistence.*;
+ 
+import play.db.jpa.*;
+
  
 @Entity
 public class Discussion extends Model {
 
-    public Date commentDate;    
+    public Date commentDate;   
+	@Lob 
     public String comment;     
     
-    public Revision revision;
+	@ManyToOne
+    public Review review;
+	
+	@ManyToOne
     public User user;
     
     
@@ -25,8 +30,8 @@ public class Discussion extends Model {
         return this;
     }*/
     
-    public Discussion(Revision revision, String comment, User user) {
-        this.revision = revision;
+    public Discussion(Review review, String comment, User user) {
+        this.review = review;
         this.commentDate = new Date();
         this.comment = comment; 
         this.user = user;
