@@ -12,6 +12,7 @@ public class Article extends Model {
 
     public String title;
     public boolean published;
+	public boolean rejected;
     
     @Lob
     public String summary;
@@ -77,6 +78,10 @@ public class Article extends Model {
 	public Revision getPreviousRevision(Revision refRevision) {
 		Revision revision = Revision.find("article = ? and revision_number = ?", this, refRevision.revision_number -1 ).first();
 		return revision;
+	}
+	
+	public int getNumberOfCommitted() {
+		return SelectedArticle.find("byArticle", this).fetch().size();
 	}
 }
 

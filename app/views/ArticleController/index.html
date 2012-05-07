@@ -21,10 +21,22 @@
 							<td>${article.title}</td> 
 							<td>
 								#{list items:article.revisions, as:'revision'}
-									<a href="@{RevisionController.show(revision.id)}" class="btn">Revision ${revision.revision_number}</a>
+								<div class="btn-group rev-rev"><a href="@{RevisionController.show(revision.id)}" class="btn btn-primary"><i class="icon-file icon-white"></i> Revision ${revision.revision_number}</a>
+									#{if revision.reviews.size() > 0}
+										<a href="@{ReviewController.showRevisionReviews(revision.id)}" class="btn"><i class="icon-file"></i> View revision reviews</a>
+									#{/if}
+								</div>
 								#{/list}
 							</td>	
-							<td>[tbd]</td>
+							<td>
+								#{if article.published == true } 
+									Published 
+								#{/if}
+								#{else}
+									#{if article.rejected == true } Rejected #{/if}
+									#{else} Pending #{/else}
+								#{/else}
+							</td>
 							<td><a href="@{RevisionController.add(article.id)}" class="btn btn-primary"><i class="icon-plus icon-white"></i> Add revision</a>
 						</tr>	
 						#{/list}

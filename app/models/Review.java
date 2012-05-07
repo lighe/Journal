@@ -75,8 +75,7 @@ public class Review extends Model {
 		if(i==3) return "Outsider";
 		return "";	
 	}
-
-
+	
 	public List<ReviewComment> getReviewComments() {
 		return ReviewComment.find("byReview", this).fetch();		
     }

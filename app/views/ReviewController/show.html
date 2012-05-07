@@ -35,6 +35,13 @@
 			<h2>Article Abstract</h2>
 			<br />
 			<p>${review.revision.article.summary}</p>
-		</div>		
+		</div>	
+		#{if review.revision.article.user.id == user.id}
+			<div class="span12">
+				<div class="well">
+					<a href="#" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Add new revision</a>
+				</div>
+			</div>
+		#{/if}	
 	</div>
 </div>

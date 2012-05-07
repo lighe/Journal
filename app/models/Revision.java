@@ -24,4 +24,8 @@ public class Revision extends Model {
         this.revision_number = revision_number;
         this.pdf_url = url_for_pdf;
     }
+	
+	public List<Review> getReviews() {
+		return Review.find("byRevision", this).fetch();
+	}
 }
