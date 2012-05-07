@@ -21,7 +21,7 @@
 				#{/if}
 				
 				<ul class="nav nav-tabs" id="myTab">
-				  <li><a href="#">Ready for publishing</a></li>
+				  <li><a href="#publish">Ready for publishing</a></li>
 				  <li class="active"><a href="#reviews">Article Reviews</a></li>
 				  <li><a href="#selections">Article Selections</a></li>
 				  <li><a href="#revisions">Article Revisions</a></li>
@@ -113,6 +113,44 @@
 				  
 				  </div>
 				  <div class="tab-pane" id="revisions">...</div>
+				  <div class="tab-pane" id="publish">
+						<h2>Article Selections</h2>
+						<div class="alert alert-info">
+							<strong><i class="icon-info-sign"></i> The following articles are ready for publishing.</strong>
+						</div>
+						#{if publishable}
+							<table class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>Article Title</th>
+										<th>Article Discription</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									#{list items:publishable, as:'rev'}
+										<tr>
+                      <td>
+                        ${rev.article.title}
+                      </td>
+                      <td>
+                        ${rev.article.summary}
+                      </td>
+                      <td>
+                        <a href="@{ControlPanelController.publishRevision(rev.id)}" class="btn btn-danger"><i class="icon-trash icon-white"></i> Reject review</a>
+                      </td>
+										</tr>
+									#{/list}
+								</tbody>
+							</table>
+						#{/if}
+						#{else}
+							<div class="alert alert-info">
+								<strong><i class="icon-info-sign"></i> There are no articles available for publishing.</strong>
+							</div>
+						#{/else}
+				  
+				  </div>
 				</div>
 		</div>
 	</div>

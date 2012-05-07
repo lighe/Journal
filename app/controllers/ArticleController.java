@@ -263,34 +263,6 @@ public class ArticleController extends Controller {
           	}
     	}           
     }
-    
-    public static boolean isAuthorAuthorisedToReiviseArticle(Article article){
-    	/*
-    	 * Check if enough reviews have been done on the paper 
-    	 */
-    	Revision revision = article.getLatestRevision(article);
-    	List<Review> reviewsForArt = Review.find("revision", revision).fetch();
-    	if(reviewsForArt.size() >= 3){
-        	/*
-        	 * now check the author has conducted enough reviews
-        	 */
-    		List<Review> reviewsByAuth = Review.find("user", article.user).fetch();
-    		List<Article> articlesByAuth = Article.find("user", article.user).fetch();
-    		int submittionsByAuth = 0;
-    		for(int x=0; x>articlesByAuth.size();x++){
-    			List<Revision> revisionsOnArt = Revision.find("article", articlesByAuth.get(x)).fetch();
-    			submittionsByAuth = submittionsByAuth + revisionsOnArt.size();
-    		}
-    		if(submittionsByAuth > (reviewsByAuth.size()*3)){
-    			return false;
-    		} else {
-    			return true;
-    		}
-    	} else{
-    		return false;
-    	}
-    	
-    }
 	
 	public static void download(@Required Long id, @Required int revisionNumber) {
 				
