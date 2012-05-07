@@ -65,18 +65,19 @@ public class Article extends Model {
 	}
     
 	public Revision getLatestRevision(Article article){
-		List<Revision> revisions = Revision.find("article_ID", article).fetch();
-
-		int highestRevision = 0;
-		for(int x = 0; x < revisions.size(); x++){
-			Revision revision = revisions.get(x);
-			if(revision.revision_number > highestRevision){
-				highestRevision = revision.revision_number;
-			}
-		}
-		Revision latestRev = Revision.find("revision_number", highestRevision).first();
-    	return latestRev;
+		Revision revision = Revision.find("article = ? order by revision_number desc", article).first();
+    	return revision;
     }
+	
+	public List<Revision> getRevisions() {
+		List<Revision> revisions = Revision.find("byArticle", this).fetch();
+		return revisions;	
+	}
+	
+	public Revision getPreviousRevision(Revision refRevision) {
+		Revision revision = Revision.find("article = ? and revision_number = ?", this, refRevision.revision_number -1 ).first();
+		return revision;
+	}
 }
 
 

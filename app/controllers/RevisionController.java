@@ -38,37 +38,75 @@ public class RevisionController extends Controller {
 		render(reviews, article);
 	}
 	
-	public static void save(Long articleId, List<String> reviewCommentIds, List<String> revisionComments, File article) {		
+	public static void save(Long articleId, List<Long> reviewCommentIds, List<String> revisionComments, File article) {		
 		
-		//get the uploaded file parts and check a title is given
-    	List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
+		validation.required(articleId).message("Please don't type addresses directly, load this page from within the user interface.");
+		validation.required(article).message("Please upload a revision PDF");
 		
-		Article art = Article.findById(articleId);
-		Revision latestRev = art.getLatestRevision(art);
-		Revision rev = new Revision(art, new Date(), latestRev.revision_number, " ");  
-		 
-		String urlPrefix = "public/files/articles/";
-		String urlSufix = art.title.trim()+String.valueOf(rev.revision_number).trim()+".pdf";
-		rev.pdf_url = urlPrefix + urlSufix;
-		String fileName = uploads.get(0).getFileName();
-		if(FileManagment.isPDF(fileName)){
-			if(FileManagment.upload(uploads, urlPrefix, urlSufix)){	        	
-				//Save the revision
-				rev.save();
-				flash.success("Revison added");
-				//if all is sucessfull, show revision
-				render("");
-			 } else {
-				 validation.addError(null, "There was an issue uploading your pdf, please try again later.");
-			 }
-		} else {
-			 validation.addError(null, "File was not a PDF.  Please make sure the file is a PDF");
+		if(!validation.hasErrors()) {
+		
+			//get the uploaded file parts and check a title is given
+			List<Upload> uploads  = (List<Upload>) request.current().args.get("__UPLOADS");
+			
+			Article art = Article.findById(articleId);
+			
+			if(art.user.id == Security.getConnectedUser().id) {
+				Revision latestRev = art.getLatestRevision(art);
+				Revision rev = new Revision(art, new Date(), latestRev.revision_number+1, " ");  		
+			
+				String urlPrefix = "public/files/articles/";
+				String urlSufix = art.title.trim()+String.valueOf(rev.revision_number).trim()+".pdf";
+				rev.pdf_url = urlPrefix + urlSufix;
+				String fileName = uploads.get(0).getFileName();
+				if(FileManagment.isPDF(fileName)){
+					if(FileManagment.upload(uploads, urlPrefix, urlSufix)){	        	
+						//Save the revision
+						rev.save();
+						flash.success("Revison added!");
+						//if all is sucessfull, show revision
+					 } else {
+						 validation.addError(null, "There was an issue uploading your pdf, please try again later.");
+					 }
+				} else {
+					 validation.addError(null, "File was not a PDF.  Please make sure the file is a PDF");
+				}
+				
+				if(!validation.hasErrors()) {
+					//add the revision comments
+					for(int i=0; i<revisionComments.size(); i++) {
+						ReviewComment reviewComment = ReviewComment.findById(reviewCommentIds.get(i));
+						RevisionComment revisionComment = new RevisionComment(new Date(), revisionComments.get(i), rev, reviewComment);
+						revisionComment.save();	
+					}	
+					
+					show(rev.id);
+				}
+				else {
+					validation.keep();
+					add(articleId);	
+				}
+			}
+			else {
+				validation.addError(null, "You can only add revisions to your own articles");	
+				validation.keep();
+				add(articleId);	
+			}
 		}
-		
-		//add comments
+		else {
+			validation.keep();
+			add(articleId);
+		}
 	}
 
-	public static void show(Long reviewId) {
+	public static void show(Long revisionId) {
+		Revision revision = Revision.findById(revisionId);
+		Revision previousRevision = revision.article.getPreviousRevision(revision);
 		
+		if(previousRevision!=null) {
+			List<Review> reviews = Review.find("byRevision", previousRevision).fetch();
+			render(revision, reviews);	
+		}
+		
+		render(revision);
 	}
 }

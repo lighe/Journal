@@ -17,7 +17,7 @@ public class Revision extends Model {
 	@ManyToOne
     //@Column(name="article",length=1000) 
     public Article article;
-            
+	
     public Revision(Article article, Date date, int revision_number, String url_for_pdf) {
         this.article = article;
         this.date = date;

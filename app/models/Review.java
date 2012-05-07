@@ -11,7 +11,6 @@ import play.db.jpa.*;
 public class Review extends Model {
 	
 	@ManyToOne
-	//@Column(name="revision",length=1000) 
 	public Revision revision;
 	
 	public String date; /* For some reason "date" type doesn't work; maybe it's because of yml */
