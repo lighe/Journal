@@ -48,7 +48,7 @@
 									#{list items:reviews, as:'review'}
 									<tr>
 										<td><a href="@{ArticleController.show(review.revision.article.id)}">${review.revision.article.title}</a></td>
-										<td>${review.user.email}</td>
+										<td>${review.user.name} [${review.user.email}]</td>
 										<td>${review.date}</td>
 										<td style="width:260px">
 											<a href="@{ReviewController.editorRejectReview(review.id)}" class="btn btn-danger">
@@ -112,6 +112,7 @@
 						#{/else}
 				  
 				  </div>
+<<<<<<< HEAD
 				  <div class="tab-pane" id="revisions">...</div>
 				  <div class="tab-pane" id="publish">
 						<h2>Article Selections</h2>
@@ -149,6 +150,43 @@
 								<strong><i class="icon-info-sign"></i> There are no articles available for publishing.</strong>
 							</div>
 						#{/else}
+=======
+				  <div class="tab-pane" id="revisions">
+				  	#{if revisions}
+						<table class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>Revision</th>
+									<th>Article</th>
+									<th>Author</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								#{list items:revisions, as:'revision'}
+								<tr>
+									<td>${revision.revision_number}</td>
+									<td><a href="@{ArticleController.show(revision.article.id)}">${revision.article.title}</a></td>
+									<td>${revision.article.user.name} [${revision.article.user.email}]</td>
+									<td style="width:260px">
+										<a href="@{RevisionController.editorRejectRevision(revision.id)}" class="btn btn-danger">
+											<i class="icon-trash icon-white"></i> Reject revision
+										</a> &nbsp;
+										<a href="@{RevisionController.show(revision.id)}" class="btn btn-primary">
+											<i class="icon-eye-open icon-white"></i> 
+											View revision
+										</a> 
+									</td>		
+								#{/list}
+							</tbody>
+						</table>
+					#{/if}
+					#{else}
+						<div class="alert alert-info">
+							<strong><i class="icon-info-sign"></i> There are no reviews.</strong>
+						</div>
+					#{/else}	
+>>>>>>> 1ea43bb8efd9b915e64be1fee076d377e2a6864e
 				  
 				  </div>
 				</div>

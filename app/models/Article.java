@@ -66,17 +66,22 @@ public class Article extends Model {
 	}
     
 	public Revision getLatestRevision(Article article){
-		Revision revision = Revision.find("article = ? order by revision_number desc", article).first();
+		Revision revision = Revision.find("rejectedByEditor = false and article = ? order by revision_number desc", article).first();
     	return revision;
     }
 	
 	public List<Revision> getRevisions() {
-		List<Revision> revisions = Revision.find("byArticle", this).fetch();
+		List<Revision> revisions = Revision.find("rejectedByEditor = false and article = ?", this).fetch();
 		return revisions;	
 	}
 	
 	public Revision getPreviousRevision(Revision refRevision) {
-		Revision revision = Revision.find("article = ? and revision_number = ?", this, refRevision.revision_number -1 ).first();
+		int i = 1;
+		Revision revision = Revision.find("article = ? and revision_number = ?", this, refRevision.revision_number - i ).first();
+		while(revision!=null && revision.rejectedByEditor == true) {
+			i++;
+			revision = Revision.find("article = ? and revision_number = ?", this, refRevision.revision_number - i ).first();
+		}
 		return revision;
 	}
 	

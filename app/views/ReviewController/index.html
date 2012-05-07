@@ -92,6 +92,10 @@
 							#{else}
 								<a href="#" class="btn disabled"><i class="icon-edit"></i> Review too old, cannot edit</a>
 							#{/else}
+							
+							#{list items:review.revision.article.getRevisions(), as:'revision'}
+								&nbsp; <a href="@{RevisionController.show(revision.id)}" class="btn" style="margin-top:3px"><i class="icon-file"></i> View revision ${revision.revision_number}</a>
+							#{/list}
 						</td>
 					</tr>
 				#{/list}

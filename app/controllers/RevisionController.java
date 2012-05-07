@@ -99,14 +99,49 @@ public class RevisionController extends Controller {
 	}
 
 	public static void show(Long revisionId) {
+	
 		Revision revision = Revision.findById(revisionId);
-		Revision previousRevision = revision.article.getPreviousRevision(revision);
 		
-		if(previousRevision!=null) {
-			List<Review> reviews = Review.find("byRevision", previousRevision).fetch();
-			render(revision, reviews);	
+		int noOfSelected = SelectedArticle.find("user = ? and article = ? and status != -1", Security.getConnectedUser(), revision.article).fetch().size();
+		if(Security.getConnectedUser().id==revision.user.id || noOfSelected !=0 ) {
+			Revision previousRevision = revision.article.getPreviousRevision(revision);
+			
+			if(previousRevision!=null) {
+				List<Review> reviews = Review.find("byRevision", previousRevision).fetch();
+				render(revision, reviews);	
+			}
+			
+			render(revision);
 		}
-		
-		render(revision);
+		else {
+			ErrorController.notFound();	
+		}
+	}
+	
+	public static void editorRejectRevision(Long revisionId){
+		if (Security.isEditor()){ 
+			Revision revision = Revision.findById(revisionId);
+			revision.setAsRejected();	
+			
+			try {
+				Emailer.sendEmailTo(revision.article.user.email, Security.getConnectedUser().email, "Your revision has been rejected.", "Revision rejected");
+			} catch (EmailException ex) {
+				validation.addError(null, "Email failed to send, please try again later");
+			} 
+			
+			flash.success("Revision Rejected.");
+			ControlPanelController.activity();	
+		}
+	}
+	
+	public static void acceptRevision(Long revisionId) {
+			Revision revision = Revision.findById(revisionId);
+			int noOfSelected = SelectedArticle.find("user = ? and article = ? and status != -1", Security.getConnectedUser(), revision.article).fetch().size();
+			if(noOfSelected > 0) {
+				
+			}
+			else {
+				ErrorController.notFound();	
+			}
 	}
 }
