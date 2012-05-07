@@ -60,4 +60,16 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		#{if user.reviewer}
+			#{if revision.isLatestRevision()}
+				<div class="span12">
+					<div class="well">
+						<a href="#" class="btn btn-primary"><i class="icon-ok icon-white"></i> Accept revision</a> &nbsp;
+						<a href="#" class="btn btn-danger"><i class="icon-trash icon-white"></i> Reject revision</a>
+					</div>
+				</div>
+			#{/if}
+		#{/if}
+	</div>
 </div>
