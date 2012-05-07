@@ -73,3 +73,6 @@ org.h2.jdbc.JdbcSQLException: Database is already closed (to disable automatic c
 	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(Unknown Source)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
 	at java.lang.Thread.run(Unknown Source)
+05-07 08:08:12 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Value too long for column "REVIEWCOMMENT BINARY(255)": "X'aced0005737200146d6f64656c732e526576696577436f6d6d656e74e8890e642d667c9c0200034c0007636f6d6d656e747400124c6a6176612f6c616e672f... (2252)"; SQL statement:
+insert into RevisionComment (id, comment, date, reviewComment, revision_id) values (null, ?, ?, ?, ?) [90005-149]

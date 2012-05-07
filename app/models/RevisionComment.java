@@ -17,6 +17,7 @@ public class RevisionComment extends Model {
 	@ManyToOne 
     public Revision revision;
 	
+	@OneToOne
 	public ReviewComment reviewComment;
     
     public RevisionComment(Date date, String comment, Revision revision, ReviewComment reviewComment) {

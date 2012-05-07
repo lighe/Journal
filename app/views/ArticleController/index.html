@@ -10,9 +10,9 @@
 					<thead>
 						<tr>
 							<th>Article title</th>
-							<th>Reviews</th>
 							<th>Revisions</th>
 							<th>Status</th>
+							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -20,10 +20,24 @@
 						<tr>
 							<td>${article.title}</td> 
 							<td>
-								[tbd]
+								#{list items:article.revisions, as:'revision'}
+								<div class="btn-group rev-rev"><a href="@{RevisionController.show(revision.id)}" class="btn btn-primary"><i class="icon-file icon-white"></i> Revision ${revision.revision_number}</a>
+									#{if revision.reviews.size() > 0}
+										<a href="@{ReviewController.showRevisionReviews(revision.id)}" class="btn"><i class="icon-file"></i> View revision reviews</a>
+									#{/if}
+								</div>
+								#{/list}
+							</td>	
+							<td>
+								#{if article.published == true } 
+									Published 
+								#{/if}
+								#{else}
+									#{if article.rejected == true } Rejected #{/if}
+									#{else} Pending #{/else}
+								#{/else}
 							</td>
-							<td>[tbd] //links here</td>	
-							<td>[tbd]</td>
+							<td><a href="@{RevisionController.add(article.id)}" class="btn btn-primary"><i class="icon-plus icon-white"></i> Add revision</a>
 						</tr>	
 						#{/list}
 					</tbody>
@@ -31,7 +45,7 @@
 			#{/if}
 			#{else}
 				<div class="alert alert-info">
-					<strong><i class="icon-info-sign"></i> You haven't submitted any articles yet. Want to <a href="@{ArticleController.new()}" class="btn"><i class="icon-upload"></i> upload</a> one now?</strong>
+					<strong><i class="icon-info-sign"></i> You haven't submitted any articles yet. Want to <a href="@{ArticleController.newArticleA()}" class="btn"><i class="icon-upload"></i> upload</a> one now?</strong>
 				</div>
 			#{/else}
 		</div>

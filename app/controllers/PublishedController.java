@@ -21,18 +21,27 @@ public class PublishedController extends Controller {
             now.add(Calendar.MONTH, -2);
             Date cutoffdate = now.getTime(); 
             //int datecheck = latestRev.date.compareTo(cutoffdate);      
-            List<Article> unpublished = Article.find("published", false).fetch();                 
-                for(int x=0; x< unpublished.size(); x++){
-                    Article datecheck = unpublished.get(x);
-                    Revision latestRev = datecheck.getLatestRevision(datecheck); 
-                        if (latestRev.date.compareTo(cutoffdate) < 0 ){
-                            forceUnpublished.add(datecheck);
-                        }             
-                }
+            List<Article> unpublishedAll = Article.find("published", false).fetch();   
+			ArrayList<Article> unpublished = new ArrayList<Article>();
+			
+			for(int i=0; i<unpublishedAll.size(); i++) {
+				if(unpublishedAll.get(i).getNumberOfCommitted() < 5) {
+					unpublished.add(unpublishedAll.get(i));	
+				}
+			}
+			
+			/*
+			for(int x=0; x< unpublished.size(); x++){
+				Article datecheck = unpublished.get(x);
+				Revision latestRev = datecheck.getLatestRevision(datecheck); 
+					if (latestRev.date.compareTo(cutoffdate) < 0 ){
+						forceUnpublished.add(datecheck);
+					}             
+			}
             if(forceUnpublished != null){
                 unpublished = forceUnpublished;
             }                  
-			
+			*/
 			long allowed = 3- SelectedArticle.count("user = ?", Security.getConnectedUser());
             render("unpublished/index.html", unpublished, forceUnpublished, allowed);
 		}

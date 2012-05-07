@@ -17,11 +17,15 @@ public class Revision extends Model {
 	@ManyToOne
     //@Column(name="article",length=1000) 
     public Article article;
-            
+	
     public Revision(Article article, Date date, int revision_number, String url_for_pdf) {
         this.article = article;
         this.date = date;
         this.revision_number = revision_number;
         this.pdf_url = url_for_pdf;
     }
+	
+	public List<Review> getReviews() {
+		return Review.find("byRevision", this).fetch();
+	}
 }

@@ -1,0 +1,57 @@
+#{extends 'main.html' /}
+#{set title:'Review' /}
+<div class="container"> 
+	<div class="row">
+		<div class="span7">
+			<h2>Article revision ${revision.revision_number}</h2>
+			<br />
+			#{ifErrors}
+			<div class="alert alert-warning"> <strong>There are some errors:</strong> <br />
+				#{errors} <i class="icon-flag"></i> ${error} <br />
+				#{/errors} </div>
+			#{/ifErrors}
+			
+			#{if flash.success}
+			<div class="alert alert-success"> <strong><i class="icon-ok"></i> ${flash.success}</strong> </div>
+			#{/if}
+			<ul class="nav nav-tabs" id="myTab">
+				#{list items:reviews, as:'review'}
+				<li #{if review_index==1} class="active" #{/if}><a href="#review-${review_index}">Review ${review_index}</a></li>
+				#{/list}
+			</ul>
+			<div class="tab-content"> #{list items:reviews, as:'review'}
+				<div class="tab-pane #{if review_index ==1 } active #{/if}" id="review-${review_index}">
+					<h2>${review.revision.article.title} Review ${review_index}</h2>
+					<br />
+					%{ 
+					reviewScore = models.Review.scoreToHuman(review.score); 
+					expertise = models.Review.expertiseToHuman(review.authorExpertiseLevel);
+					%}
+					<div class="well">
+						<p><strong>Score: </strong>${reviewScore}</p>
+						<p><strong>Author Expertise Level: </strong>${expertise}</p>
+						<p><strong>Summary: </strong> ${review.summary}</p>
+						<p><strong>Small errors: </strong>${review.smallErrors}</p>
+					</div>
+					<div id="review-comments">
+						<h2>Criticism</h2>
+						<br />
+						#{list items:review.reviewComments, as:'comment'}
+						<p class="comment alert"><span class="badge badge-warning">${comment_index}</span> ${comment.comment}</p>
+						<p class="comment alert alert-warning"><span class="badge badge-warning">Author reply</span> ${comment.revisionComment.comment}</p>
+						<hr />
+						#{/list} </div>
+				</div>
+				#{/list} </div>
+		</div>
+		<div class="span5">
+			<h2>${revision.article.title}</h2>
+			<div class="group">
+				<p>${revision.article.summary}</p>
+			</div>
+			<div class="group">
+				<a href="@{ArticleController.download(revision.article.id, revision.id)}" class="btn"><i class="icon-download"></i> &nbsp;Download article (PDF)</a>
+			</div>
+		</div>
+	</div>
+</div>

@@ -85,39 +85,44 @@ public class ReviewController extends Controller {
 		}
 		
 		Article article = Article.findById(articleId);
-		Revision rev = article.getLatestRevision(article);
-
-		Date today = new Date();
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		String todayString = df.format(today);
-          
-		//if edit or add      
-		//check not to add multiple reviews for same article		
-		Review review = new Review(rev, todayString, judgment, smallErrors, expertise, Security.getConnectedUser(), summary);
 		
-		//save review
-		review.save();
-		
-		//if edit delete all reviewComments:
-		/*for(ReviewComment r : ReviewComment.<ReviewComment>find("byReview", review).fetch()) {
-			r.delete();
-		}*/
-		
-		for(int i=0; i<criticism.size(); i++) {
-			ReviewComment comment = new ReviewComment(today, criticism.get(i), review);
-			comment.save();	
+		if(article.user.id!=Security.getConnectedUser().id) {
+			Revision rev = article.getLatestRevision(article);
+	
+			Date today = new Date();
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+			String todayString = df.format(today);
+			  
+			//if edit or add      
+			//check not to add multiple reviews for same article		
+			Review review = new Review(rev, todayString, judgment, smallErrors, expertise, Security.getConnectedUser(), summary);
+			
+			//save review
+			review.save();
+			
+			//if edit delete all reviewComments:
+			/*for(ReviewComment r : ReviewComment.<ReviewComment>find("byReview", review).fetch()) {
+				r.delete();
+			}*/
+			
+			for(int i=0; i<criticism.size(); i++) {
+				ReviewComment comment = new ReviewComment(today, criticism.get(i), review);
+				comment.save();	
+			}
+			
+			SelectedArticle selectedArticleEntry = SelectedArticle.find("byUserAndArticle", Security.getConnectedUser(), article).first();
+			selectedArticleEntry.status = 2;
+			selectedArticleEntry.save();
+			
+			//review.addComment(criticism);
+			flash.success("Review added successfully. You can edit it within 7 days.");
 		}
-		
-		SelectedArticle selectedArticleEntry = SelectedArticle.find("byUserAndArticle", Security.getConnectedUser(), article).first();
-		selectedArticleEntry.status = 2;
-		selectedArticleEntry.save();
-		
-		//review.addComment(criticism);
-		flash.success("Review added successfully. You can edit it within 7 days.");
-		
+		else {
+			validation.addError(null, "You cannot review your own article");
+			validation.keep();
+			add(articleId);
+		}
 		index();
-		
-		
 	}
 
 	public static void show(Long reviewId) {

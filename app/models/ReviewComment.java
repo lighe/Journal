@@ -23,5 +23,9 @@ public class ReviewComment extends Model {
         this.date = date;
         this.comment = comment;
     }
+	
+	public RevisionComment getRevisionComment() {
+		return RevisionComment.find("byReviewComment", this).first();
+	}
  
 }
