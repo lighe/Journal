@@ -103,7 +103,7 @@ public class RevisionController extends Controller {
 		Revision revision = Revision.findById(revisionId);
 		
 		int noOfSelected = SelectedArticle.find("user = ? and article = ? and status != -1", Security.getConnectedUser(), revision.article).fetch().size();
-		if(Security.getConnectedUser().id==revision.user.id || noOfSelected !=0 ) {
+		if(/*Security.getConnectedUser().id==revision.user.id || */noOfSelected !=0 ) {
 			Revision previousRevision = revision.article.getPreviousRevision(revision);
 			
 			if(previousRevision!=null) {
