@@ -3,7 +3,7 @@
 <div class="container"> #{form @RevisionController.save(), enctype:'multipart/form-data'}
 	<div class="row">
 		<div class="span7">
-			<h2>Add a new revision for article.title</h2>
+			<h2>Add a new revision for ${article.title}</h2>
 			<br />
 			#{ifErrors}
 			<div class="alert alert-warning"> <strong>There are some errors:</strong> <br />
