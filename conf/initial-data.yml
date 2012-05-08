@@ -1,6 +1,8 @@
 #initial data
 JournalConfiguration(jc1):
     journalName: Java Ecommerce Journal
+    urlToLatexTemplate: notyeset
+    urlToDocTemplate: notyetset
     journalGoals: Journal Goals text here 
     shortDescription: Journal short description text
     guidelines: Guidelines text here
