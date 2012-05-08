@@ -14,11 +14,6 @@
 					
 					<a href="@{BrowseController.index(volume.id)}">
 						${volume.name} 
-						#{if user}
-							#{if user.editor}
-							<a href="@{VolumeController.show(volume.id)}" class="btn btn-primary"><i class="icon-pencil icon-white"></i> Edit</a> 
-							#{/if}
-						#{/if}
 						<!--<i class="icon-chevron-right #{if volume.id == selectedVolumeID } icon-white #{/if}"></i>-->
 					</a>
 					

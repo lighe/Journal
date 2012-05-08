@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.*;
@@ -146,8 +147,70 @@ public class ControlPanelController extends  Controller {
 	public static void activity() {
 		List<Review> reviews = Review.find("rejectedByEditor is ? order by id desc", false).fetch();
 		List<SelectedArticle> selectedArticles = SelectedArticle.find("status != ? and status !=? order by status desc", -1, 100).fetch();
+<<<<<<< HEAD
+		
+		ArrayList<Revision> publishable = getPublishable();
+		
+		render("ControlPanels/activity.html", reviews, selectedArticles, publishable);	
+=======
 		List<Revision> revisions = Revision.find("rejectedByEditor is ? order by id desc", false).fetch();
 		render("ControlPanels/activity.html", reviews, selectedArticles, revisions);	
+>>>>>>> 1ea43bb8efd9b915e64be1fee076d377e2a6864e
 	} 
+	public static void publishRevision(Long id) {
+   	 	
+   	 	Revision rev = Revision.findById(id);
+   	 	List<Edition> edList = Edition.all().fetch();
+   	 	Edition ed = edList.get(edList.size());
+   	 	Published pub = new Published(rev, ed, Security.getConnectedUser());
+   	 	pub.save();
+   	 	
+   	 	Article art = rev.article;
+		art.published = true;
+		art.save();
+
+   	 	flash.success("Article published");
+   	 	
+		List<Review> reviews = Review.find("rejectedByEditor is ? order by id desc", false).fetch();
+		List<SelectedArticle> selectedArticles = SelectedArticle.find("status != ? and status !=? order by status desc", -1, 100).fetch();
+		
+		ArrayList<Revision> publishable = getPublishable();
+		
+		render("ControlPanels/activity.html", reviews, selectedArticles, publishable);	
+	} 
+	
+	private static ArrayList<Revision> getPublishable(){
+		ArrayList<Revision> results = new ArrayList<Revision>();
+		
+		//get all unpublsihed with more than 3 reviews
+		List<Article> articleList = Article.find("published", false).fetch();
+		for(int x=0; x<articleList.size();x++){
+			Article art = articleList.get(x);
+			Revision latestRev = art.getLatestRevision(art);
+			
+			List<Review> revList = Review.find("revision", latestRev).fetch();
+			if(revList.size() <= 3){
+				//Check if each Article has a high enough score based on the detractor model
+				int champ = 0;
+				int dem = 0;
+				for(int z = 0; z<revList.size(); z++){
+					Review review = revList.get(x);
+					if(review.score == 4){
+						champ++;
+					}
+					if(review.score == 1){
+						dem++;
+					}
+				}
+				if(champ>dem && champ>1){
+					results.add(latestRev);
+				}
+			}
+		}
+		
+		return results;
+		
+	}
+	
 	
 }
