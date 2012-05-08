@@ -147,15 +147,9 @@ public class ControlPanelController extends  Controller {
 	public static void activity() {
 		List<Review> reviews = Review.find("rejectedByEditor is ? order by id desc", false).fetch();
 		List<SelectedArticle> selectedArticles = SelectedArticle.find("status != ? and status !=? order by status desc", -1, 100).fetch();
-<<<<<<< HEAD
-		
 		ArrayList<Revision> publishable = getPublishable();
-		
-		render("ControlPanels/activity.html", reviews, selectedArticles, publishable);	
-=======
 		List<Revision> revisions = Revision.find("rejectedByEditor is ? order by id desc", false).fetch();
-		render("ControlPanels/activity.html", reviews, selectedArticles, revisions);	
->>>>>>> 1ea43bb8efd9b915e64be1fee076d377e2a6864e
+		render("ControlPanels/activity.html", reviews, selectedArticles, revisions, publishable);	
 	} 
 	public static void publishRevision(Long id) {
    	 	
