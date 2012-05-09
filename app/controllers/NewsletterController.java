@@ -39,7 +39,7 @@ public class NewsletterController extends Controller {
 				index(); //re-render index
 			}
     	} else {
-    		//index(); //if no upload found, send back to upload page
+    		index(); //if no upload found, send back to upload page
     	} 
     }
     
@@ -99,7 +99,7 @@ public class NewsletterController extends Controller {
     //Returns a list of all files uploaded to the newsletter directory (
     private static String[][] getAvailableNewsletters(){
     	//Directory path here
-    	String path = "public\\files\\newsletters\\";
+    	String path = "public/files/newsletters/";
     	 
     	File folder = new File(path);
     	File[] listOfFiles = folder.listFiles();
