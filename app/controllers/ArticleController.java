@@ -211,7 +211,7 @@ public class ArticleController extends Controller {
 			        rev.save();
 				    flash.success("Article added.  Thanks for your contribution.");
 				    //if all is sucessfull, show the article
-				    render("articleController/new.html");
+				    render("ArticleController/new.html");
 		    	 } else {
 		    		 validation.addError(null, "There was an issue uploading your article, please try again later.");
 		    	 }
