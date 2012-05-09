@@ -39,7 +39,7 @@ public class NewsletterController extends Controller {
 				index(); //re-render index
 			}
     	} else {
-    		index(); //if no upload found, send back to upload page
+    		//index(); //if no upload found, send back to upload page
     	} 
     }
     
