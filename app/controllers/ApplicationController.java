@@ -30,4 +30,21 @@ public class ApplicationController extends Controller {
 
         render(volumes, editions, publishedArticles);
    }
+   
+   	public static void subscribe(String email, String name) {
+		
+		validation.required(email).message("Please give us an email address!");
+		validation.email(email).message("Please give us a valid email address!");
+				
+		if (validation.hasErrors()) {
+			params.flash(); // add http parameters to the flash scope
+			validation.keep();
+		}	
+		else {
+			NewsletterSubscription subscriber = new NewsletterSubscription(email, name);
+			subscriber.save();
+			flash.success("Thank you! You have been subscribed to our newsletter!");
+		}
+		ApplicationController.index();
+	}
 }
