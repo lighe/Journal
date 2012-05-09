@@ -80,7 +80,7 @@ public class SearchController extends Controller {
 		//make elements unique and get latest rev
 		ArrayList<Revision> results = formatArrayAndMakeUnique(releventArticleList);
 		
-		render("searchController/results.html", results);		
+		render("SearchController/results.html", results);		
 	}
 	
 	public static void searchByAuthors(String names){
@@ -114,7 +114,7 @@ public class SearchController extends Controller {
 		//make elements unique and get latest rev
 		ArrayList<Revision> results = formatArrayAndMakeUnique(releventArticleList);
 		
-		render("searchController/results.html", results);		
+		render("SearchController/results.html", results);		
 	}
 	
 	public static void searchByTitles(String titles){
@@ -140,7 +140,7 @@ public class SearchController extends Controller {
 		//make elements unique and get latest rev
 		ArrayList<Revision> results = formatArrayAndMakeUnique(releventArticleList);
 		
-		render("searchController/results.html", results);		
+		render("SearchController/results.html", results);		
 		
 	}
 	
@@ -169,7 +169,7 @@ public class SearchController extends Controller {
 		//make elements unique and get latest rev
 		ArrayList<Revision> results = formatArrayAndMakeUnique(releventArticleList);
 		
-		render("searchController/results.html", results);	
+		render("SearchController/results.html", results);	
 	}
 	
 	public static void searchByDate(String to, String from){
@@ -196,7 +196,7 @@ public class SearchController extends Controller {
 			}
 			
 			
-			render("searchController/results.html", results);
+			render("SearchController/results.html", results);
 		} catch (ParseException e) {
 			index();
 		}
