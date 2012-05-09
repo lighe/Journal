@@ -38,10 +38,12 @@ public class FileManagment {
     			fos.close();
         		return true;
     		}catch (Exception e){//Catch exception if any
+				System.out.println("Upload error:" + e.getMessage());
     			  System.err.println("Error: " + e.getMessage());
     	    		return false;
     		}
     	} else {
+			System.out.println("No uploads");
     		return false;
     	} 
     }
