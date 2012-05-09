@@ -16,7 +16,7 @@ public class ControlPanelController extends  Controller {
 		User user  = Security.getConnectedUser();
 		JournalConfiguration jc  = JournalConfiguration.all().first();
 
-	    render("controlPanels/index.html", user, jc);
+	    render("ControlPanels/index.html", user, jc);
 	}
 	
 	 public static void changePassword(String password1, String password2){
@@ -36,7 +36,7 @@ public class ControlPanelController extends  Controller {
 	     if(!validation.hasErrors()) {
 	    	 flash.success("Password Updated");
 	     }
-    	 render("controlPanels/index.html");	 
+    	 render("ControlPanels/index.html");	 
 	 }
 	 
 	 public static void resignEditor(String password){
@@ -59,12 +59,12 @@ public class ControlPanelController extends  Controller {
 	     if(!validation.hasErrors()) {
 	    	 flash.success("Your resignation has been accepted.");
 	     }
-    	 render("controlPanels/index.html");	 
+    	 render("ControlPanels/index.html");	 
 	 }
 	 
 	 public static void journalControlPanel(){
 		 JournalConfiguration jc = JournalConfiguration.all().first();
-    	 render("controlPanels/journalPanel.html", jc);	 
+    	 render("ControlPanels/journalPanel.html", jc);	 
 	 }
 	 
 	 public static void updateJournal(String name, String goals, String shortDescription){
@@ -80,12 +80,12 @@ public class ControlPanelController extends  Controller {
 	     if(!validation.hasErrors()) {
 	    	 flash.success("Journal Updated");
 	     }
-    	 render("controlPanels/journalPanel.html", jc);	 
+    	 render("ControlPanels/journalPanel.html", jc);	 
 	 }
 	 
 	 public static void listUsers(){
 		 List<User> users = User.find("editor", false).fetch();
-		 render("controlPanels/listUsers.html", users);
+		 render("ControlPanels/listUsers.html", users);
 	 }
 	 
 	 public static void promoteToEditor(@Required Long user_id){
@@ -141,7 +141,7 @@ public class ControlPanelController extends  Controller {
 		 }
 		
 		 jc.save();
-		 render("controlPanels/journalPanel.html", jc);	 
+		 render("ControlPanels/journalPanel.html", jc);	 
 	}
 
 	public static void activity() {

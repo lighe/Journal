@@ -50,11 +50,11 @@ public class ArticleController extends Controller {
     public static void showRevision(long id, int revision_num) {
     	Article article = models.Article.findById(id);
     	Revision revision = Revision.find("revision_number", revision_num).first();
-        render("articleController/show.html", revision, article);
+        render("ArticleController/show.html", revision, article);
     }
     
     public static void newArticleA(){
- 		render("articleController/new.html");
+ 		render("ArticleController/new.html");
     }
     
     /**
@@ -221,7 +221,7 @@ public class ArticleController extends Controller {
 	     }
 	     
 	     if(validation.hasErrors()){
-	 		render("articleController/new.html");
+	 		render("ArticleController/new.html");
 	     }
     }
     
