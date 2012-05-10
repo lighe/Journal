@@ -188,7 +188,7 @@ public class ControlPanelController extends  Controller {
 				int champ = 0;
 				int dem = 0;
 				for(int z = 0; z<revList.size(); z++){
-					Review review = revList.get(x);
+					Review review = revList.get(z);
 					if(review.score == 4){
 						champ++;
 					}
